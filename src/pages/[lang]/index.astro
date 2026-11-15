@@ -1,8 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { LANGS, SITE, type Lang } from '../../config';
-import { asset, formatDate, href, pick, t } from '../../i18n/ui';
-import { getMatieres, getRessources, getVoyages } from '../../lib/content';
+import { href, pick, t } from '../../i18n/ui';
+import { getCircuits, getMatieres, getPays, getRessources, getSejours } from '../../lib/content';
 
 export function getStaticPaths() {
   return LANGS.map((lang) => ({ params: { lang } }));
@@ -11,13 +11,21 @@ const lang = Astro.params.lang as Lang;
 
 const matieres = await getMatieres();
 const ressources = await getRessources();
-const voyages = await getVoyages();
+const pays = await getPays();
+const sejours = await getSejours();
+const circuits = await getCircuits();
 
 const latest = ressources
   .filter((r) => r.data.updated)
   .sort((a, b) => b.data.updated!.getTime() - a.data.updated!.getTime())
   .slice(0, 5);
-const trip = voyages[0];
+const trip = pays.length > 0 ? true : null;
+const stats = [
+  { n: pays.length, label: t(lang, 'travel.countries') },
+  { n: new Set(pays.map((p) => p.data.continent)).size, label: t(lang, 'travel.continents') },
+  { n: sejours.length, label: t(lang, 'travel.stays') },
+  { n: circuits.length, label: t(lang, 'travel.circuits') },
+];
 
 const cards = [
   { to: 'about', emoji: '👋', title: t(lang, 'nav.about'), text: t(lang, 'home.card.about') },
@@ -78,20 +86,17 @@ const cards = [
         )}
         {trip && (
           <div>
-            <h2 class="text-lg font-semibold">{t(lang, 'home.latestTrip')}</h2>
-            <a href={href(lang, `travel/${trip.id}`)} class="card mt-3 block overflow-hidden">
-              {trip.data.cover ? (
-                <img src={asset(trip.data.cover)} alt="" class="h-48 w-full object-cover" loading="lazy" />
-              ) : (
-                <div class="grid h-48 place-items-center bg-accent-soft text-6xl" aria-hidden="true">{trip.data.flag}</div>
-              )}
-              <div class="p-5">
-                <p class="text-sm text-muted">
-                  {trip.data.flag} {pick(trip.data, 'country', lang)} · {formatDate(trip.data.start, lang, { month: 'long', year: 'numeric' })}
-                </p>
-                <h3 class="mt-1 text-lg font-semibold">{pick(trip.data, 'title', lang)}</h3>
-                <p class="mt-1 text-muted">{pick(trip.data, 'summary', lang)}</p>
-              </div>
+            <h2 class="text-lg font-semibold">{t(lang, 'nav.travel')}</h2>
+            <a href={href(lang, 'travel')} class="card mt-3 block p-5">
+              <ul class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {stats.map((s) => (
+                  <li>
+                    <p class="text-3xl font-bold text-accent">{s.n}</p>
+                    <p class="text-sm text-muted">{s.label}</p>
+                  </li>
+                ))}
+              </ul>
+              <p class="mt-4 text-muted">{pays.map((p) => p.data.flag).join(' ')}</p>
             </a>
           </div>
         )}

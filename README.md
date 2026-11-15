@@ -10,7 +10,7 @@ Technologies : **Astro** + **TypeScript** + **Tailwind CSS**. Pas de base de don
 | Accueil | `/fr/` · `/en/` | Présentation courte, accès aux sections, dernières ressources, dernier voyage |
 | Présentation | `/fr/about/` | Texte libre, à écrire dans `src/pages/[lang]/about.astro` |
 | Travail | `/fr/work/` | Enseignement (matières → cours / TD / TP) et recherche (MSStudio, liens HAL) |
-| Voyages | `/fr/travel/` | Une fiche par voyage, filtre par pays, galerie photo |
+| Voyages | `/fr/travel/` | Carte du monde interactive, compteurs, pays par continent, séjours, circuits, galeries photo |
 | Folie | `/fr/fun/` | Jeux et surprises (essaie le code Konami !) |
 | Recherche | `/fr/search/` | Recherche dans tout le site (disponible après `npm run build`) |
 
@@ -38,7 +38,9 @@ Tout le contenu est dans `src/content/`. **Un fichier `.md` = une fiche.** Tu pe
 ```bash
 npm run nouveau -- matiere   "Gestion de projet"
 npm run nouveau -- ressource "TD 2 : Cas pratique" --matiere=gestion-de-projet --type=td
-npm run nouveau -- voyage    "Islande 2027"
+npm run nouveau -- pays      "Islande"
+npm run nouveau -- sejour    "Rome"
+npm run nouveau -- circuit   "Tour de Toscane"
 npm run nouveau -- recherche "Nouveau projet"
 ```
 
@@ -53,9 +55,14 @@ Les modèles sont dans `templates/` : tu peux aussi les copier à la main.
 Pas de corrigés sur le site : tu ne publies que ce que tu mets dans `public/files/`. **Tout ce qui est dans `public/` est accessible à n'importe qui sur Internet.**
 
 ### Ajouter un voyage
-1. `npm run nouveau -- voyage "Nom du voyage"` crée la fiche et le dossier `public/voyages/nom-du-voyage/`.
-2. Mets tes photos dans ce dossier (idéalement réduites à ~1600 px de large, en .jpg ou .webp) et décommente les lignes `cover:` et `gallery:` de la fiche.
-3. Écris le récit sous la ligne `---` du bas, en Markdown.
+Les voyages ont trois niveaux :
+- **Pays** (`src/content/pays/`) : un fichier par pays visité. Il est coloré sur la carte et classé par continent. Le champ `iso` est le code numérique du pays (250 France, 840 États-Unis, 484 Mexique, 276 Allemagne, 756 Suisse, `"040"` Autriche, 724 Espagne, 422 Liban, 012 Algérie, 380 Italie, 826 Royaume-Uni, 392 Japon… liste complète : https://fr.wikipedia.org/wiki/ISO_3166-1#Table_de_codes).
+- **Séjour** (`src/content/sejours/`) : quelques jours dans un lieu, sans boucle (« 1 semaine à San Francisco »). Rattaché à un pays par `pays:`. Avec `coords: [longitude, latitude]`, une épingle apparaît sur la carte.
+- **Circuit** (`src/content/circuits/`) : une boucle par plusieurs villes ou lieux, dans un ou plusieurs pays (`pays: [france, suisse]`). Liste les étapes dans `steps:` ; si toutes ont des `coords`, le trajet est tracé sur la carte.
+
+Pour chacun : `npm run nouveau -- pays|sejour|circuit "Nom"` crée la fiche et le dossier `public/voyages/<nom>/` ; mets-y tes photos (réduites à ~1600 px, .jpg ou .webp), décommente `cover:` et `gallery:` (sans oublier `alt:`). Le récit se rédige sous le second `---`. Aucune date n'est obligatoire : `when:` et `duration:` sont du texte libre.
+
+Les coordonnées : sur Google Maps, clic droit sur le lieu, la première ligne donne « latitude, longitude » ; dans la fiche, écris-les à l'envers : `[longitude, latitude]`. Un très petit pays absent de la carte (Liechtenstein) a besoin de `coords:` pour être dessiné comme un point.
 
 ### Traductions
 Les champs qui finissent par `_en` (`title_en`, `summary_en`…) sont les versions anglaises. S'ils sont vides, le français est affiché. Le texte libre (sous le deuxième `---`) est identique dans les deux langues : pour le bilingue, écris les deux versions l'une sous l'autre.
@@ -117,7 +124,7 @@ Pas de HTTPS à configurer, aucune ouverture de ta box : tout est géré par Git
 src/
   config.ts               nom, phrase d'accueil, liens
   content.config.ts       règles des fiches (champs autorisés)
-  content/                TON CONTENU : matieres/ ressources/ recherche/ voyages/
+  content/                TON CONTENU : matieres/ ressources/ recherche/ pays/ sejours/ circuits/
   pages/[lang]/           les pages (fr et en générées automatiquement)
   components/ layouts/    en-tête, pied de page, structure commune
   i18n/ui.ts              textes fixes FR/EN

@@ -1,0 +1,27 @@
+---
+import { asset } from '../i18n/ui';
+interface Props {
+  href: string;
+  title: string;
+  kicker?: string;
+  text?: string;
+  cover?: string;
+  emoji?: string;
+}
+const { href, title, kicker, text, cover, emoji = '🌍' } = Astro.props;
+---
+
+<a href={href} class="card block h-full overflow-hidden">
+  {
+    cover ? (
+      <img src={asset(cover)} alt="" class="h-40 w-full object-cover" loading="lazy" />
+    ) : (
+      <div class="grid h-40 place-items-center bg-accent-soft text-5xl" aria-hidden="true">{emoji}</div>
+    )
+  }
+  <div class="p-5">
+    {kicker && <p class="text-sm text-muted">{kicker}</p>}
+    <h3 class="mt-1 text-lg font-semibold">{title}</h3>
+    {text && <p class="mt-1 text-muted">{text}</p>}
+  </div>
+</a>

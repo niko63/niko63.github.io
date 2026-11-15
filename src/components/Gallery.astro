@@ -1,0 +1,26 @@
+---
+import { asset, pick, t } from '../i18n/ui';
+import type { Lang } from '../config';
+interface Props {
+  lang: Lang;
+  photos: { src: string; alt: string; alt_en?: string }[];
+}
+const { lang, photos } = Astro.props;
+---
+
+{
+  photos.length > 0 && (
+    <section class="mt-10" aria-labelledby="photos">
+      <h2 id="photos" class="text-2xl font-semibold">{t(lang, 'travel.gallery')}</h2>
+      <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+        {photos.map((p) => (
+          <li>
+            <a href={asset(p.src)} class="block overflow-hidden rounded-xl border border-line">
+              <img src={asset(p.src)} alt={pick(p, 'alt', lang)} class="aspect-[4/3] w-full object-cover" loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

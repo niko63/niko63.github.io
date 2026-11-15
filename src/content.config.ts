@@ -64,27 +64,71 @@ const recherche = defineCollection({
   }),
 });
 
-/** Un voyage. */
-const voyages = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/voyages' }),
+const photo = z.object({ src: z.string(), alt: z.string(), alt_en: z.string().optional() });
+// [longitude, latitude] : ex. San Francisco = [-122.42, 37.77] (clic droit sur Google Maps > copier les coordonnées, puis inverser).
+const coords = z.tuple([z.number(), z.number()]);
+
+/** Un pays visité. Les séjours et circuits s'y rattachent. */
+const pays = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pays' }),
   schema: z.object({
     title: z.string(),
     title_en: z.string().optional(),
-    country: z.string(),
-    country_en: z.string().optional(),
+    // Code ISO numérique du pays (sert à le colorer sur la carte) : 250 = France, 840 = États-Unis…
+    iso: z.string(),
     flag: z.string().default('🌍'),
-    cities: z.array(z.string()).default([]),
-    start: z.coerce.date(),
-    end: z.coerce.date().optional(),
-    summary: z.string(),
+    continent: z.enum(['afrique', 'amerique-nord', 'amerique-sud', 'europe', 'asie', 'oceanie']),
+    // Obligatoire seulement pour un très petit pays absent du fond de carte (ex. Liechtenstein) : un point est alors dessiné.
+    coords: coords.optional(),
+    when: z.string().optional(), // texte libre : « Été 2019 », « 2015 et 2022 »…
+    summary: z.string().optional(),
     summary_en: z.string().optional(),
-    // Image de couverture placée dans public/voyages/<nom>/ (ex. « /voyages/islande/cover.jpg »).
     cover: z.string().optional(),
-    gallery: z
-      .array(z.object({ src: z.string(), alt: z.string(), alt_en: z.string().optional() }))
-      .default([]),
+    gallery: z.array(photo).default([]),
+    order: z.number().default(100),
     draft: z.boolean().default(false),
   }),
 });
 
-export const collections = { matieres, ressources, recherche, voyages };
+/** Un séjour dans une ville ou un lieu (sans boucle), ex. « 1 semaine à San Francisco ». */
+const sejours = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/sejours' }),
+  schema: z.object({
+    title: z.string(),
+    title_en: z.string().optional(),
+    pays: reference('pays'),
+    coords: coords.optional(), // pour poser une épingle sur la carte
+    duration: z.string().optional(), // « 1 semaine »
+    duration_en: z.string().optional(),
+    when: z.string().optional(),
+    summary: z.string().optional(),
+    summary_en: z.string().optional(),
+    cover: z.string().optional(),
+    gallery: z.array(photo).default([]),
+    order: z.number().default(100),
+    draft: z.boolean().default(false),
+  }),
+});
+
+/** Un circuit (boucle) passant par plusieurs villes ou lieux de visite, dans un ou plusieurs pays. */
+const circuits = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/circuits' }),
+  schema: z.object({
+    title: z.string(),
+    title_en: z.string().optional(),
+    pays: z.array(reference('pays')).min(1),
+    // Les étapes, dans l'ordre. `coords` est facultatif : s'il est donné pour toutes les étapes, le trajet est tracé sur la carte.
+    steps: z.array(z.object({ name: z.string(), name_en: z.string().optional(), coords: coords.optional() })).default([]),
+    duration: z.string().optional(),
+    duration_en: z.string().optional(),
+    when: z.string().optional(),
+    summary: z.string().optional(),
+    summary_en: z.string().optional(),
+    cover: z.string().optional(),
+    gallery: z.array(photo).default([]),
+    order: z.number().default(100),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { matieres, ressources, recherche, pays, sejours, circuits };

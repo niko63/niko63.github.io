@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Crée une nouvelle fiche à partir d'un modèle.
-//   npm run nouveau -- voyage "Islande 2027"
+//   npm run nouveau -- pays "Islande"
+//   npm run nouveau -- sejour "Rome"
+//   npm run nouveau -- circuit "Tour de Toscane"
 //   npm run nouveau -- matiere "Gestion de projet"
 //   npm run nouveau -- ressource "Cours 2 : BPMN" --matiere=exemple --type=cours
 //   npm run nouveau -- recherche "Mon projet"
@@ -13,14 +15,16 @@ const targets = {
   matiere: 'src/content/matieres',
   ressource: 'src/content/ressources',
   recherche: 'src/content/recherche',
-  voyage: 'src/content/voyages',
+  pays: 'src/content/pays',
+  sejour: 'src/content/sejours',
+  circuit: 'src/content/circuits',
 };
 
 const [kind, title, ...rest] = process.argv.slice(2);
 const flags = Object.fromEntries(rest.filter((a) => a.startsWith('--')).map((a) => a.slice(2).split('=')));
 
 if (!kind || !title || !targets[kind]) {
-  console.log('Usage : npm run nouveau -- <matiere|ressource|recherche|voyage> "Titre" [--matiere=slug --type=cours|td|tp]');
+  console.log('Usage : npm run nouveau -- <matiere|ressource|recherche|pays|sejour|circuit> "Titre" [--matiere=slug --type=cours|td|tp]');
   process.exit(1);
 }
 
@@ -57,6 +61,6 @@ const out = readFileSync(join(root, 'templates', `${kind}.md`), 'utf8')
 
 mkdirSync(dirname(file), { recursive: true });
 writeFileSync(file, out);
-if (kind === 'voyage') mkdirSync(join(root, 'public/voyages', s), { recursive: true });
+if (['pays', 'sejour', 'circuit'].includes(kind)) mkdirSync(join(root, 'public/voyages', s), { recursive: true });
 if (kind === 'ressource') mkdirSync(join(root, 'public/files', flags.matiere), { recursive: true });
 console.log(`Créé : ${file.replace(root + '/', '')}`);

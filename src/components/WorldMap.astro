@@ -1,0 +1,136 @@
+---
+import { countryPaths, project, regions, spherePath } from '../lib/map';
+import { href, t, type UiKey } from '../i18n/ui';
+import type { Lang } from '../config';
+
+interface Props {
+  lang: Lang;
+  /** Pays visités (la page du pays s'ouvre au clic). */
+  countries: { iso: string; slug: string; name: string; coords?: [number, number] }[];
+  /** Épingles des séjours qui ont des coordonnées. */
+  stays?: { slug: string; name: string; coords: [number, number] }[];
+  /** Trajets des circuits dont toutes les étapes ont des coordonnées. */
+  circuits?: { slug: string; name: string; points: [number, number][] }[];
+}
+const { lang, countries, stays = [], circuits = [] } = Astro.props;
+
+const visited = new Map(countries.map((c) => [c.iso, c]));
+const base = countryPaths.filter((c) => !visited.has(c.id));
+const hit = countryPaths.filter((c) => visited.has(c.id));
+const known = new Set(countryPaths.map((c) => c.id));
+const dots = countries.filter((c) => !known.has(c.iso) && c.coords);
+---
+
+<figure class="worldmap" data-worldmap>
+  <div class="mb-3 flex flex-wrap gap-2" role="group" aria-label={t(lang, 'travel.map')}>
+    {
+      regions.map((r, i) => (
+        <button type="button" class="btn" data-view={r.view.join(' ')} aria-pressed={i === 0 ? 'true' : 'false'}>
+          {t(lang, r.key as UiKey)}
+        </button>
+      ))
+    }
+  </div>
+
+  <svg viewBox={regions[0].view.join(' ')} class="map-svg" role="group" aria-label={t(lang, 'travel.map')}>
+    <path d={spherePath} class="map-sea"></path>
+    {base.map((c) => <path d={c.d} class="map-land"></path>)}
+    {
+      hit.map((c) => {
+        const v = visited.get(c.id)!;
+        return (
+          <a href={href(lang, `travel/${v.slug}`)} aria-label={v.name} class="map-visited">
+            <title>{v.name}</title>
+            <path d={c.d}></path>
+          </a>
+        );
+      })
+    }
+    {
+      circuits.map((c) => (
+        <a href={href(lang, `travel/circuit/${c.slug}`)} aria-label={c.name} class="map-route">
+          <title>{c.name}</title>
+          <polyline points={c.points.map((p) => project(p).join(',')).join(' ')}></polyline>
+        </a>
+      ))
+    }
+    {
+      dots.map((c) => {
+        const [x, y] = project(c.coords!);
+        return (
+          <a href={href(lang, `travel/${c.slug}`)} aria-label={c.name} class="map-visited map-dot">
+            <title>{c.name}</title>
+            <circle cx={x} cy={y} r="5" data-r="5"></circle>
+          </a>
+        );
+      })
+    }
+    {
+      stays.map((s) => {
+        const [x, y] = project(s.coords);
+        return (
+          <a href={href(lang, `travel/stay/${s.slug}`)} aria-label={s.name} class="map-pin">
+            <title>{s.name}</title>
+            <circle cx={x} cy={y} r="4" data-r="4"></circle>
+          </a>
+        );
+      })
+    }
+  </svg>
+  <figcaption class="mt-2 text-sm text-muted">{t(lang, 'travel.mapHint')}</figcaption>
+</figure>
+
+<style is:global>
+  .map-svg {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--surface);
+    display: block;
+  }
+  .map-sea { fill: var(--surface); }
+  .map-land { fill: var(--line); stroke: var(--surface); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+  .map-visited path, .map-visited circle { fill: var(--accent); stroke: var(--surface); stroke-width: 0.8; vector-effect: non-scaling-stroke; transition: opacity 0.15s; }
+  .map-visited:hover path, .map-visited:focus path, .map-visited:hover circle, .map-visited:focus circle { opacity: 0.7; }
+  .map-visited:focus-visible { outline: none; }
+  .map-visited:focus-visible path, .map-visited:focus-visible circle { stroke: var(--fg); stroke-width: 2.5; }
+  .map-route polyline { fill: none; stroke: var(--fg); stroke-width: 1.8; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+  .map-pin circle { fill: var(--fg); stroke: var(--surface); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .map-pin:hover circle, .map-pin:focus-visible circle { fill: var(--accent-fg); stroke: var(--fg); stroke-width: 2.5; }
+  .map-pin:focus-visible { outline: none; }
+  .worldmap button[aria-pressed='true'] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-worldmap]');
+  const svg = root?.querySelector('svg');
+  if (root && svg) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cur = svg.getAttribute('viewBox')!.split(' ').map(Number);
+    const baseW = cur[2];
+    const dots = svg.querySelectorAll<SVGCircleElement>('circle[data-r]');
+    const setR = (w: number) => dots.forEach((c) => c.setAttribute('r', String((Number(c.dataset.r) * w) / baseW)));
+    const draw = (v: number[]) => {
+      svg.setAttribute('viewBox', v.map((n) => n.toFixed(1)).join(' '));
+      setR(v[2]);
+    };
+    root.querySelectorAll<HTMLButtonElement>('button[data-view]').forEach((b) => {
+      b.addEventListener('click', () => {
+        root.querySelectorAll('button[data-view]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        const to = b.dataset.view!.split(' ').map(Number);
+        const from = cur;
+        cur = to;
+        if (reduce) return draw(to);
+        const t0 = performance.now();
+        const step = (now: number) => {
+          const k = Math.min(1, (now - t0) / 450);
+          const e = 1 - Math.pow(1 - k, 3);
+          draw(from.map((f, i) => f + (to[i] - f) * e));
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    });
+  }
+</script>

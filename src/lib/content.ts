@@ -15,6 +15,17 @@ export async function getRecherche() {
   return (await getCollection('recherche', published)).sort((a, b) => a.data.order - b.data.order);
 }
 
-export async function getVoyages() {
-  return (await getCollection('voyages', published)).sort((a, b) => b.data.start.getTime() - a.data.start.getTime());
+const byOrder = <T extends { data: { order: number; title: string } }>(a: T, b: T) =>
+  a.data.order - b.data.order || a.data.title.localeCompare(b.data.title);
+
+export async function getPays() {
+  return (await getCollection('pays', published)).sort(byOrder);
+}
+
+export async function getSejours() {
+  return (await getCollection('sejours', published)).sort(byOrder);
+}
+
+export async function getCircuits() {
+  return (await getCollection('circuits', published)).sort(byOrder);
 }

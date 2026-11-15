@@ -1,0 +1,37 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import PageTitle from '../../../../components/PageTitle.astro';
+import Gallery from '../../../../components/Gallery.astro';
+import { LANGS, type Lang } from '../../../../config';
+import { asset, href, pick, t } from '../../../../i18n/ui';
+import { getPays, getSejours } from '../../../../lib/content';
+
+export async function getStaticPaths() {
+  const list = await getSejours();
+  return LANGS.flatMap((lang) => list.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const country = (await getPays()).find((p) => p.id === d.pays.id);
+const hasBody = Boolean(entry.body?.trim());
+---
+
+<Base lang={lang} path={`travel/stay/${entry.id}/`} title={pick(d, 'title', lang)} description={pick(d, 'summary', lang)}>
+  <div class="wrap pt-8">
+    <a href={href(lang, `travel/${d.pays.id}`)} class="text-sm text-muted hover:text-accent">{t(lang, 'travel.backCountry')}</a>
+  </div>
+  <PageTitle title={pick(d, 'title', lang)} emoji="📍" intro={pick(d, 'summary', lang)} />
+  <div class="wrap py-8">
+    {d.cover && <img src={asset(d.cover)} alt="" class="mb-6 max-h-[28rem] w-full rounded-2xl object-cover" />}
+    <p class="flex flex-wrap gap-2 text-sm">
+      {country && <a class="chip" href={href(lang, `travel/${country.id}`)}>{country.data.flag} {pick(country.data, 'title', lang)}</a>}
+      {d.duration && <span class="chip">{pick(d, 'duration', lang)}</span>}
+      {d.when && <span class="chip">{d.when}</span>}
+    </p>
+    {hasBody && <div class="prose prose-lg mt-8 max-w-none"><Content /></div>}
+    <Gallery lang={lang} photos={d.gallery} />
+  </div>
+</Base>

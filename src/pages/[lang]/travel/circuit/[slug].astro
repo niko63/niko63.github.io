@@ -1,0 +1,55 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import PageTitle from '../../../../components/PageTitle.astro';
+import Gallery from '../../../../components/Gallery.astro';
+import { LANGS, type Lang } from '../../../../config';
+import { asset, href, pick, t } from '../../../../i18n/ui';
+import { getCircuits, getPays } from '../../../../lib/content';
+
+export async function getStaticPaths() {
+  const list = await getCircuits();
+  return LANGS.flatMap((lang) => list.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const all = await getPays();
+const countries = d.pays.map((r) => all.find((p) => p.id === r.id)).filter((p) => p !== undefined);
+const hasBody = Boolean(entry.body?.trim());
+---
+
+<Base lang={lang} path={`travel/circuit/${entry.id}/`} title={pick(d, 'title', lang)} description={pick(d, 'summary', lang)}>
+  <div class="wrap pt-8">
+    <a href={href(lang, 'travel')} class="text-sm text-muted hover:text-accent">{t(lang, 'travel.back')}</a>
+  </div>
+  <PageTitle title={pick(d, 'title', lang)} emoji="🧭" intro={pick(d, 'summary', lang)} />
+  <div class="wrap py-8">
+    {d.cover && <img src={asset(d.cover)} alt="" class="mb-6 max-h-[28rem] w-full rounded-2xl object-cover" />}
+    <p class="flex flex-wrap gap-2 text-sm">
+      {countries.map((c) => <a class="chip" href={href(lang, `travel/${c.id}`)}>{c.data.flag} {pick(c.data, 'title', lang)}</a>)}
+      {d.duration && <span class="chip">{pick(d, 'duration', lang)}</span>}
+      {d.when && <span class="chip">{d.when}</span>}
+    </p>
+
+    {
+      d.steps.length > 0 && (
+        <section class="mt-8" aria-labelledby="steps">
+          <h2 id="steps" class="text-2xl font-semibold">{t(lang, 'travel.cities')}</h2>
+          <ol class="mt-4 flex flex-wrap items-center gap-2">
+            {d.steps.map((s, i) => (
+              <li class="flex items-center gap-2">
+                {i > 0 && <span aria-hidden="true" class="text-muted">→</span>}
+                <span class="card-box px-3 py-1.5"><span class="text-muted">{i + 1}.</span> {pick(s, 'name', lang)}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {hasBody && <div class="prose prose-lg mt-8 max-w-none"><Content /></div>}
+    <Gallery lang={lang} photos={d.gallery} />
+  </div>
+</Base>
