@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+import { LANGS, SITE, type Lang } from '../../config';
+import { asset, formatDate, href, pick, t } from '../../i18n/ui';
+import { getMatieres, getRessources, getVoyages } from '../../lib/content';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+
+const matieres = await getMatieres();
+const ressources = await getRessources();
+const voyages = await getVoyages();
+
+const latest = ressources
+  .filter((r) => r.data.updated)
+  .sort((a, b) => b.data.updated!.getTime() - a.data.updated!.getTime())
+  .slice(0, 4);
+const trip = voyages[0];
+
+const cards = [
+  { to: 'about', emoji: '👋', title: t(lang, 'nav.about'), text: t(lang, 'home.card.about') },
+  { to: 'work', emoji: '🎓', title: t(lang, 'nav.work'), text: t(lang, 'home.card.work') },
+  { to: 'travel', emoji: '🧳', title: t(lang, 'nav.travel'), text: t(lang, 'home.card.travel') },
+  { to: 'fun', emoji: '🎲', title: t(lang, 'nav.fun'), text: t(lang, 'home.card.fun') },
+];
+---
+
+<Base lang={lang} path="">
+  <section class="mx-auto max-w-5xl px-4 pt-16 pb-10 sm:pt-24">
+    <p class="chip">{lang === 'fr' ? 'Bienvenue' : 'Welcome'}</p>
+    <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-6xl">
+      {lang === 'fr' ? 'Salut, je suis' : "Hi, I'm"} <span class="text-accent">{SITE.name}</span>.
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg text-muted sm:text-xl">{SITE.tagline[lang]}</p>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-6" aria-label={t(lang, 'home.explore')}>
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {
+        cards.map((c) => (
+          <li>
+            <a href={href(lang, c.to)} class="card block h-full p-6">
+              <p class="text-3xl" aria-hidden="true">{c.emoji}</p>
+              <h2 class="mt-3 text-xl font-semibold">{c.title}</h2>
+              <p class="mt-1 text-muted">{c.text}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    (latest.length > 0 || trip) && (
+      <section class="mx-auto grid max-w-5xl gap-8 px-4 py-10 md:grid-cols-2">
+        {latest.length > 0 && (
+          <div>
+            <h2 class="text-lg font-semibold">{t(lang, 'home.latest')}</h2>
+            <ul class="mt-3 divide-y divide-line rounded-2xl border border-line bg-surface">
+              {latest.map((r) => {
+                const m = matieres.find((x) => x.id === r.data.matiere.id);
+                return (
+                  <li>
+                    <a href={href(lang, `work/teaching/${r.data.matiere.id}`)} class="flex items-start justify-between gap-3 px-4 py-3 hover:bg-accent-soft">
+                      <span>
+                        <span class="font-medium">{pick(r.data, 'title', lang)}</span>
+                        {m && <span class="block text-sm text-muted">{pick(m.data, 'title', lang)}</span>}
+                      </span>
+                      <span class="chip shrink-0">{t(lang, `type.${r.data.type}` as 'type.cours')}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+        {trip && (
+          <div>
+            <h2 class="text-lg font-semibold">{t(lang, 'home.latestTrip')}</h2>
+            <a href={href(lang, `travel/${trip.id}`)} class="card mt-3 block overflow-hidden">
+              {trip.data.cover && <img src={asset(trip.data.cover)} alt="" class="h-40 w-full object-cover" loading="lazy" />}
+              <div class="p-5">
+                <p class="text-sm text-muted">
+                  {trip.data.flag} {pick(trip.data, 'country', lang)} · {formatDate(trip.data.start, lang, { month: 'long', year: 'numeric' })}
+                </p>
+                <h3 class="mt-1 text-lg font-semibold">{pick(trip.data, 'title', lang)}</h3>
+                <p class="mt-1 text-muted">{pick(trip.data, 'summary', lang)}</p>
+              </div>
+            </a>
+          </div>
+        )}
+      </section>
+    )
+  }
+</Base>

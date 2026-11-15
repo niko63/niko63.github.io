@@ -1,0 +1,55 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import PageTitle from '../../../components/PageTitle.astro';
+import { LANGS, type Lang } from '../../../config';
+import { asset, formatDate, href, pick, t } from '../../../i18n/ui';
+import { getVoyages } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const list = await getVoyages();
+  return LANGS.flatMap((lang) => list.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const dates = d.end
+  ? `${formatDate(d.start, lang, { day: 'numeric', month: 'long' })} – ${formatDate(d.end, lang)}`
+  : formatDate(d.start, lang, { month: 'long', year: 'numeric' });
+---
+
+<Base lang={lang} path={`travel/${entry.id}/`} title={pick(d, 'title', lang)} description={pick(d, 'summary', lang)}>
+  <div class="mx-auto max-w-5xl px-4 pt-8">
+    <a href={href(lang, 'travel')} class="text-sm text-muted hover:text-accent">{t(lang, 'travel.back')}</a>
+  </div>
+  <PageTitle title={pick(d, 'title', lang)} emoji={d.flag} intro={pick(d, 'summary', lang)} />
+
+  <div class="mx-auto max-w-5xl px-4">
+    {d.cover && <img src={asset(d.cover)} alt="" class="mb-6 max-h-[28rem] w-full rounded-2xl object-cover" />}
+    <p class="flex flex-wrap gap-2 text-sm">
+      <span class="chip">{pick(d, 'country', lang)}</span>
+      <span class="chip">{dates}</span>
+    </p>
+    {d.cities.length > 0 && <p class="mt-3 text-muted"><strong class="text-fg">{t(lang, 'travel.cities')} :</strong> {d.cities.join(' → ')}</p>}
+
+    <div class="prose mt-8 max-w-2xl"><Content /></div>
+
+    {
+      d.gallery.length > 0 && (
+        <section class="mt-10" aria-labelledby="photos">
+          <h2 id="photos" class="text-2xl font-semibold">{t(lang, 'travel.gallery')}</h2>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {d.gallery.map((p) => (
+              <li>
+                <a href={asset(p.src)} class="block overflow-hidden rounded-xl border border-line">
+                  <img src={asset(p.src)} alt={pick(p, 'alt', lang)} class="aspect-[4/3] w-full object-cover" loading="lazy" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</Base>

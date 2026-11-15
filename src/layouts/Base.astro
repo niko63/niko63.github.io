@@ -1,0 +1,64 @@
+---
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, type Lang } from '../config';
+import { asset, t } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Chemin de la page sans la langue (ex. « work/ »), pour le sélecteur de langue et les liens alternatifs. */
+  path?: string;
+  /** Mettre à false pour exclure la page de la recherche. */
+  indexed?: boolean;
+}
+
+const { lang, title, description, path = '', indexed = true } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.name}` : SITE.name;
+const desc = description ?? SITE.tagline[lang];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const alt = (l: Lang) => `${base}/${l}/${path}`;
+const canonical = new URL(alt(lang), Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={new URL(alt('fr'), Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(alt('en'), Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <link rel="sitemap" href={asset('sitemap-index.xml')} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Applique le thème choisi avant l'affichage (évite le « flash » blanc). -->
+    <script is:inline>
+      try {
+        var m = localStorage.getItem('theme');
+        if (m === 'light' || m === 'dark') document.documentElement.setAttribute('data-theme', m);
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col" data-pagefind-body={indexed ? '' : undefined}>
+    <a
+      href="#contenu"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-accent focus:text-accent-fg focus:px-4 focus:py-2 focus:rounded-lg"
+    >
+      {t(lang, 'skip')}
+    </a>
+    <Header lang={lang} path={path} />
+    <main id="contenu" class="flex-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

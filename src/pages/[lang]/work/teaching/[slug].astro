@@ -1,0 +1,58 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import PageTitle from '../../../../components/PageTitle.astro';
+import { LANGS, type Lang } from '../../../../config';
+import { asset, formatDate, href, pick, t } from '../../../../i18n/ui';
+import { getMatieres, getRessources } from '../../../../lib/content';
+
+export async function getStaticPaths() {
+  const matieres = await getMatieres();
+  return LANGS.flatMap((lang) => matieres.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const all = await getRessources();
+const items = all.filter((r) => r.data.matiere.id === entry.id);
+const sections = (['cours', 'td', 'tp'] as const).map((type) => ({ type, list: items.filter((r) => r.data.type === type) })).filter((s) => s.list.length > 0);
+---
+
+<Base lang={lang} path={`work/teaching/${entry.id}/`} title={pick(entry.data, 'title', lang)} description={pick(entry.data, 'description', lang) || undefined}>
+  <div class="mx-auto max-w-5xl px-4 pt-8">
+    <a href={href(lang, 'work')} class="text-sm text-muted hover:text-accent">{t(lang, 'work.back')}</a>
+  </div>
+  <PageTitle title={pick(entry.data, 'title', lang)} emoji={entry.data.emoji} intro={pick(entry.data, 'description', lang) || undefined} />
+
+  <div class="mx-auto max-w-5xl px-4">
+    <div class="prose max-w-2xl"><Content /></div>
+
+    {
+      sections.length === 0 && <p class="mt-8 text-muted">{t(lang, 'work.empty')}</p>
+    }
+    {
+      sections.map((s) => (
+        <section class="mt-10" aria-labelledby={`sec-${s.type}`}>
+          <h2 id={`sec-${s.type}`} class="text-2xl font-semibold">{t(lang, `type.${s.type}` as 'type.cours')}</h2>
+          <ul class="mt-4 space-y-3">
+            {s.list.map((r) => (
+              <li class="card p-5">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <h3 class="text-lg font-semibold">{pick(r.data, 'title', lang)}</h3>
+                    {pick(r.data, 'description', lang) && <p class="mt-1 text-muted">{pick(r.data, 'description', lang)}</p>}
+                    {r.data.updated && <p class="mt-1 text-xs text-muted">{t(lang, 'res.updated')} {formatDate(r.data.updated, lang)}</p>}
+                  </div>
+                  <p class="flex flex-wrap gap-2">
+                    {r.data.file && <a class="btn btn-primary" href={asset(r.data.file)} download>{t(lang, 'res.pdf')}</a>}
+                    {r.data.repo && <a class="btn" href={r.data.repo} rel="noopener">{t(lang, 'res.repo')}</a>}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Base>

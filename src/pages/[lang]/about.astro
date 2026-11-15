@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import { LANGS, SITE, type Lang } from '../../config';
+import { t } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+---
+
+<Base lang={lang} path="about/" title={t(lang, 'about.title')}>
+  <PageTitle title={t(lang, 'about.title')} emoji="👋" />
+  <div class="mx-auto max-w-5xl px-4">
+    {
+      lang === 'fr' ? (
+        <article class="prose max-w-2xl">
+          <p class="lead">
+            Je m'appelle {SITE.name}. Voici ma page de présentation : remplace ce texte par le tien.
+          </p>
+          <h2>Ce que je fais</h2>
+          <p>Quelques lignes sur ton métier, tes thèmes de travail, ce qui te passionne.</p>
+          <h2>Ce qui m'anime</h2>
+          <p>Tes centres d'intérêt, ta façon de travailler, ce que tu aimerais que les visiteurs retiennent.</p>
+        </article>
+      ) : (
+        <article class="prose max-w-2xl">
+          <p class="lead">My name is {SITE.name}. This is my about page: replace this text with your own.</p>
+          <h2>What I do</h2>
+          <p>A few lines about your job, your topics, what you are passionate about.</p>
+          <h2>What drives me</h2>
+          <p>Your interests, how you work, what you would like visitors to remember.</p>
+        </article>
+      )
+    }
+  </div>
+</Base>

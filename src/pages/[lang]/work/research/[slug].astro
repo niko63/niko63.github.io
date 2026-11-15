@@ -1,0 +1,38 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import PageTitle from '../../../../components/PageTitle.astro';
+import { LANGS, type Lang } from '../../../../config';
+import { href, pick, t } from '../../../../i18n/ui';
+import { getRecherche } from '../../../../lib/content';
+
+export async function getStaticPaths() {
+  const list = await getRecherche();
+  return LANGS.flatMap((lang) => list.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Base lang={lang} path={`work/research/${entry.id}/`} title={pick(entry.data, 'title', lang)} description={pick(entry.data, 'summary', lang)}>
+  <div class="mx-auto max-w-5xl px-4 pt-8">
+    <a href={href(lang, 'work')} class="text-sm text-muted hover:text-accent">{t(lang, 'work.back')}</a>
+  </div>
+  <PageTitle title={pick(entry.data, 'title', lang)} intro={pick(entry.data, 'summary', lang)} />
+  <div class="mx-auto max-w-5xl px-4">
+    <p class="flex flex-wrap gap-2">{entry.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p>
+    {
+      entry.data.links.length > 0 && (
+        <p class="mt-5 flex flex-wrap gap-3">
+          {entry.data.links.map((l) => (
+            <a class="btn btn-primary" href={l.url} rel="noopener">
+              {pick(l, 'label', lang)} ↗
+            </a>
+          ))}
+        </p>
+      )
+    }
+    <div class="prose mt-8 max-w-2xl"><Content /></div>
+  </div>
+</Base>

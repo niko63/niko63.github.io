@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n/ui';
+---
+
+<Base lang="fr" title="Page introuvable" indexed={false}>
+  <section class="mx-auto max-w-3xl px-4 py-24 text-center">
+    <p class="text-6xl" aria-hidden="true">🧭</p>
+    <h1 class="mt-4 text-3xl font-bold">Page introuvable · Page not found</h1>
+    <p class="mt-3 text-muted">Cette page n'existe pas (ou plus). / This page doesn't exist (anymore).</p>
+    <p class="mt-8 flex justify-center gap-3">
+      <a class="btn btn-primary" href={href('fr')}>Accueil</a>
+      <a class="btn" href={href('en')}>Home</a>
+    </p>
+  </section>
+</Base>

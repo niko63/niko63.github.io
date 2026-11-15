@@ -1,0 +1,78 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageTitle from '../../../components/PageTitle.astro';
+import { LANGS, type Lang } from '../../../config';
+import { asset, formatDate, href, pick, t } from '../../../i18n/ui';
+import { getVoyages } from '../../../lib/content';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const voyages = await getVoyages();
+const countries = [...new Set(voyages.map((v) => pick(v.data, 'country', lang)))].sort((a, b) => a.localeCompare(b, lang));
+---
+
+<Base lang={lang} path="travel/" title={t(lang, 'travel.title')}>
+  <PageTitle title={t(lang, 'travel.title')} emoji="🧳" intro={t(lang, 'travel.intro')} />
+
+  <div class="mx-auto max-w-5xl px-4">
+    {
+      countries.length > 1 && (
+        <div class="mb-6 flex flex-wrap gap-2" role="group" aria-label={lang === 'fr' ? 'Filtrer par pays' : 'Filter by country'} id="filters">
+          <button type="button" class="btn btn-primary" data-country="" aria-pressed="true">{t(lang, 'travel.all')}</button>
+          {countries.map((c) => (
+            <button type="button" class="btn" data-country={c} aria-pressed="false">{c}</button>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      voyages.length === 0 ? (
+        <p class="text-muted">{t(lang, 'work.empty')}</p>
+      ) : (
+        <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="trips">
+          {voyages.map((v) => (
+            <li data-country={pick(v.data, 'country', lang)}>
+              <a href={href(lang, `travel/${v.id}`)} class="card block h-full overflow-hidden">
+                {v.data.cover ? (
+                  <img src={asset(v.data.cover)} alt="" class="h-44 w-full object-cover" loading="lazy" />
+                ) : (
+                  <div class="grid h-44 place-items-center bg-accent-soft text-6xl" aria-hidden="true">{v.data.flag}</div>
+                )}
+                <div class="p-5">
+                  <p class="text-sm text-muted">
+                    {v.data.flag} {pick(v.data, 'country', lang)} · {formatDate(v.data.start, lang, { month: 'long', year: 'numeric' })}
+                  </p>
+                  <h2 class="mt-1 text-lg font-semibold">{pick(v.data, 'title', lang)}</h2>
+                  <p class="mt-1 text-muted">{pick(v.data, 'summary', lang)}</p>
+                  {v.data.cities.length > 0 && <p class="mt-3 text-sm text-muted">📍 {v.data.cities.join(' · ')}</p>}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</Base>
+
+<script>
+  // Filtre par pays (sans rechargement de page)
+  const filters = document.getElementById('filters');
+  const items = document.querySelectorAll<HTMLElement>('#trips > li');
+  filters?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-country]');
+    if (!btn) return;
+    const wanted = btn.dataset.country ?? '';
+    filters.querySelectorAll<HTMLButtonElement>('button').forEach((b) => {
+      const on = b === btn;
+      b.setAttribute('aria-pressed', String(on));
+      b.classList.toggle('btn-primary', on);
+    });
+    items.forEach((li) => {
+      li.hidden = wanted !== '' && li.dataset.country !== wanted;
+    });
+  });
+</script>

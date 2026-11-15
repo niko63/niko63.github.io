@@ -1,0 +1,22 @@
+---
+// Page racine : redirige vers /fr/ ou /en/ selon la langue du navigateur.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirection…</title>
+    <meta name="robots" content="noindex" />
+    <noscript><meta http-equiv="refresh" content={`0; url=${base}/fr/`} /></noscript>
+    <script is:inline define:vars={{ base }}>
+      var l = (navigator.language || 'fr').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en';
+      location.replace(base + '/' + l + '/');
+    </script>
+  </head>
+  <body>
+    <p><a href={`${base}/fr/`}>Français</a> · <a href={`${base}/en/`}>English</a></p>
+  </body>
+</html>

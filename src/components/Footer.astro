@@ -1,0 +1,22 @@
+---
+import { SITE, type Lang } from '../config';
+import { t } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-line">
+  <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+    <p>© {year} {SITE.name} · {t(lang, 'footer.rights')}</p>
+    <ul class="flex flex-wrap items-center gap-4">
+      {SITE.links.github && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={SITE.links.github} rel="noopener">GitHub</a></li>}
+      {SITE.links.hal && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={SITE.links.hal} rel="noopener">HAL</a></li>}
+      {SITE.links.email && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={`mailto:${SITE.links.email}`}>{SITE.links.email}</a></li>}
+      <li>{t(lang, 'footer.built')}</li>
+    </ul>
+  </div>
+</footer>
