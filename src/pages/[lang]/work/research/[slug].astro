@@ -16,11 +16,11 @@ const { Content } = await render(entry);
 ---
 
 <Base lang={lang} path={`work/research/${entry.id}/`} title={pick(entry.data, 'title', lang)} description={pick(entry.data, 'summary', lang)}>
-  <div class="mx-auto max-w-5xl px-4 pt-8">
+  <div class="wrap pt-8">
     <a href={href(lang, 'work')} class="text-sm text-muted hover:text-accent">{t(lang, 'work.back')}</a>
   </div>
-  <PageTitle title={pick(entry.data, 'title', lang)} intro={pick(entry.data, 'summary', lang)} />
-  <div class="mx-auto max-w-5xl px-4">
+  <PageTitle color="c2" title={pick(entry.data, 'title', lang)} intro={pick(entry.data, 'summary', lang)} />
+  <div class="wrap">
     <p class="flex flex-wrap gap-2">{entry.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p>
     {
       entry.data.links.length > 0 && (
@@ -33,6 +33,6 @@ const { Content } = await render(entry);
         </p>
       )
     }
-    <div class="prose mt-8 max-w-2xl"><Content /></div>
+    <div class="prose prose-lg mt-10 max-w-[68ch]"><Content /></div>
   </div>
 </Base>

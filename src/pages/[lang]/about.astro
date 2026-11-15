@@ -11,11 +11,17 @@ const lang = Astro.params.lang as Lang;
 ---
 
 <Base lang={lang} path="about/" title={t(lang, 'about.title')}>
-  <PageTitle title={t(lang, 'about.title')} emoji="👋" />
-  <div class="mx-auto max-w-5xl px-4">
+  <PageTitle title={t(lang, 'about.title')} color="c1" />
+  <div class="wrap grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-20">
+    <!-- Emplacement de ta photo ou de ton illustration : remplace ce bloc par <img src="/portrait.jpg" alt="…"> -->
+    <div class="lg:sticky lg:top-28 lg:self-start" aria-hidden="true">
+      <div class="grid aspect-[4/5] place-items-center border-2 border-fg" style="background: color-mix(in srgb, var(--c1) 18%, var(--bg))">
+        <span class="display text-[9rem] font-semibold leading-none" style="color: var(--c1)">{SITE.name.charAt(0)}</span>
+      </div>
+    </div>
     {
       lang === 'fr' ? (
-        <article class="prose max-w-2xl">
+        <article class="prose prose-lg max-w-[68ch]">
           <p class="lead">
             Je m'appelle {SITE.name}. Voici ma page de présentation : remplace ce texte par le tien.
           </p>
@@ -25,7 +31,7 @@ const lang = Astro.params.lang as Lang;
           <p>Tes centres d'intérêt, ta façon de travailler, ce que tu aimerais que les visiteurs retiennent.</p>
         </article>
       ) : (
-        <article class="prose max-w-2xl">
+        <article class="prose prose-lg max-w-[68ch]">
           <p class="lead">My name is {SITE.name}. This is my about page: replace this text with your own.</p>
           <h2>What I do</h2>
           <p>A few lines about your job, your topics, what you are passionate about.</p>

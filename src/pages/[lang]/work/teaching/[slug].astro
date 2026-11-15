@@ -19,27 +19,27 @@ const sections = (['cours', 'td', 'tp'] as const).map((type) => ({ type, list: i
 ---
 
 <Base lang={lang} path={`work/teaching/${entry.id}/`} title={pick(entry.data, 'title', lang)} description={pick(entry.data, 'description', lang) || undefined}>
-  <div class="mx-auto max-w-5xl px-4 pt-8">
+  <div class="wrap pt-8">
     <a href={href(lang, 'work')} class="text-sm text-muted hover:text-accent">{t(lang, 'work.back')}</a>
   </div>
-  <PageTitle title={pick(entry.data, 'title', lang)} emoji={entry.data.emoji} intro={pick(entry.data, 'description', lang) || undefined} />
+  <PageTitle color="c2" title={pick(entry.data, 'title', lang)} emoji={entry.data.emoji} intro={pick(entry.data, 'description', lang) || undefined} />
 
-  <div class="mx-auto max-w-5xl px-4">
-    <div class="prose max-w-2xl"><Content /></div>
+  <div class="wrap">
+    <div class="prose prose-lg mt-10 max-w-[68ch]"><Content /></div>
 
     {
       sections.length === 0 && <p class="mt-8 text-muted">{t(lang, 'work.empty')}</p>
     }
     {
       sections.map((s) => (
-        <section class="mt-10" aria-labelledby={`sec-${s.type}`}>
-          <h2 id={`sec-${s.type}`} class="text-2xl font-semibold">{t(lang, `type.${s.type}` as 'type.cours')}</h2>
-          <ul class="mt-4 space-y-3">
+        <section class="mt-14" aria-labelledby={`sec-${s.type}`}>
+          <h2 id={`sec-${s.type}`} class="display text-4xl font-semibold">{t(lang, `type.${s.type}` as 'type.cours')}</h2>
+          <ul class="mt-4 border-t-2 border-fg">
             {s.list.map((r) => (
-              <li class="card p-5">
+              <li class="border-b border-line py-6">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <h3 class="text-lg font-semibold">{pick(r.data, 'title', lang)}</h3>
+                    <h3 class="display text-2xl font-semibold">{pick(r.data, 'title', lang)}</h3>
                     {pick(r.data, 'description', lang) && <p class="mt-1 text-muted">{pick(r.data, 'description', lang)}</p>}
                     {r.data.updated && <p class="mt-1 text-xs text-muted">{t(lang, 'res.updated')} {formatDate(r.data.updated, lang)}</p>}
                   </div>
