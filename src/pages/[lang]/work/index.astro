@@ -18,8 +18,8 @@ const count = (id: string) => ressources.filter((r) => r.data.matiere.id === id)
 <Base lang={lang} path="work/" title={t(lang, 'work.title')}>
   <PageTitle title={t(lang, 'work.title')} color="c2" intro={lang === 'fr' ? 'Enseignement et recherche.' : 'Teaching and research.'} />
 
-  <section class="wrap py-14 sm:py-20" aria-labelledby="teaching">
-    <h2 id="teaching" class="display text-4xl font-semibold sm:text-5xl">{t(lang, 'work.teaching')}</h2>
+  <section class="wrap py-6" aria-labelledby="teaching">
+    <h2 id="teaching" class="text-2xl font-semibold">{t(lang, 'work.teaching')}</h2>
     <p class="mt-1 text-muted">{t(lang, 'work.teachingIntro')}</p>
     {
       matieres.length === 0 ? (
@@ -28,10 +28,10 @@ const count = (id: string) => ressources.filter((r) => r.data.matiere.id === id)
         <ul class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {matieres.map((m) => (
             <li>
-              <a href={href(lang, `work/teaching/${m.id}`)} class="tile h-full" style="--c: var(--c2)">
-                <p class="text-5xl" aria-hidden="true">{m.data.emoji}</p>
+              <a href={href(lang, `work/teaching/${m.id}`)} class="card block h-full p-6">
+                <p class="text-3xl" aria-hidden="true">{m.data.emoji}</p>
                 <div>
-                <h3 class="display text-2xl font-semibold">{pick(m.data, 'title', lang)}</h3>
+                <h3 class="mt-2 text-xl font-semibold">{pick(m.data, 'title', lang)}</h3>
                 {pick(m.data, 'description', lang) && <p class="mt-1 text-muted">{pick(m.data, 'description', lang)}</p>}
                 <p class="mt-3 flex flex-wrap gap-2">
                   {m.data.level && <span class="chip">{m.data.level}</span>}
@@ -46,8 +46,8 @@ const count = (id: string) => ressources.filter((r) => r.data.matiere.id === id)
     }
   </section>
 
-  <section class="band-alt" aria-labelledby="research"><div class="wrap py-14 sm:py-20">
-    <h2 id="research" class="display text-4xl font-semibold sm:text-5xl">{t(lang, 'work.research')}</h2>
+  <section class="wrap py-10" aria-labelledby="research"><div>
+    <h2 id="research" class="text-2xl font-semibold">{t(lang, 'work.research')}</h2>
     <p class="mt-1 text-muted">{t(lang, 'work.researchIntro')}</p>
     {
       recherche.length === 0 ? (
@@ -56,8 +56,8 @@ const count = (id: string) => ressources.filter((r) => r.data.matiere.id === id)
         <ul class="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {recherche.map((p) => (
             <li>
-              <a href={href(lang, `work/research/${p.id}`)} class="card block h-full">
-                <h3 class="display text-2xl font-semibold">{pick(p.data, 'title', lang)}</h3>
+              <a href={href(lang, `work/research/${p.id}`)} class="card block h-full p-6">
+                <h3 class="text-xl font-semibold">{pick(p.data, 'title', lang)}</h3>
                 <p class="mt-1 text-muted">{pick(p.data, 'summary', lang)}</p>
                 <p class="mt-3 flex flex-wrap gap-2">
                   {p.data.tags.map((tag) => <span class="chip">{tag}</span>)}

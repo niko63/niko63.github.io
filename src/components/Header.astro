@@ -18,14 +18,18 @@ const items: { key: UiKey; to: string }[] = [
 const current = path.replace(/\/$/, '').split('/')[0];
 ---
 
-<header class="sticky top-0 z-40 border-b-2 border-fg bg-bg">
+<header class="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur">
   <div class="wrap flex items-center justify-between gap-4 py-3.5">
-    <a href={href(lang)} class="font-display flex items-baseline gap-1 text-2xl font-semibold">
-      <span>{SITE.name}</span><span class="text-accent" aria-hidden="true">.</span>
+    <a href={href(lang)} class="flex items-center gap-2 text-lg font-bold tracking-tight">
+      <span
+        class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-base text-accent-fg"
+        aria-hidden="true">{SITE.name.charAt(0)}</span
+      >
+      <span>{SITE.name}</span>
     </a>
 
     <nav aria-label="Navigation principale" class="hidden md:block">
-      <ul class="flex items-center gap-2 lg:gap-4">
+      <ul class="flex items-center gap-1">
         {
           items.map((i) => (
             <li>
@@ -33,8 +37,8 @@ const current = path.replace(/\/$/, '').split('/')[0];
                 href={href(lang, i.to)}
                 aria-current={current === i.to ? 'page' : undefined}
                 class:list={[
-                  'px-3 py-2 text-base font-semibold underline-offset-8 decoration-2 hover:text-accent hover:underline',
-                  current === i.to ? 'text-accent underline' : 'text-fg',
+                  'rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent-soft hover:text-accent',
+                  current === i.to ? 'bg-accent-soft text-accent' : 'text-muted',
                 ]}
               >
                 {t(lang, i.key)}
@@ -89,7 +93,7 @@ const current = path.replace(/\/$/, '').split('/')[0];
             <a
               href={href(lang, i.to)}
               aria-current={current === i.to ? 'page' : undefined}
-              class="font-display block px-1 py-3 text-2xl font-semibold hover:text-accent"
+              class="block rounded-lg px-3 py-3 font-medium hover:bg-accent-soft"
             >
               {t(lang, i.key)}
             </a>

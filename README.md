@@ -67,8 +67,7 @@ Ajoute `draft: true` dans l'en-tête de la fiche : elle n'apparaît plus sur le 
 ## Personnaliser
 
 - **Nom, phrase d'accueil, liens GitHub/HAL/e-mail** : `src/config.ts`
-- **Couleurs** : `src/styles/global.css` (variables en haut du fichier, une série pour le clair, une pour le sombre) : `--accent` pour la couleur principale, `--c1` à `--c4` pour les couleurs des quatre sections (présentation, travail, voyages, folie)
-- **Mots du bandeau défilant de l'accueil** : liste `words` dans `src/pages/[lang]/index.astro`
+- **Couleurs** : `src/styles/global.css` (variables `--accent`, `--bg`… en haut du fichier, une série pour le clair, une pour le sombre)
 - **Portrait de la page Présentation** : remplace le bloc marqué par un commentaire dans `src/pages/[lang]/about.astro`
 - **Logo / icône** : remplace `public/favicon.svg` (le « N » actuel est provisoire) et le carré d'initiale dans `src/components/Header.astro`
 - **Page Folie** : listes d'excuses et de résultats du dé en haut de `src/pages/[lang]/fun.astro`

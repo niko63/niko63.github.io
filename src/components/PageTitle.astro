@@ -3,26 +3,15 @@ interface Props {
   title: string;
   intro?: string;
   emoji?: string;
-  /** Variable de couleur de la section : c1 (présentation), c2 (travail), c3 (voyages), c4 (folie). */
+  /** Réservé (couleur de section) : sans effet dans ce thème. */
   color?: 'c1' | 'c2' | 'c3' | 'c4';
 }
-const { title, intro, emoji, color = 'c1' } = Astro.props;
+const { title, intro, emoji } = Astro.props;
 ---
 
-<header class="band-hero" style={`--c: var(--${color})`}>
-  <div class="wrap py-14 sm:py-20">
-    <h1 class="display text-5xl font-semibold leading-[1.02] sm:text-7xl lg:text-8xl">
-      {emoji && <span aria-hidden="true" class="mr-3 inline-block text-[0.8em]">{emoji}</span>}{title}<span style="color: var(--c)" aria-hidden="true">.</span>
-    </h1>
-    {intro && <p class="mt-6 max-w-3xl text-xl text-muted sm:text-2xl">{intro}</p>}
-  </div>
+<header class="wrap pb-6 pt-12">
+  <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
+    {emoji && <span aria-hidden="true" class="mr-2">{emoji}</span>}{title}
+  </h1>
+  {intro && <p class="mt-3 max-w-2xl text-lg text-muted">{intro}</p>}
 </header>
-
-<style>
-  .band-hero {
-    background:
-      radial-gradient(60rem 24rem at 100% 0%, color-mix(in srgb, var(--c) 22%, transparent), transparent 70%),
-      var(--bg);
-    border-bottom: 1px solid var(--line);
-  }
-</style>

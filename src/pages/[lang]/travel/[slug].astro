@@ -25,8 +25,8 @@ const dates = d.end
   </div>
   <PageTitle color="c3" title={pick(d, 'title', lang)} emoji={d.flag} intro={pick(d, 'summary', lang)} />
 
-  {d.cover && <img src={asset(d.cover)} alt="" class="max-h-[70vh] w-full object-cover" />}
   <div class="wrap py-10">
+    {d.cover && <img src={asset(d.cover)} alt="" class="mb-6 max-h-[28rem] w-full rounded-2xl object-cover" />}
     <p class="flex flex-wrap gap-2 text-sm">
       <span class="chip">{pick(d, 'country', lang)}</span>
       <span class="chip">{dates}</span>
@@ -38,11 +38,11 @@ const dates = d.end
     {
       d.gallery.length > 0 && (
         <section class="mt-10" aria-labelledby="photos">
-          <h2 id="photos" class="display text-4xl font-semibold">{t(lang, 'travel.gallery')}</h2>
+          <h2 id="photos" class="text-2xl font-semibold">{t(lang, 'travel.gallery')}</h2>
           <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {d.gallery.map((p) => (
               <li>
-                <a href={asset(p.src)} class="block overflow-hidden">
+                <a href={asset(p.src)} class="block overflow-hidden rounded-xl border border-line">
                   <img src={asset(p.src)} alt={pick(p, 'alt', lang)} class="aspect-[4/3] w-full object-cover" loading="lazy" />
                 </a>
               </li>

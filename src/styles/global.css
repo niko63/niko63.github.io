@@ -65,7 +65,7 @@
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-soft: var(--accent-soft);
-  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-display: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -119,7 +119,7 @@ body {
 }
 
 /* ------------------------------------------------------------------
-   Mise en page : pleine largeur, typographie éditoriale
+   Mise en page : pleine largeur (le contenu s'étend avec l'écran)
 ------------------------------------------------------------------- */
 .wrap {
   width: 100%;
@@ -127,140 +127,62 @@ body {
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 5rem);
 }
-.font-display {
-  font-family: var(--font-display);
-  font-variation-settings: 'opsz' 144, 'SOFT' 50;
-  letter-spacing: -0.02em;
+h1,
+h2,
+.display {
+  letter-spacing: -0.025em;
 }
-h1, h2, .display {
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
-}
-.prose :where(h1, h2, h3, h4) {
-  font-family: var(--font-display);
-}
-.eyebrow {
-  font-size: 0.8rem;
+.display {
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
 }
 
-/* Bandes de section en pleine largeur */
-.band {
-  border-top: 1px solid var(--line);
-}
-.band-alt {
-  background: var(--surface);
-  border-block: 1px solid var(--line);
-}
-
-/* Cartes : plates, éditoriales (pas de « bulles » d'application) */
+/* Petits utilitaires réutilisables */
 .card {
-  background: transparent;
-  border-top: 2px solid var(--fg);
-  padding-top: 1rem;
-  border-radius: 0;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 a.card:hover {
-  border-top-color: var(--accent);
-  background: var(--accent-soft);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px -12px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 .card-box {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 0.25rem;
+  border-radius: 1rem;
 }
-
-/* Grandes tuiles colorées de l'accueil */
-.tile {
-  --c: var(--accent);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 17rem;
-  padding: 1.75rem;
-  background: color-mix(in srgb, var(--c) 13%, var(--bg));
-  border: 1px solid color-mix(in srgb, var(--c) 35%, var(--bg));
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-.tile:hover {
-  background: color-mix(in srgb, var(--c) 24%, var(--bg));
-  transform: translateY(-4px);
-}
-.tile .num {
-  font-family: var(--font-display);
-  font-size: 4.5rem;
-  line-height: 1;
-  font-weight: 600;
-  color: var(--c);
-}
-.tile .arrow {
-  transition: transform 0.25s ease;
-}
-.tile:hover .arrow {
-  transform: translateX(6px);
-}
-
-/* Bandeau défilant */
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-  border-block: 2px solid var(--fg);
-  background: var(--fg);
-  color: var(--bg);
-}
-.marquee-track {
-  display: inline-flex;
-  gap: 3rem;
-  padding: 0.9rem 0;
-  animation: marquee 38s linear infinite;
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  font-weight: 500;
-}
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .tile,
-  .tile .arrow {
+  .card {
     transition: none;
   }
-  .tile:hover {
+  a.card:hover {
     transform: none;
-  }
-  .tile:hover .arrow {
-    transform: none;
-  }
-  .marquee-track {
-    animation: none;
   }
 }
 
-.btn {
+.btn,
+.icon-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.55rem 1rem;
-  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.6rem;
   font-weight: 600;
   font-size: 0.9rem;
-  border: 1.5px solid var(--fg);
-  background: transparent;
+  border: 1px solid var(--line);
+  background: var(--surface);
   color: var(--fg);
-  transition: background 0.15s, color 0.15s;
 }
-.btn:hover {
-  background: var(--fg);
-  color: var(--bg);
+.icon-btn {
+  padding: 0.5rem 0.65rem;
+}
+.btn:hover,
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 .btn-primary {
   background: var(--accent);
@@ -268,31 +190,15 @@ a.card:hover {
   border-color: var(--accent);
 }
 .btn-primary:hover {
-  background: var(--fg);
-  border-color: var(--fg);
-  color: var(--bg);
-}
-.icon-btn {
-  display: inline-grid;
-  place-items: center;
-  min-width: 2.4rem;
-  height: 2.4rem;
-  padding: 0 0.5rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--fg);
-}
-.icon-btn:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-fg);
+  filter: brightness(1.08);
 }
 
 .chip {
   display: inline-block;
-  padding: 0.15rem 0.65rem;
+  padding: 0.15rem 0.6rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--accent-soft);
   color: var(--accent);
   font-size: 0.78rem;
   font-weight: 600;

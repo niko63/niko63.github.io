@@ -19,58 +19,32 @@ const latest = ressources
   .slice(0, 5);
 const trip = voyages[0];
 
-const tiles = [
-  { to: 'about', n: '01', c: 'c1', title: t(lang, 'nav.about'), text: t(lang, 'home.card.about') },
-  { to: 'work', n: '02', c: 'c2', title: t(lang, 'nav.work'), text: t(lang, 'home.card.work') },
-  { to: 'travel', n: '03', c: 'c3', title: t(lang, 'nav.travel'), text: t(lang, 'home.card.travel') },
-  { to: 'fun', n: '04', c: 'c4', title: t(lang, 'nav.fun'), text: t(lang, 'home.card.fun') },
+const cards = [
+  { to: 'about', emoji: '👋', title: t(lang, 'nav.about'), text: t(lang, 'home.card.about') },
+  { to: 'work', emoji: '🎓', title: t(lang, 'nav.work'), text: t(lang, 'home.card.work') },
+  { to: 'travel', emoji: '🧳', title: t(lang, 'nav.travel'), text: t(lang, 'home.card.travel') },
+  { to: 'fun', emoji: '🎲', title: t(lang, 'nav.fun'), text: t(lang, 'home.card.fun') },
 ];
-
-// Mots du bandeau défilant (à modifier à ta guise)
-const words =
-  lang === 'fr'
-    ? ['Modélisation', 'Simulation', 'Enseignement', 'Recherche', 'Voyages', 'Curiosité', 'Folie']
-    : ['Modeling', 'Simulation', 'Teaching', 'Research', 'Travel', 'Curiosity', 'Madness'];
 ---
 
 <Base lang={lang} path="">
-  <!-- Hero plein écran -->
-  <section class="hero relative overflow-hidden">
-    <div class="wrap relative z-10 flex min-h-[78vh] flex-col justify-center py-20">
-      <p class="eyebrow">{lang === 'fr' ? 'Bienvenue sur mon site' : 'Welcome to my site'}</p>
-      <h1 class="display mt-6 text-[clamp(3.5rem,12vw,11rem)] font-semibold leading-[0.95]">
-        {lang === 'fr' ? 'Salut,' : 'Hi,'}<br />
-        {lang === 'fr' ? 'je suis' : "I'm"} <em class="font-medium italic text-accent">{SITE.name}</em><span aria-hidden="true">.</span>
-      </h1>
-      <p class="mt-10 max-w-3xl text-xl text-muted sm:text-3xl sm:leading-snug">{SITE.tagline[lang]}</p>
-      <p class="mt-10 flex flex-wrap gap-3">
-        <a class="btn btn-primary" href={href(lang, 'work')}>{t(lang, 'nav.work')} →</a>
-        <a class="btn" href={href(lang, 'travel')}>{t(lang, 'nav.travel')}</a>
-        <a class="btn" href={href(lang, 'fun')}>{t(lang, 'nav.fun')} 🎲</a>
-      </p>
-    </div>
+  <section class="wrap flex min-h-[55vh] flex-col justify-center pb-10 pt-16 sm:pt-24">
+    <p class="chip self-start">{lang === 'fr' ? 'Bienvenue' : 'Welcome'}</p>
+    <h1 class="mt-4 text-5xl font-extrabold tracking-tight sm:text-7xl lg:text-8xl">
+      {lang === 'fr' ? 'Salut, je suis' : "Hi, I'm"} <span class="text-accent">{SITE.name}</span>.
+    </h1>
+    <p class="mt-6 max-w-3xl text-xl text-muted sm:text-2xl">{SITE.tagline[lang]}</p>
   </section>
 
-  <!-- Bandeau défilant -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {[0, 1].map(() => words.map((w) => <span>{w} <span class="text-accent">✦</span></span>))}
-    </div>
-  </div>
-
-  <!-- Quatre grandes tuiles -->
-  <section class="wrap py-16 sm:py-24" aria-label={t(lang, 'home.explore')}>
+  <section class="wrap py-6" aria-label={t(lang, 'home.explore')}>
     <ul class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {
-        tiles.map((c) => (
+        cards.map((c) => (
           <li>
-            <a href={href(lang, c.to)} class="tile h-full" style={`--c: var(--${c.c})`}>
-              <span class="num" aria-hidden="true">{c.n}</span>
-              <span>
-                <span class="display block text-3xl font-semibold">{c.title}</span>
-                <span class="mt-2 block min-h-[3.25rem] text-muted">{c.text}</span>
-                <span class="arrow mt-4 inline-block text-2xl" aria-hidden="true" style="color: var(--c)">→</span>
-              </span>
+            <a href={href(lang, c.to)} class="card block h-full p-6">
+              <p class="text-4xl" aria-hidden="true">{c.emoji}</p>
+              <h2 class="mt-3 text-xl font-semibold">{c.title}</h2>
+              <p class="mt-1 text-muted">{c.text}</p>
             </a>
           </li>
         ))
@@ -80,60 +54,48 @@ const words =
 
   {
     (latest.length > 0 || trip) && (
-      <section class="band-alt">
-        <div class="wrap grid gap-12 py-16 sm:py-24 lg:grid-cols-2">
-          {latest.length > 0 && (
-            <div>
-              <h2 class="display text-4xl font-semibold">{t(lang, 'home.latest')}</h2>
-              <ul class="mt-6 border-t-2 border-fg">
-                {latest.map((r) => {
-                  const m = matieres.find((x) => x.id === r.data.matiere.id);
-                  return (
-                    <li class="border-b border-line">
-                      <a href={href(lang, `work/teaching/${r.data.matiere.id}`)} class="flex items-baseline justify-between gap-4 py-4 hover:text-accent">
-                        <span>
-                          <span class="display text-xl font-semibold">{pick(r.data, 'title', lang)}</span>
-                          {m && <span class="block text-sm text-muted">{pick(m.data, 'title', lang)}</span>}
-                        </span>
-                        <span class="chip shrink-0">{t(lang, `type.${r.data.type}` as 'type.cours')}</span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
-          {trip && (
-            <div>
-              <h2 class="display text-4xl font-semibold">{t(lang, 'home.latestTrip')}</h2>
-              <a href={href(lang, `travel/${trip.id}`)} class="card mt-6 block">
-                {trip.data.cover ? (
-                  <img src={asset(trip.data.cover)} alt="" class="aspect-[16/9] w-full object-cover" loading="lazy" />
-                ) : (
-                  <div class="grid aspect-[16/9] place-items-center bg-accent-soft text-8xl" aria-hidden="true">{trip.data.flag}</div>
-                )}
-                <div class="py-4">
-                  <p class="text-sm text-muted">
-                    {trip.data.flag} {pick(trip.data, 'country', lang)} · {formatDate(trip.data.start, lang, { month: 'long', year: 'numeric' })}
-                  </p>
-                  <h3 class="display mt-1 text-2xl font-semibold">{pick(trip.data, 'title', lang)}</h3>
-                  <p class="mt-1 text-muted">{pick(trip.data, 'summary', lang)}</p>
-                </div>
-              </a>
-            </div>
-          )}
-        </div>
+      <section class="wrap grid gap-8 py-10 lg:grid-cols-2">
+        {latest.length > 0 && (
+          <div>
+            <h2 class="text-lg font-semibold">{t(lang, 'home.latest')}</h2>
+            <ul class="mt-3 divide-y divide-line rounded-2xl border border-line bg-surface">
+              {latest.map((r) => {
+                const m = matieres.find((x) => x.id === r.data.matiere.id);
+                return (
+                  <li>
+                    <a href={href(lang, `work/teaching/${r.data.matiere.id}`)} class="flex items-start justify-between gap-3 px-4 py-3 hover:bg-accent-soft">
+                      <span>
+                        <span class="font-medium">{pick(r.data, 'title', lang)}</span>
+                        {m && <span class="block text-sm text-muted">{pick(m.data, 'title', lang)}</span>}
+                      </span>
+                      <span class="chip shrink-0">{t(lang, `type.${r.data.type}` as 'type.cours')}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+        {trip && (
+          <div>
+            <h2 class="text-lg font-semibold">{t(lang, 'home.latestTrip')}</h2>
+            <a href={href(lang, `travel/${trip.id}`)} class="card mt-3 block overflow-hidden">
+              {trip.data.cover ? (
+                <img src={asset(trip.data.cover)} alt="" class="h-48 w-full object-cover" loading="lazy" />
+              ) : (
+                <div class="grid h-48 place-items-center bg-accent-soft text-6xl" aria-hidden="true">{trip.data.flag}</div>
+              )}
+              <div class="p-5">
+                <p class="text-sm text-muted">
+                  {trip.data.flag} {pick(trip.data, 'country', lang)} · {formatDate(trip.data.start, lang, { month: 'long', year: 'numeric' })}
+                </p>
+                <h3 class="mt-1 text-lg font-semibold">{pick(trip.data, 'title', lang)}</h3>
+                <p class="mt-1 text-muted">{pick(trip.data, 'summary', lang)}</p>
+              </div>
+            </a>
+          </div>
+        )}
       </section>
     )
   }
 </Base>
-
-<style>
-  .hero {
-    background:
-      radial-gradient(55rem 40rem at 90% 10%, color-mix(in srgb, var(--c4) 28%, transparent), transparent 65%),
-      radial-gradient(50rem 38rem at 5% 100%, color-mix(in srgb, var(--c3) 26%, transparent), transparent 65%),
-      radial-gradient(45rem 30rem at 55% 40%, color-mix(in srgb, var(--c1) 20%, transparent), transparent 70%),
-      var(--bg);
-  }
-</style>
