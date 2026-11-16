@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Flag from '../../components/Flag.astro';
 import { LANGS, SITE, type Lang } from '../../config';
 import { href, pick, t } from '../../i18n/ui';
 import { getCircuits, getMatieres, getPays, getRessources, getSejours } from '../../lib/content';
@@ -96,7 +97,7 @@ const cards = [
                   </li>
                 ))}
               </ul>
-              <p class="mt-4 text-muted">{pays.map((p) => p.data.flag).join(' ')}</p>
+              <p class="mt-4 flex flex-wrap gap-1.5 text-xl">{pays.map((p) => <Flag emoji={p.data.flag} />)}</p>
             </a>
           </div>
         )}

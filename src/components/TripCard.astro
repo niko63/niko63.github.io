@@ -1,5 +1,6 @@
 ---
 import { asset } from '../i18n/ui';
+import Flag from './Flag.astro';
 interface Props {
   href: string;
   title: string;
@@ -16,7 +17,7 @@ const { href, title, kicker, text, cover, emoji = '🌍' } = Astro.props;
     cover ? (
       <img src={asset(cover)} alt="" class="h-40 w-full object-cover" loading="lazy" />
     ) : (
-      <div class="grid h-40 place-items-center bg-accent-soft text-5xl" aria-hidden="true">{emoji}</div>
+      <div class="grid h-40 place-items-center bg-accent-soft text-5xl" aria-hidden="true"><Flag emoji={emoji} /></div>
     )
   }
   <div class="p-5">

@@ -1,0 +1,31 @@
+---
+// Affiche un drapeau en image (SVG) à partir de l'emoji du pays (🇫🇷 → FR).
+// Windows n'affiche pas les emojis de drapeaux (il montre « FR »), d'où ce composant.
+// Si l'emoji n'est pas un drapeau (ex. 🌍), il est affiché tel quel.
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  emoji: string;
+}
+const { emoji } = Astro.props;
+
+const pts = [...emoji].map((c) => c.codePointAt(0)!);
+const isFlag = pts.length === 2 && pts.every((p) => p >= 0x1f1e6 && p <= 0x1f1ff);
+const code = isFlag ? pts.map((p) => String.fromCharCode(p - 0x1f1e6 + 65)).join('') : '';
+const file = code ? join(process.cwd(), 'node_modules/country-flag-icons/3x2', `${code}.svg`) : '';
+const svg = file && existsSync(file) ? readFileSync(file, 'utf8').replace('<svg ', '<svg class="flag" aria-hidden="true" focusable="false" ') : '';
+---
+
+{svg ? <Fragment set:html={svg} /> : <span aria-hidden="true">{emoji}</span>}
+
+<style is:global>
+  svg.flag {
+    display: inline-block;
+    height: 1em;
+    width: 1.5em;
+    vertical-align: -0.125em;
+    border-radius: 0.15em;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.15);
+  }
+</style>

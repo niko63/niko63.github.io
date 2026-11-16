@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../../../../layouts/Base.astro';
 import PageTitle from '../../../../components/PageTitle.astro';
+import Flag from '../../../../components/Flag.astro';
 import Gallery from '../../../../components/Gallery.astro';
 import { LANGS, type Lang } from '../../../../config';
 import { asset, href, pick, t } from '../../../../i18n/ui';
@@ -28,7 +29,7 @@ const hasBody = Boolean(entry.body?.trim());
   <div class="wrap py-8">
     {d.cover && <img src={asset(d.cover)} alt="" class="mb-6 max-h-[28rem] w-full rounded-2xl object-cover" />}
     <p class="flex flex-wrap gap-2 text-sm">
-      {countries.map((c) => <a class="chip" href={href(lang, `travel/${c.id}`)}>{c.data.flag} {pick(c.data, 'title', lang)}</a>)}
+      {countries.map((c) => <a class="chip" href={href(lang, `travel/${c.id}`)}><Flag emoji={c.data.flag} /> {pick(c.data, 'title', lang)}</a>)}
       {d.duration && <span class="chip">{pick(d, 'duration', lang)}</span>}
       {d.when && <span class="chip">{d.when}</span>}
     </p>
