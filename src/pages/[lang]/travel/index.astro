@@ -72,7 +72,7 @@ const mapCircuits = circuits
                     href={href(lang, `travel/${p.id}`)}
                     title={pick(p.data, 'title', lang)}
                     kicker={p.data.when}
-                    text={pick(p.data, 'summary', lang)}
+                    text={pick(p.data, 'summary', lang) || pick(p.data, 'location', lang)}
                     cover={p.data.cover}
                     emoji={p.data.flag}
                   />

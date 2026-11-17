@@ -81,6 +81,17 @@ const pays = defineCollection({
     // Obligatoire seulement pour un très petit pays absent du fond de carte (ex. Liechtenstein) : un point est alors dessiné.
     coords: coords.optional(),
     when: z.string().optional(), // texte libre : « Été 2019 », « 2015 et 2022 »…
+    // Fiche pays : tous ces champs sont facultatifs.
+    capital: z.string().optional(),
+    capital_en: z.string().optional(),
+    location: z.string().optional(), // situation, en une phrase courte
+    location_en: z.string().optional(),
+    area: z.number().optional(), // superficie en km²
+    population: z.number().optional(), // nombre d'habitants (arrondi)
+    intro: z.string().optional(), // quelques lignes de présentation
+    intro_en: z.string().optional(),
+    fact: z.string().optional(), // « le saviez-vous ? »
+    fact_en: z.string().optional(),
     summary: z.string().optional(),
     summary_en: z.string().optional(),
     cover: z.string().optional(),

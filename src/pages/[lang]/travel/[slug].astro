@@ -5,7 +5,7 @@ import PageTitle from '../../../components/PageTitle.astro';
 import Gallery from '../../../components/Gallery.astro';
 import TripCard from '../../../components/TripCard.astro';
 import { LANGS, type Lang } from '../../../config';
-import { asset, href, pick, t, type UiKey } from '../../../i18n/ui';
+import { asset, href, localeTag, pick, t, type UiKey } from '../../../i18n/ui';
 import { getCircuits, getPays, getSejours } from '../../../lib/content';
 
 export async function getStaticPaths() {
@@ -19,6 +19,21 @@ const d = entry.data;
 const sejours = (await getSejours()).filter((s) => s.data.pays.id === entry.id);
 const circuits = (await getCircuits()).filter((c) => c.data.pays.some((p) => p.id === entry.id));
 const hasBody = Boolean(entry.body?.trim());
+const nf = new Intl.NumberFormat(localeTag[lang]);
+const fmtArea = d.area ? `${nf.format(d.area)} km²` : '';
+const fmtPop = d.population
+  ? d.population >= 1e6
+    ? `≈ ${new Intl.NumberFormat(localeTag[lang], { maximumFractionDigits: d.population < 2e7 ? 1 : 0 }).format(d.population / 1e6)} M`
+    : `≈ ${nf.format(d.population)}`
+  : '';
+const facts = [
+  { label: t(lang, 'country.capital'), value: pick(d, 'capital', lang) },
+  { label: t(lang, 'country.location'), value: pick(d, 'location', lang) },
+  { label: t(lang, 'country.area'), value: fmtArea },
+  { label: t(lang, 'country.population'), value: fmtPop },
+].filter((f) => f.value);
+const intro = pick(d, 'intro', lang);
+const fact = pick(d, 'fact', lang);
 ---
 
 <Base lang={lang} path={`travel/${entry.id}/`} title={pick(d, 'title', lang)} description={pick(d, 'summary', lang)}>
@@ -33,6 +48,29 @@ const hasBody = Boolean(entry.body?.trim());
       <span class="chip">{t(lang, `continent.${d.continent}` as UiKey)}</span>
       {d.when && <span class="chip">{d.when}</span>}
     </p>
+
+    {
+      facts.length > 0 && (
+        <dl class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {facts.map((f) => (
+            <div class="card-box p-4">
+              <dt class="text-sm text-muted">{f.label}</dt>
+              <dd class="mt-1 text-lg font-semibold">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+    {facts.length > 0 && <p class="mt-2 text-xs text-muted">{t(lang, entry.id === 'france' ? 'country.noteFrance' : 'country.note')}</p>}
+    {intro && <p class="mt-6 max-w-4xl text-lg">{intro}</p>}
+    {
+      fact && (
+        <aside class="mt-6 rounded-2xl border border-accent bg-accent-soft p-5">
+          <p class="text-sm font-semibold text-accent">💡 {t(lang, 'country.didYouKnow')}</p>
+          <p class="mt-1 text-lg">{fact}</p>
+        </aside>
+      )
+    }
 
     {hasBody && <div class="prose prose-lg mt-8 max-w-none"><Content /></div>}
 
