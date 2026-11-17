@@ -92,6 +92,8 @@ const pays = defineCollection({
     intro_en: z.string().optional(),
     fact: z.string().optional(), // « le saviez-vous ? »
     fact_en: z.string().optional(),
+    story: z.string().optional(), // texte personnel (paragraphes séparés par une ligne vide)
+    story_en: z.string().optional(),
     summary: z.string().optional(),
     summary_en: z.string().optional(),
     cover: z.string().optional(),

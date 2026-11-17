@@ -34,6 +34,7 @@ const facts = [
 ].filter((f) => f.value);
 const intro = pick(d, 'intro', lang);
 const fact = pick(d, 'fact', lang);
+const story = pick(d, 'story', lang);
 ---
 
 <Base lang={lang} path={`travel/${entry.id}/`} title={pick(d, 'title', lang)} description={pick(d, 'summary', lang)}>
@@ -69,6 +70,17 @@ const fact = pick(d, 'fact', lang);
           <p class="text-sm font-semibold text-accent">💡 {t(lang, 'country.didYouKnow')}</p>
           <p class="mt-1 text-lg">{fact}</p>
         </aside>
+      )
+    }
+
+    {
+      story && (
+        <section class="mt-8" aria-labelledby="story">
+          <h2 id="story" class="text-2xl font-semibold">{t(lang, 'country.story')}</h2>
+          <div class="mt-3 max-w-4xl space-y-4 text-lg">
+            {story.split(/\n\s*\n/).map((para) => <p>{para.trim()}</p>)}
+          </div>
+        </section>
       )
     }
 
