@@ -35,7 +35,7 @@ const count = (id: string) => ressources.filter((r) => r.data.matiere.id === id)
                 {pick(m.data, 'description', lang) && <p class="mt-1 text-muted">{pick(m.data, 'description', lang)}</p>}
                 <p class="mt-3 flex flex-wrap gap-2">
                   {m.data.level && <span class="chip">{m.data.level}</span>}
-                  <span class="chip">{count(m.id)} {lang === 'fr' ? 'supports' : 'items'}</span>
+                  <span class="chip">{count(m.id)} {lang === 'fr' ? (count(m.id) > 1 ? 'supports' : 'support') : (count(m.id) > 1 ? 'items' : 'item')}</span>
                 </p>
                 </div>
               </a>

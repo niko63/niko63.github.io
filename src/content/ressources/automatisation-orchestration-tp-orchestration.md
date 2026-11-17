@@ -1,0 +1,11 @@
+---
+title: "TP : orchestration des processus"
+title_en: "Lab: process orchestration"
+matiere: automatisation-orchestration
+type: tp
+order: 2
+# description: "Une phrase sur ce support."
+# file: "/files/automatisation-orchestration/tp-orchestration.pdf"   # décommente quand le PDF est dans public/files/automatisation-orchestration/
+# repo: "https://github.com/niko63/ton-depot"   # dépôt des exécutables (facultatif)
+# updated: 2026-11-17
+---

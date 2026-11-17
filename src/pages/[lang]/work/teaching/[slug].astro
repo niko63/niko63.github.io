@@ -45,6 +45,7 @@ const sections = (['cours', 'td', 'tp'] as const).map((type) => ({ type, list: i
                   </div>
                   <p class="flex flex-wrap gap-2">
                     {r.data.file && <a class="btn btn-primary" href={asset(r.data.file)} download>{t(lang, 'res.pdf')}</a>}
+                    {!r.data.file && !r.data.repo && <span class="chip">{t(lang, 'res.soon')}</span>}
                     {r.data.repo && <a class="btn" href={r.data.repo} rel="noopener">{t(lang, 'res.repo')}</a>}
                   </p>
                 </div>
