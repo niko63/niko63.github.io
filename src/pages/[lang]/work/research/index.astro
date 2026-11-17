@@ -1,0 +1,126 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import PageTitle from '../../../../components/PageTitle.astro';
+import { LANGS, SITE, type Lang } from '../../../../config';
+import { href, t } from '../../../../i18n/ui';
+import { research as r } from '../../../../data/research';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const tx = (x: string | { fr: string; en: string }) => (typeof x === 'string' ? x : x[lang]);
+const maxDomain = Math.max(...r.domains.map((d) => d.n));
+const maxKw = Math.max(...r.keywords.map((k) => k.n));
+const title = t(lang, 'work.research');
+---
+
+<Base lang={lang} path="work/research/" title={title} description={r.intro[lang]}>
+  <div class="wrap pt-8">
+    <a href={href(lang, 'work')} class="text-sm text-muted hover:text-accent">{t(lang, 'work.back')}</a>
+  </div>
+  <PageTitle title={title} emoji="🔬" intro={r.intro[lang]} />
+
+  <section class="wrap pb-6" aria-label={lang === 'fr' ? 'Chiffres' : 'Figures'}>
+    <ul class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      {
+        r.stats.map((s) => (
+          <li class="card-box p-5">
+            <p class="text-4xl font-bold text-accent">{s.n}</p>
+            <p class="text-sm text-muted">{s.label[lang]}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="wrap py-8" aria-labelledby="thread">
+    <h2 id="thread" class="text-2xl font-semibold">{r.thread.title[lang]}</h2>
+    <ol class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      {
+        r.thread.steps.map((s, i) => (
+          <li class="card relative p-5">
+            <p class="text-sm font-semibold text-accent">{i + 1}</p>
+            <h3 class="mt-1 text-lg font-semibold">{s.name[lang]}</h3>
+            <p class="mt-1 text-muted">{s.text[lang]}</p>
+            <p class="mt-3 flex flex-wrap gap-2">{s.tags.map((tag) => <span class="chip">{tx(tag)}</span>)}</p>
+            {i < r.thread.steps.length - 1 && <span aria-hidden="true" class="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 text-xl text-muted xl:block">→</span>}
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="wrap py-8" aria-labelledby="axes">
+    <h2 id="axes" class="text-2xl font-semibold">{r.axes.title[lang]}</h2>
+    <ul class="mt-5 grid gap-4 md:grid-cols-2">
+      {
+        r.axes.items.map((a) => (
+          <li class="card p-6">
+            <p class="text-3xl" aria-hidden="true">{a.emoji}</p>
+            <h3 class="mt-2 text-lg font-semibold">{a.name[lang]}</h3>
+            <p class="mt-1 text-muted">{a.text[lang]}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="wrap py-8" aria-labelledby="tool">
+    <a href={href(lang, `work/research/${r.tool.slug}`)} class="card block p-6 sm:p-8">
+      <h2 id="tool" class="text-2xl font-semibold">{r.tool.title[lang]}</h2>
+      <p class="mt-2 max-w-3xl text-lg text-muted">{r.tool.text[lang]}</p>
+      <p class="mt-4 font-medium text-accent">{lang === 'fr' ? 'En savoir plus →' : 'Learn more →'}</p>
+    </a>
+  </section>
+
+  <section class="wrap py-8" aria-labelledby="corpus">
+    <h2 id="corpus" class="text-2xl font-semibold">{lang === 'fr' ? 'Mon corpus en chiffres' : 'My work in numbers'}</h2>
+    <p class="mt-1 text-sm text-muted">{lang === 'fr' ? 'D’après mon profil HAL ; les comptes évoluent avec les dépôts.' : 'From my HAL profile; counts change as items are deposited.'}</p>
+    <div class="mt-6 grid gap-8 lg:grid-cols-2">
+      <div>
+        <h3 class="text-lg font-semibold">{lang === 'fr' ? 'Domaines' : 'Fields'}</h3>
+        <ul class="mt-3 space-y-3">
+          {
+            r.domains.map((d) => (
+              <li>
+                <p class="flex justify-between text-sm"><span>{d.label[lang]}</span><span class="text-muted">{d.n}</span></p>
+                <div class="mt-1 h-2 rounded-full bg-accent-soft" aria-hidden="true">
+                  <div class="h-2 rounded-full bg-accent" style={`width:${Math.round((d.n / maxDomain) * 100)}%`}></div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold">{lang === 'fr' ? 'Mots-clés' : 'Keywords'}</h3>
+        <ul class="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+          {
+            r.keywords.map((k) => (
+              <li class="font-semibold leading-tight text-accent" style={`font-size:${(0.95 + (k.n / maxKw) * 1.25).toFixed(2)}rem`} title={`${k.n}`}>{k.w[lang]}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap py-8" aria-labelledby="pubs">
+    <h2 id="pubs" class="text-2xl font-semibold">{r.publications.title[lang]}</h2>
+    <ul class="mt-4 divide-y divide-line rounded-2xl border border-line bg-surface">
+      {
+        r.publications.items.map((p) => (
+          <li class="flex gap-4 px-5 py-4">
+            <span class="chip h-fit shrink-0">{p.year}</span>
+            <span>
+              <span class="font-medium">{p.title}</span>
+              <span class="block text-sm text-muted">{p.venue}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-5"><a class="btn btn-primary" href={SITE.links.hal} rel="noopener">{r.publications.cta[lang]} ↗</a></p>
+  </section>
+</Base>

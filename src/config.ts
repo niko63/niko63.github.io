@@ -9,7 +9,7 @@ export const SITE = {
   // Liens externes affichés dans le pied de page (supprime ceux dont tu ne veux pas).
   links: {
     github: 'https://github.com/niko63',
-    hal: 'https://hal.science/',
+    hal: 'https://cv.hal.science/nicolas-daclin',
     email: '', // ex. 'prenom@exemple.fr' ; laisse vide pour ne rien afficher
   },
 } as const;
