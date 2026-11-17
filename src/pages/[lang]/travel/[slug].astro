@@ -63,24 +63,30 @@ const story = pick(d, 'story', lang);
       )
     }
     {facts.length > 0 && <p class="mt-2 text-xs text-muted">{t(lang, entry.id === 'france' ? 'country.noteFrance' : 'country.note')}</p>}
-    {intro && <p class="mt-6 max-w-4xl text-lg">{intro}</p>}
     {
-      fact && (
-        <aside class="mt-6 rounded-2xl border border-accent bg-accent-soft p-5">
-          <p class="text-sm font-semibold text-accent">💡 {t(lang, 'country.didYouKnow')}</p>
-          <p class="mt-1 text-lg">{fact}</p>
-        </aside>
-      )
-    }
-
-    {
-      story && (
-        <section class="mt-8" aria-labelledby="story">
-          <h2 id="story" class="text-2xl font-semibold">{t(lang, 'country.story')}</h2>
-          <div class="mt-3 max-w-4xl space-y-4 text-lg">
-            {story.split(/\n\s*\n/).map((para) => <p>{para.trim()}</p>)}
-          </div>
-        </section>
+      (intro || fact || story) && (
+        <div class:list={['mt-6 grid gap-8', story && 'lg:grid-cols-2']}>
+          {(intro || fact) && (
+            <section aria-labelledby="about">
+              <h2 id="about" class="text-2xl font-semibold">{t(lang, 'country.about')}</h2>
+              {intro && <p class="mt-3 text-lg">{intro}</p>}
+              {fact && (
+                <aside class="mt-5 rounded-2xl border border-accent bg-accent-soft p-5">
+                  <p class="text-sm font-semibold text-accent">💡 {t(lang, 'country.didYouKnow')}</p>
+                  <p class="mt-1 text-lg">{fact}</p>
+                </aside>
+              )}
+            </section>
+          )}
+          {story && (
+            <section aria-labelledby="story">
+              <h2 id="story" class="text-2xl font-semibold">{t(lang, 'country.story')}</h2>
+              <div class="mt-3 space-y-4 text-lg">
+                {story.split(/\n\s*\n/).map((para) => <p>{para.trim()}</p>)}
+              </div>
+            </section>
+          )}
+        </div>
       )
     }
 

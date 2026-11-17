@@ -16,13 +16,13 @@ intro_en: "Algeria lies in North Africa, on the southern shore of the Mediterran
 fact: "L'Algérie est le plus grand pays d'Afrique, et le Sahara en couvre plus de 80 % du territoire."
 fact_en: "Algeria is the largest country in Africa, and the Sahara covers more than 80% of its territory."
 story: |
-  Je voyage en Algérie depuis plus de dix ans et j'en profite pour visiter le pays. Chaque wilaya, chaque ville a sa propre culture, sa gastronomie, ses coutumes vestimentaires et son architecture : c'est à chaque fois une belle découverte et de bons moments.
+  Je voyage en Algérie depuis plus de dix ans et j'en profite pour découvrir le pays. Chaque wilaya, chaque ville a sa propre culture, sa gastronomie, ses tenues traditionnelles et son architecture : à chaque fois, c'est une belle découverte et de bons moments.
 
-  C'est un pays encore peu visité, souffrant certainement de son passé récent, et qui peut faire peur. Il vaut pourtant la peine de dépasser les a priori : on y est toujours accueilli chaleureusement.
+  C'est un pays encore peu visité, qui souffre certainement de son passé récent et peut faire peur. Il mérite pourtant qu'on dépasse les a priori : on y est toujours accueilli chaleureusement.
 story_en: |
-  I have been travelling to Algeria for more than ten years, and I take the opportunity to explore the country. Every wilaya and every city has its own culture, food, traditional dress and architecture, so every trip is a lovely discovery and a good time.
+  I have been travelling to Algeria for more than ten years, and I use each trip to explore more of the country. Every wilaya and every city has its own culture, cuisine, traditional dress and architecture, so each visit is a lovely discovery and a good time.
 
-  It is a country that still sees few visitors, no doubt still suffering from its recent past, and it can seem daunting. Yet it is well worth setting aside preconceptions: you are always welcomed warmly.
+  It is a country that still sees few visitors, probably because it still suffers from its recent past, and it can seem daunting. Yet it deserves to be seen beyond the preconceptions: you are always warmly welcomed.
 # when: "Été 2019"
 # summary: "Une phrase sur ton voyage."
 # summary_en: "One sentence about your trip."
