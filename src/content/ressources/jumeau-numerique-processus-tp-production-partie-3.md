@@ -11,8 +11,5 @@ extras:
   - label: "Version anglaise (PDF)"
     label_en: "English version (PDF)"
     file: "/files/jumeau-numerique-processus/processus-de-production/partie-3/tp-part-3-analysis-en.pdf"
-  - label: "Version anglaise (Word)"
-    label_en: "English version (Word)"
-    file: "/files/jumeau-numerique-processus/processus-de-production/partie-3/tp-part-3-analysis-en.docx"
 updated: 2026-11-19
 ---

@@ -12,8 +12,5 @@ extras:
   - label: "Version anglaise (PDF)"
     label_en: "English version (PDF)"
     file: "/files/jumeau-numerique-processus/cours-en.pdf"
-  - label: "Version anglaise (PowerPoint)"
-    label_en: "English version (PowerPoint)"
-    file: "/files/jumeau-numerique-processus/cours-en.pptx"
 updated: 2026-11-19
 ---
