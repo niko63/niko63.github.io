@@ -8,6 +8,12 @@ description: "Intégration du processus au système d'information : organisation
 description_en: "Integrating the process with the information system: organization, connectors (e-mail, database) and data."
 file: "/files/jumeau-numerique-processus/processus-de-production/partie-2/tp-partie-2-integration-si.pdf"
 extras:
+  - label: "Version anglaise (PDF)"
+    label_en: "English version (PDF)"
+    file: "/files/jumeau-numerique-processus/processus-de-production/partie-2/tp-part-2-is-integration-en.pdf"
+  - label: "Version anglaise (Word)"
+    label_en: "English version (Word)"
+    file: "/files/jumeau-numerique-processus/processus-de-production/partie-2/tp-part-2-is-integration-en.docx"
   - label: "Données H2 (db.txt)"
     label_en: "H2 data (db.txt)"
     file: "/files/jumeau-numerique-processus/processus-de-production/partie-2/db.txt"

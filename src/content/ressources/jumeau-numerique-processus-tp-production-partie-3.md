@@ -7,5 +7,12 @@ order: 4
 description: "Analyse des données du processus : données métier, API, pages d'application et tableau de bord."
 description_en: "Process data analysis: business data, API, application pages and dashboard."
 file: "/files/jumeau-numerique-processus/processus-de-production/partie-3/tp-partie-3-analyse.pdf"
+extras:
+  - label: "Version anglaise (PDF)"
+    label_en: "English version (PDF)"
+    file: "/files/jumeau-numerique-processus/processus-de-production/partie-3/tp-part-3-analysis-en.pdf"
+  - label: "Version anglaise (Word)"
+    label_en: "English version (Word)"
+    file: "/files/jumeau-numerique-processus/processus-de-production/partie-3/tp-part-3-analysis-en.docx"
 updated: 2026-11-19
 ---
