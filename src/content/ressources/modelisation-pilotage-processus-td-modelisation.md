@@ -8,5 +8,9 @@ description: "Trois situations décrites en langage courant à modéliser avec B
 description_en: "Three plain-language situations to model with BPMN: booking a trip, manufacturing a machined part, order handling and procurement."
 file: "/files/modelisation-pilotage-processus/td-modelisation.pdf"
 # repo: "https://github.com/niko63/ton-depot"   # dépôt des exécutables (facultatif)
+extras:
+  - label: "Version anglaise (PDF)"
+    label_en: "English version (PDF)"
+    file: "/files/modelisation-pilotage-processus/td-modelisation-en.pdf"
 updated: 2026-11-19
 ---
