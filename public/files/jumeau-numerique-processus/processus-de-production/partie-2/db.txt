@@ -1,0 +1,20 @@
+-- ============================================================
+-- db.txt : base de données H2 de Bonita - Partie II (MécaPrécision)
+-- Table issue de l'objet métier TempsCycleObject
+-- ============================================================
+
+-- Insert valeur temps de cycle
+-- (à coller dans la console h2 : Modèle de données métier > Consulter les données (console h2))
+INSERT INTO TEMPSCYCLEOBJECT (PERSISTENCEID, PERSISTENCEVERSION, CATEGORIEPRODUIT, MINTEMPS, MEDTEMPS, MAXTEMPS) VALUES (1, 0, 'A', '4-6', '6-8', '8-9');
+INSERT INTO TEMPSCYCLEOBJECT (PERSISTENCEID, PERSISTENCEVERSION, CATEGORIEPRODUIT, MINTEMPS, MEDTEMPS, MAXTEMPS) VALUES (2, 0, 'B', '3-5', '5-6', '6-7');
+INSERT INTO TEMPSCYCLEOBJECT (PERSISTENCEID, PERSISTENCEVERSION, CATEGORIEPRODUIT, MINTEMPS, MEDTEMPS, MAXTEMPS) VALUES (3, 0, 'C', '2-3', '3-4', '4-5');
+INSERT INTO TEMPSCYCLEOBJECT (PERSISTENCEID, PERSISTENCEVERSION, CATEGORIEPRODUIT, MINTEMPS, MEDTEMPS, MAXTEMPS) VALUES (4, 0, 'D', '0.5-1', '1-2', '2-3');
+
+-- Vérification
+SELECT * FROM TEMPSCYCLEOBJECT;
+
+-- query
+-- Requête du connecteur Base de données (ici pour la catégorie A).
+-- Dans le connecteur, remplacez 'A' par la catégorie de la commande, par exemple avec l'expression :
+--   "SELECT MINTEMPS, MEDTEMPS, MAXTEMPS FROM TEMPSCYCLEOBJECT WHERE CATEGORIEPRODUIT = '${votreVariableCategorie} '
+SELECT MINTEMPS, MEDTEMPS, MAXTEMPS FROM TEMPSCYCLEOBJECT WHERE CATEGORIEPRODUIT = 'A'

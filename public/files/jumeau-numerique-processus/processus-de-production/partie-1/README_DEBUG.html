@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Déboguer son processus</title>
+<style>
+:root{--teal:#0b7f75;--navy:#0e1a2b;--bg:#f6f7f5;--card:#fff;--line:#dad9d2;--grey:#5b6678;--soft:#eaf5f3;--warn:#fff6e5;--warnl:#e8b64a;--err:#fdeceb;--errl:#d9534f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--navy);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:40px 20px 34px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+header .wrap{padding:0}
+header small{color:#7fd6cc;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+h1{margin:6px 0 8px;font-size:2rem;line-height:1.2}
+header p{margin:0;color:#c9d3e0;max-width:680px}
+main{padding:28px 0 60px}
+h2{color:var(--teal);margin:40px 0 12px;font-size:1.35rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:14px 0}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-size:.9rem}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;font-size:.95rem}
+td:first-child{font-weight:600}
+tr:nth-child(even) td{background:#fafaf8}
+code{background:#eef0ef;border-radius:5px;padding:1px 6px;font:0.9em ui-monospace,Consolas,monospace}
+.num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:.85rem;margin-right:8px}
+.callout{border-left:5px solid var(--teal);background:var(--soft);border-radius:8px;padding:14px 18px;margin:16px 0}
+.callout.warn{border-color:var(--warnl);background:var(--warn)}
+.callout.err{border-color:var(--errl);background:var(--err)}
+.callout strong:first-child{display:block;margin-bottom:4px}
+ol,ul{padding-left:22px}
+li{margin:5px 0}
+.steps{list-style:none;padding:0;counter-reset:s}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px 12px 52px;position:relative;margin:10px 0}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;text-align:center;line-height:26px;font-size:.85rem}
+.check li{list-style:none;margin-left:-22px}
+.check li::before{content:"☐ ";color:var(--teal)}
+footer{color:var(--grey);font-size:.85rem;text-align:center;padding:20px}
+@media (prefers-color-scheme:dark){
+:root{--bg:#10151c;--card:#171e28;--line:#2b3442;--navy:#e8edf3;--grey:#9aa6b6;--soft:#12302e;--warn:#33290f;--err:#3a1d1c}
+header{background:#0a0f16}th{background:#0a0f16}tr:nth-child(even) td{background:#141b24}code{background:#222b38}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<small>Jumeau numérique et processus métiers · Bonita</small>
+<h1>Déboguer son processus : par où commencer ?</h1>
+<p>Quand quelque chose ne marche pas, regardez les sources d’information suivantes dans cet ordre. Chacune répond à une question différente.</p>
+</div></header>
+
+<main><div class="wrap">
+
+<h2>1. Où regarder</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Où regarder</th><th>Ce que cela vous dit</th><th>Quand l’utiliser</th></tr></thead>
+<tbody>
+<tr><td>Vue <em>Statut de validation</em> (Studio)</td><td>Erreurs et avertissements du modèle : variable non définie, connecteur incomplet, tâche sans acteur</td><td>Avant même de lancer le processus</td></tr>
+<tr><td>Vue <em>Problèmes</em> (Studio)</td><td>Le détail de chaque erreur et l’élément du diagramme concerné</td><td>Pour localiser la tâche ou l’objet à corriger</td></tr>
+<tr><td>Retour d’erreur côté application (portail, formulaire)</td><td>Le message affiché à l’utilisateur, par exemple <code>expected input is missing "nomVariable"</code></td><td>Quand un formulaire ou une tâche refuse de s’exécuter</td></tr>
+<tr><td>Log du moteur</td><td>Le détail technique de l’échec : exception, ligne du script Groovy, connecteur en cause</td><td>Quand le message de l’application ne suffit pas</td></tr>
+<tr><td>Valeurs des variables</td><td>Ce que contient réellement la variable à cette étape : <code>null</code>, vide, mauvaise valeur</td><td>Quand tout s’exécute mais que le résultat est faux</td></tr>
+<tr><td>Terminal du simulateur (partie II)</td><td>Les appels reçus et leur code (<code>200</code>, <code>401</code>, <code>422</code>…)</td><td>Pour tout ce qui concerne l’API</td></tr>
+</tbody></table></div>
+
+<h2>2. Comment lire un message d’erreur : exemple</h2>
+<div class="card">
+<p><code>expected input is missing "nomVariable"</code> signifie que le <strong>contrat</strong> de la tâche attend une donnée (<code>nomVariable</code>) que le formulaire n’a pas transmise. Les opérations qui devaient mettre à jour la BDM à partir de cette entrée ne peuvent donc pas s’exécuter.</p>
+<p>Il faut vérifier trois choses :</p>
+<ol>
+<li>le nom de l’entrée dans le <strong>contrat</strong> de la tâche ;</li>
+<li>la correspondance avec la donnée envoyée par le <strong>formulaire</strong> (UI Designer) ;</li>
+<li>l’<strong>opération</strong> qui utilise cette entrée.</li>
+</ol>
+<div class="callout warn"><strong>Attention à l’orthographe</strong>Une différence d’orthographe ou de majuscule entre ces trois éléments suffit à provoquer l’erreur.</div>
+</div>
+
+<h2>3. Règle de travail</h2>
+<ul class="steps">
+<li><strong>Formulez une hypothèse</strong> : « l’entrée du contrat n’est pas alimentée ».</li>
+<li><strong>Vérifiez-la</strong> avec la vue ou le log adapté (tableau ci-dessus).</li>
+<li><strong>Corrigez une seule chose à la fois</strong>, puis relancez un nouveau cas. Un cas déjà en erreur garde l’ancien état.</li>
+<li><strong>Notez ce que vous avez trouvé</strong> avant d’appeler l’enseignant.</li>
+</ul>
+<div class="callout"><strong>Appeler l’enseignant</strong>Appelez seulement après avoir consulté ces sources et noté ce que vous avez trouvé : message d’erreur, vue consultée, hypothèse testée.</div>
+
+<h2>4. Erreurs fréquentes et leur cause</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Symptôme</th><th>Cause probable</th><th>Où vérifier</th></tr></thead>
+<tbody>
+<tr><td><code>expected input is missing "…"</code></td><td>Le formulaire n’alimente pas l’entrée du contrat (nom différent ou champ non lié)</td><td>Contrat de la tâche, puis UI Designer</td></tr>
+<tr><td>La BDM n’est pas mise à jour</td><td>Opération absente, mal écrite, ou exécutée sur la mauvaise variable</td><td>Onglet Opérations de la tâche, puis H2 / valeurs des variables</td></tr>
+<tr><td><code>NullPointerException</code> dans un script</td><td>Variable ou attribut non initialisé (par exemple <code>nbreBoucle</code> à <code>null</code>)</td><td>Valeur par défaut de la variable, log du moteur</td></tr>
+<tr><td><code>Illegal character in path</code></td><td>URL saisie comme constante au lieu d’un script Groovy</td><td>Page de l’URL du connecteur REST (icône crayon → Script)</td></tr>
+<tr><td>Le POST ne produit rien et le processus continue</td><td>Bonita ne signale pas les refus HTTP : le code est dans la variable de sortie</td><td><code>codeRetourOrdre</code>, terminal du simulateur</td></tr>
+<tr><td><code>401</code> côté simulateur</td><td>En-tête <code>X-API-Key</code> absent ou erroné</td><td>Page En-têtes du connecteur</td></tr>
+<tr><td><code>400</code> / <code>422</code></td><td>Corps JSON mal formé, ou ordre refusé (machine, quantité…)</td><td>Payload du connecteur, message de réponse</td></tr>
+<tr><td>Rien dans le terminal du simulateur</td><td>Simulateur arrêté, mauvais port, ancienne version du fichier</td><td>Terminal, URL <code>http://localhost:3000</code></td></tr>
+<tr><td>Le widget affiche du JSON brut</td><td>La réponse est du texte et n’a pas été transformée en objet</td><td>Script Groovy de lecture (<code>etatJson</code>)</td></tr>
+<tr><td>Tâche en échec dans le portail</td><td>Une opération, un connecteur ou un script a levé une exception</td><td>Cas en échec du portail, puis log du moteur</td></tr>
+</tbody></table></div>
+
+<h2>5. Liste de contrôle avant d’appeler</h2>
+<div class="card"><ul class="check">
+<li>J’ai regardé les vues <em>Statut de validation</em> et <em>Problèmes</em>.</li>
+<li>J’ai lu le message d’erreur en entier.</li>
+<li>J’ai consulté le log du moteur (ou le terminal du simulateur pour l’API).</li>
+<li>J’ai vérifié la valeur de la variable concernée.</li>
+<li>J’ai relu l’orthographe des noms (contrat, formulaire, opération).</li>
+<li>J’ai relancé un <strong>nouveau cas</strong> après ma correction.</li>
+<li>Je sais dire ce que j’ai essayé et ce que j’ai observé.</li>
+</ul></div>
+
+<div class="callout err"><strong>Réflexe à éviter</strong>Modifier plusieurs éléments à la fois : on ne sait plus ce qui a corrigé, ou aggravé, le problème.</div>
+
+</div></main>
+<footer>Cours « Jumeau numérique et processus métiers » · IMT Mines Alès</footer>
+</body>
+</html>
