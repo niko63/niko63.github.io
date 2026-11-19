@@ -35,6 +35,10 @@ const ressources = defineCollection({
     file: z.string().optional(),
     // Dépôt Git contenant les exécutables / sources utilisés (facultatif).
     repo: z.url().optional(),
+    // Fichiers complémentaires affichés comme boutons (zip, texte, page HTML…), facultatif.
+    extras: z
+      .array(z.object({ label: z.string(), label_en: z.string().optional(), file: z.string() }))
+      .default([]),
     // Date de dernière mise à jour (facultatif).
     updated: z.coerce.date().optional(),
     draft: z.boolean().default(false),

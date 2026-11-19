@@ -7,5 +7,9 @@ order: 2
 description: "Modélisation d'un processus de production dans Bonita : processus, données, formulaires et exécution."
 description_en: "Modeling a production process in Bonita: process, data, forms and execution."
 file: "/files/jumeau-numerique-processus/processus-de-production/partie-1/tp-partie-1-modelisation-ui.pdf"
+extras:
+  - label: "Guide de débogage"
+    label_en: "Debugging guide"
+    file: "/files/jumeau-numerique-processus/processus-de-production/partie-1/README_DEBUG.html"
 updated: 2026-11-19
 ---

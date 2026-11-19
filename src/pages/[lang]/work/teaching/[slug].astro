@@ -47,6 +47,9 @@ const sections = (['cours', 'td', 'tp'] as const).map((type) => ({ type, list: i
                     {r.data.file && <a class="btn btn-primary" href={asset(r.data.file)} download>{t(lang, 'res.pdf')}</a>}
                     {!r.data.file && !r.data.repo && <span class="chip">{t(lang, 'res.soon')}</span>}
                     {r.data.repo && <a class="btn" href={r.data.repo} rel="noopener">{t(lang, 'res.repo')}</a>}
+                    {r.data.extras.map((x) => (
+                      <a class="btn" href={asset(x.file)} {...(x.file.endsWith('.html') ? { target: '_blank', rel: 'noopener' } : { download: true })}>{pick(x, 'label', lang)}</a>
+                    ))}
                   </p>
                 </div>
               </li>
