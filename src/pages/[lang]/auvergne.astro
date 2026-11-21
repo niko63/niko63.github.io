@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import Gallery from '../../components/Gallery.astro';
 import { LANGS, type Lang } from '../../config';
-import { t } from '../../i18n/ui';
+import { asset, t } from '../../i18n/ui';
 import { auvergne as a } from '../../data/auvergne';
 
 export function getStaticPaths() {
@@ -20,6 +20,34 @@ const lang = Astro.params.lang as Lang;
       <h2 id="story" class="text-2xl font-semibold">{a.story.title[lang]}</h2>
       <div class="prose prose-lg mt-4 max-w-[68ch]">
         {a.story.paragraphs.map((p) => <p>{p[lang]}</p>)}
+      </div>
+    </section>
+
+    <section class="mt-12" aria-labelledby="panel">
+      <h2 id="panel" class="text-2xl font-semibold">{a.panel.title[lang]}</h2>
+      <blockquote class="card mt-4 p-6 text-2xl font-bold tracking-tight sm:text-3xl">« {a.panel.quote[lang]} »</blockquote>
+      <div class="prose prose-lg mt-4 max-w-[68ch]">
+        {a.panel.paragraphs.map((p) => <p>{p[lang]}</p>)}
+      </div>
+      <p class="mt-2 text-sm text-muted">
+        {lang === 'fr' ? 'Sources : ' : 'Sources: '}
+        {a.panel.sources.map((x, i) => <>{i > 0 && ', '}<a href={x.url} class="underline" rel="noopener">{x.label}</a></>)}
+      </p>
+    </section>
+
+    <section class="mt-12" aria-labelledby="blason">
+      <h2 id="blason" class="text-2xl font-semibold">{a.blason.title[lang]}</h2>
+      <div class="mt-4 flex flex-col gap-6 sm:flex-row sm:items-start">
+        <img src={asset('/auvergne/blason.svg')} alt={a.blason.alt[lang]} class="h-48 w-auto shrink-0" width="154" height="192" />
+        <div class="prose prose-lg max-w-[68ch]">
+          <p><em>{a.blason.blazon[lang]}</em></p>
+          {a.blason.paragraphs.map((p) => <p>{p[lang]}</p>)}
+          <p class="text-sm text-muted">
+            {lang === 'fr' ? 'Sources : ' : 'Sources: '}
+            {a.blason.sources.map((x, i) => <>{i > 0 && ', '}<a href={x.url} class="underline" rel="noopener">{x.label}</a></>)}
+            {lang === 'fr' ? '. Dessin d’après la description héraldique.' : '. Drawing based on the heraldic description.'}
+          </p>
+        </div>
       </div>
     </section>
 

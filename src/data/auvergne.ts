@@ -24,6 +24,46 @@ export const auvergne = {
     ] as Txt[],
   },
 
+  // Le panneau du col Saint-Thomas.
+  panel: {
+    title: { fr: 'Le panneau du col Saint-Thomas', en: 'The Col Saint-Thomas sign' } as Txt,
+    quote: {
+      fr: 'Ici commence l’Auvergne, ici finit la France',
+      en: 'Here begins Auvergne, here ends France',
+    } as Txt,
+    paragraphs: [
+      {
+        fr: 'Au col Saint-Thomas (930 m), dans les Bois Noirs, un panneau marque l’entrée symbolique en Auvergne. Le col est sur la limite entre la Loire (côté Chausseterre) et le Puy-de-Dôme (côté Arconsat).',
+        en: 'At the Col Saint-Thomas (930 m), in the Bois Noirs, a sign marks the symbolic entrance to Auvergne. The pass lies on the border between the Loire (Chausseterre side) and the Puy-de-Dôme (Arconsat side).',
+      },
+      {
+        fr: 'Il est né d’une plaisanterie d’étudiants de Thiers, en 1942, pendant l’Occupation. D’après La Montagne, la bande, menée par René Barnérias, aurait repeint un vieux panneau publicitaire et joué aux faux douaniers avec les rares passants. Le panneau a depuis été volé ou remplacé plusieurs fois, et une nouvelle version a été installée au printemps 2024.',
+        en: 'It started as a joke by students from Thiers in 1942, during the Occupation. According to the newspaper La Montagne, the group, led by René Barnérias, repainted an old advertising board and played fake customs officers with the few passers-by. The sign has since been stolen or replaced several times, and a new version was put up in spring 2024.',
+      },
+    ] as Txt[],
+    sources: [
+      { label: 'La Montagne', url: 'https://www.lamontagne.fr/arconsat-63250/loisirs/ici-commence-l-auvergne-connaissez-vous-l-histoire-de-de-ce-panneau-culte_14480489/' },
+      { label: 'Cols-cyclisme.com', url: 'https://www.cols-cyclisme.com/livradois-forez/france/col-de-saint-thomas-depuis-chabreloche-c73.htm' },
+    ],
+  },
+
+  // Le blason (dessin d’après la description héraldique : public/auvergne/blason.svg).
+  blason: {
+    title: { fr: 'Le blason', en: 'The coat of arms' } as Txt,
+    alt: { fr: 'Blason de l’Auvergne : un gonfanon rouge à franges vertes sur fond d’or', en: 'Coat of arms of Auvergne: a red gonfalon with green fringes on a gold field' } as Txt,
+    blazon: { fr: 'D’or au gonfanon de gueules, frangé de sinople.', en: 'Or, a gonfalon gules fringed vert.' } as Txt,
+    paragraphs: [
+      {
+        fr: 'Les comtes d’Auvergne portent un gonfanon, une bannière à longues franges, depuis au moins le XIIᵉ siècle. Son origine n’est pas tranchée : la bannière d’Eustache III de Boulogne, rapportée de la première croisade, ou celle de l’abbaye Saint-Géraud d’Aurillac. La région n’a pas de devise officielle.',
+        en: 'The counts of Auvergne have carried a gonfalon, a banner with long fringes, since at least the 12th century. Its origin is uncertain: the banner of Eustace III of Boulogne, brought back from the First Crusade, or that of the abbey of Saint-Géraud in Aurillac. The region has no official motto.',
+      },
+    ] as Txt[],
+    sources: [
+      { label: 'Heraldry Wiki', url: 'https://www.heraldry-wiki.com/wiki/Auvergne' },
+      { label: 'Wikipédia', url: 'https://fr.wikipedia.org/wiki/Auvergne' },
+    ],
+  },
+
   // Lieux à voir, regroupés par département. Ajoute ou retire des lieux librement.
   placesTitle: { fr: 'Lieux à voir', en: 'Places to see' } as Txt,
   areas: [

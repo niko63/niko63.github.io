@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" role="img" aria-labelledby="t d">
+  <title id="t">Blason de l’Auvergne</title>
+  <desc id="d">D’or au gonfanon de gueules, frangé de sinople.</desc>
+  <path d="M10 10H190V120C190 188 146 226 100 244C54 226 10 188 10 120Z" fill="#FCD116" stroke="#1b1b1b" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="38" y="36" width="124" height="9" rx="4.5" fill="#fff0a6" stroke="#1b1b1b" stroke-width="2.5"/>
+  <circle cx="38" cy="40.5" r="6" fill="#fff0a6" stroke="#1b1b1b" stroke-width="2.5"/>
+  <circle cx="162" cy="40.5" r="6" fill="#fff0a6" stroke="#1b1b1b" stroke-width="2.5"/>
+  <path d="M48 46H152V132L134.7 172L117.3 132L100 172L82.7 132L65.3 172L48 132Z" fill="#E3242B" stroke="#1b1b1b" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M152 132L134.7 172L117.3 132L100 172L82.7 132L65.3 172L48 132" fill="none" stroke="#009A44" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M152 132L134.7 172L117.3 132L100 172L82.7 132L65.3 172L48 132" fill="none" stroke="#1b1b1b" stroke-width="1" stroke-linejoin="round" stroke-opacity=".6"/>
+</svg>
