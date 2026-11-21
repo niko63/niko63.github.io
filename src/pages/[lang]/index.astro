@@ -32,6 +32,7 @@ const cards = [
   { to: 'about', emoji: '👋', title: t(lang, 'nav.about'), text: t(lang, 'home.card.about') },
   { to: 'work', emoji: '🎓', title: t(lang, 'nav.work'), text: t(lang, 'home.card.work') },
   { to: 'travel', emoji: '🧳', title: t(lang, 'nav.travel'), text: t(lang, 'home.card.travel') },
+  { to: 'auvergne', emoji: '🌋', title: t(lang, 'nav.auvergne'), text: t(lang, 'home.card.auvergne') },
   { to: 'fun', emoji: '🎲', title: t(lang, 'nav.fun'), text: t(lang, 'home.card.fun') },
 ];
 ---
@@ -46,7 +47,7 @@ const cards = [
   </section>
 
   <section class="wrap py-6" aria-label={t(lang, 'home.explore')}>
-    <ul class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <ul class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
       {
         cards.map((c) => (
           <li>

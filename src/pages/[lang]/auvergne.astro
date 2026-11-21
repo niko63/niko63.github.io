@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import Gallery from '../../components/Gallery.astro';
+import { LANGS, type Lang } from '../../config';
+import { t } from '../../i18n/ui';
+import { auvergne as a } from '../../data/auvergne';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+---
+
+<Base lang={lang} path="auvergne/" title={t(lang, 'nav.auvergne')}>
+  <PageTitle title={t(lang, 'nav.auvergne')} intro={a.intro[lang]} emoji="🌋" />
+
+  <div class="wrap py-8">
+    <section aria-labelledby="story">
+      <h2 id="story" class="text-2xl font-semibold">{a.story.title[lang]}</h2>
+      <div class="prose prose-lg mt-4 max-w-[68ch]">
+        {a.story.paragraphs.map((p) => <p>{p[lang]}</p>)}
+      </div>
+    </section>
+
+    <section class="mt-12" aria-labelledby="places">
+      <h2 id="places" class="text-2xl font-semibold">{a.placesTitle[lang]}</h2>
+      {
+        a.areas.map((area) => (
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-accent">{area.name[lang]}</h3>
+            <ul class="mt-3 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {area.places.map((p) => (
+                <li class="card p-5">
+                  <h4 class="text-lg font-semibold">{p.name[lang]}</h4>
+                  <p class="mt-1 text-muted">{p.text[lang]}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <Gallery lang={lang} photos={a.gallery} />
+  </div>
+</Base>
