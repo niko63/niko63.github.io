@@ -4,8 +4,12 @@ title_en: "Lecture: requirements engineering"
 matiere: ingenierie-exigences
 type: cours
 order: 1
-# description: "Une phrase sur ce support."
-# file: "/files/ingenierie-exigences/cours.pdf"   # décommente quand le PDF est dans public/files/ingenierie-exigences/
-# repo: "https://github.com/niko63/ton-depot"   # dépôt des exécutables (facultatif)
-# updated: 2026-11-17
+description: "Principes et bonnes pratiques : exigences des parties prenantes, exigences techniques, rédaction et classification."
+description_en: "Principles and good practices: stakeholders' requirements, technical requirements, writing and classification."
+file: "/files/ingenierie-exigences/cours.pdf"
+extras:
+  - label: "Version anglaise (PDF)"
+    label_en: "English version (PDF)"
+    file: "/files/ingenierie-exigences/cours-en.pdf"
+updated: 2026-11-21
 ---
