@@ -40,6 +40,11 @@ const canonical = new URL(alt(lang), Astro.site);
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
     <meta name="color-scheme" content="light dark" />
+    {
+      SITE.analytics.goatcounter && (
+        <script is:inline async data-goatcounter={`https://${SITE.analytics.goatcounter}.goatcounter.com/count`} src="//gc.zgo.at/count.js"></script>
+      )
+    }
     <!-- Applique le thème choisi avant l'affichage (évite le « flash » blanc). -->
     <script is:inline>
       try {

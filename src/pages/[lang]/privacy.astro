@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import { LANGS, SITE, type Lang } from '../../config';
+import { t } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const on = Boolean(SITE.analytics.goatcounter);
+---
+
+<Base lang={lang} path="privacy/" title={t(lang, 'footer.privacy')} indexed={false}>
+  <PageTitle title={t(lang, 'footer.privacy')} />
+  <div class="wrap py-8">
+    {
+      lang === 'fr' ? (
+        <article class="prose prose-lg max-w-[68ch]">
+          <p>Ce site ne dépose aucun cookie et ne collecte aucune donnée personnelle de façon identifiable.</p>
+          {on ? (
+            <>
+              <h2>Mesure d'audience</h2>
+              <p>
+                Pour savoir quelles pages sont consultées et quels supports (cours, TD, TP) sont téléchargés, j'utilise{' '}
+                <a href="https://www.goatcounter.com" rel="noopener">GoatCounter</a>, un outil de statistiques sans cookie. Il enregistre
+                seulement des données agrégées : page vue, pays et type d'appareil, sans adresse IP complète ni identifiant permettant de
+                vous suivre d'un site à l'autre. Ces chiffres ne servent qu'à améliorer ce site.
+              </p>
+            </>
+          ) : (
+            <p>Aucune mesure d'audience n'est actuellement active.</p>
+          )}
+          <p>Aucune publicité, aucun traceur tiers.</p>
+        </article>
+      ) : (
+        <article class="prose prose-lg max-w-[68ch]">
+          <p>This site sets no cookies and does not collect personally identifiable data.</p>
+          {on ? (
+            <>
+              <h2>Audience measurement</h2>
+              <p>
+                To know which pages are viewed and which materials (lectures, tutorials, labs) are downloaded, I use{' '}
+                <a href="https://www.goatcounter.com" rel="noopener">GoatCounter</a>, a cookie-free analytics tool. It only records
+                aggregated data: page view, country and device type, without full IP address or any identifier that could follow you across
+                sites. These figures are used only to improve this site.
+              </p>
+            </>
+          ) : (
+            <p>No audience measurement is currently active.</p>
+          )}
+          <p>No advertising, no third-party trackers.</p>
+        </article>
+      )
+    }
+  </div>
+</Base>

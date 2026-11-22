@@ -6,6 +6,9 @@ export const SITE = {
     fr: 'Enseignant-chercheur. Modèles, simulation, voyages et un peu de folie.',
     en: 'Teacher & researcher. Models, simulation, travel and a bit of madness.',
   },
+  // Mesure d'audience (GoatCounter, sans cookie). Colle ici le « code » choisi à l'inscription sur goatcounter.com
+  // (ex. 'niko63' pour https://niko63.goatcounter.com). Laisse vide pour désactiver tout suivi.
+  analytics: { goatcounter: 'niko63' },
   // Liens externes affichés dans le pied de page (supprime ceux dont tu ne veux pas).
   links: {
     github: 'https://github.com/niko63',
