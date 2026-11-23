@@ -163,7 +163,21 @@ export const auvergne = {
 
   // Photos : ajoute-les ici une fois les images copiées dans public/auvergne/ (voir l’exemple).
   galleryTitle: { fr: 'Photos', en: 'Photos' } as Txt,
-  gallery: [] as { src: string; alt: string; alt_en?: string }[],
+  gallery: [
+    { src: '/auvergne/clermont-place-de-jaude.jpg', alt: 'Place de Jaude à Clermont-Ferrand, de nuit à Noël, avec la grande roue et la statue de Vercingétorix', alt_en: 'Place de Jaude in Clermont-Ferrand at night at Christmas, with the Ferris wheel and the statue of Vercingetorix' },
+    { src: '/auvergne/clermont-cathedrale.jpg', alt: 'La cathédrale de Clermont-Ferrand vue de côté', alt_en: 'Clermont-Ferrand cathedral seen from the side' },
+    { src: '/auvergne/puy-ruelle-cathedrale.jpg', alt: 'Ruelle pavoisée du Puy-en-Velay menant à la cathédrale', alt_en: 'A street hung with bunting in Le Puy-en-Velay, leading to the cathedral' },
+    { src: '/auvergne/puy-cathedrale.jpg', alt: 'Façade de la cathédrale du Puy-en-Velay', alt_en: 'Façade of Le Puy-en-Velay cathedral' },
+    { src: '/auvergne/puy-rue-pavee.jpg', alt: 'Rue pavée du Puy-en-Velay décorée de fanions', alt_en: 'Cobbled street in Le Puy-en-Velay decorated with pennants' },
+    { src: '/auvergne/montagne-hiver-1.jpg', alt: 'Crête enneigée et pistes de ski sous un ciel bleu', alt_en: 'Snowy ridge and ski runs under a blue sky' },
+    { src: '/auvergne/montagne-hiver-2.jpg', alt: 'Sommet enneigé sous un ciel chargé de nuages', alt_en: 'Snow-covered summit under a cloudy sky' },
+    { src: '/auvergne/montagne-hiver-3.jpg', alt: 'Montagne enneigée, soleil en face, pistes au premier plan', alt_en: 'Snowy mountain facing the sun, ski runs in the foreground' },
+    { src: '/auvergne/montagne-hiver-4.jpg', alt: 'Panorama de montagne enneigée avec le soleil dans le ciel', alt_en: 'Snowy mountain panorama with the sun in the sky' },
+    { src: '/auvergne/chateau-1.jpg', alt: 'Donjon d’un château fort d’Auvergne, vu d’en bas', alt_en: 'Keep of an Auvergne castle seen from below' },
+    { src: '/auvergne/chateau-2.jpg', alt: 'Le château fort et ses remparts sous un ciel bleu', alt_en: 'The castle and its ramparts under a blue sky' },
+    { src: '/auvergne/chateau-3.jpg', alt: 'Cour intérieure du château, arcades et façades en pierre', alt_en: 'Castle courtyard with arcades and stone façades' },
+    { src: '/auvergne/chateau-4.jpg', alt: 'Porte sculptée à l’entrée du château', alt_en: 'Carved doorway at the castle entrance' },
+  ] as { src: string; alt: string; alt_en?: string }[],
   // Exemple :
   // gallery: [
   //   { src: '/auvergne/puy-en-velay.jpg', alt: 'Le Puy-en-Velay au lever du jour', alt_en: 'Le Puy-en-Velay at sunrise' },
