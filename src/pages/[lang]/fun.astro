@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { LANGS, type Lang } from '../../config';
-import { t } from '../../i18n/ui';
+import { asset, t } from '../../i18n/ui';
 
 export function getStaticPaths() {
   return LANGS.map((lang) => ({ params: { lang } }));
@@ -73,6 +73,26 @@ const L = {
     reduced: 'Reduced motion is on for your device: here is a quiet little surprise instead 🎈',
   },
 }[lang];
+
+// Article : le rubber-banding dans Mario Kart (PDF dans public/files/fun/).
+const P = {
+  fr: {
+    title: 'Mario Kart : pourquoi la carapace bleue vous rattrape',
+    sub: 'Le rubber-banding dans Mario Kart : analyse d’un mécanisme de rattrapage et enjeux de conception',
+    text: 'Un joueur en tête peut perdre la première place à cause d’objets de rattrapage distribués aux retardataires. L’article documente ce mécanisme depuis son apparition dans la série, recense les stratégies des joueurs pour en limiter l’effet, puis le relie à l’ajustement dynamique de la difficulté, en comparant avec d’autres jeux, le sport et la redistribution économique.',
+    pdfFr: 'Lire l’article (PDF, français)',
+    pdfEn: 'English version (PDF)',
+    meta: 'Nicolas Daclin · 15 pages',
+  },
+  en: {
+    title: 'Mario Kart: why the blue shell always catches you',
+    sub: 'Rubber-Banding in Mario Kart: Analyzing a Catch-Up Mechanic and Its Design Implications',
+    text: 'A player leading the race can lose first place to catch-up items given preferentially to trailing players. The article documents this mechanic from its first appearance in the series, catalogs the strategies players use to limit its effect, then connects it to dynamic difficulty adjustment, comparing it with other games, sport and economic redistribution.',
+    pdfFr: 'French version (PDF)',
+    pdfEn: 'Read the article (PDF, English)',
+    meta: 'Nicolas Daclin · 15 pages',
+  },
+}[lang];
 ---
 
 <Base lang={lang} path="fun/" title={t(lang, 'fun.title')} indexed={false}>
@@ -106,6 +126,19 @@ const L = {
         <h2 class="text-lg font-semibold">🌀 {L.chaos}</h2>
         <p class="mt-3 text-muted">{lang === 'fr' ? 'Les couleurs et les emojis perdent la tête.' : 'Colours and emojis lose their minds.'}</p>
         <button type="button" id="chaos-btn" class="btn mt-4" aria-pressed="false">{L.chaosOn}</button>
+      </div>
+    </section>
+
+    <section class="wrap pb-10" aria-labelledby="rubber">
+      <div class="card-box p-6">
+        <h2 id="rubber" class="text-xl font-semibold">🏎️ {P.title}</h2>
+        <p class="mt-1 text-sm italic text-muted">{P.sub}</p>
+        <p class="mt-3 max-w-[70ch]">{P.text}</p>
+        <p class="mt-1 text-sm text-muted">{P.meta}</p>
+        <p class="mt-4 flex flex-wrap gap-2">
+          <a class="btn btn-primary" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-fr.pdf') : asset('files/fun/rubber-banding-mariokart-en.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart" download>{lang === 'fr' ? P.pdfFr : P.pdfEn}</a>
+          <a class="btn" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-en.pdf') : asset('files/fun/rubber-banding-mariokart-fr.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart-other" download>{lang === 'fr' ? P.pdfEn : P.pdfFr}</a>
+        </p>
       </div>
     </section>
 
