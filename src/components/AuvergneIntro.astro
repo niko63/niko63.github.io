@@ -49,26 +49,37 @@ const T = {
 }[lang];
 ---
 
-<section class="card-box p-6" aria-labelledby="auv-intro">
-  <figure class="float-right mb-3 ml-5 w-28 sm:w-36">
-    <img src={asset('auvergne/blason.png')} alt={T.blasonAlt} class="w-full" />
-    <figcaption class="mt-1 text-xs text-muted">{T.blasonCap}</figcaption>
-  </figure>
-  <h2 id="auv-intro" class="text-xl font-semibold">{T.h}</h2>
-  <p class="mt-3 max-w-[70ch]">{T.p1}</p>
-  <p class="mt-3 max-w-[70ch]">{T.p2}</p>
+<div class="grid gap-5">
+  <section class="card-box p-6" aria-labelledby="auv-intro">
+    <div class="grid items-center gap-6 md:grid-cols-[1fr_11rem]">
+      <div>
+        <h2 id="auv-intro" class="text-xl font-semibold">{T.h}</h2>
+        <p class="mt-3 max-w-[70ch]">{T.p1}</p>
+        <p class="mt-3 max-w-[70ch]">{T.p2}</p>
+      </div>
+      <figure class="mx-auto w-36 md:w-full">
+        <img src={asset('auvergne/blason.png')} alt={T.blasonAlt} class="w-full" />
+        <figcaption class="mt-2 text-center text-xs text-muted">{T.blasonCap}</figcaption>
+      </figure>
+    </div>
+  </section>
 
-  {hasPanneau && (
-    <figure class="my-5 clear-both max-w-xl">
-      <img src={asset('auvergne/panneau.jpg')} alt={T.sign} class="w-full rounded-xl border border-line" loading="lazy" />
-      <figcaption class="mt-2 text-sm text-muted">{T.sign}{!PANNEAU_IS_PHOTO && ' ' + T.illus}</figcaption>
-    </figure>
-  )}
+  <section class="card-box p-6" aria-labelledby="auv-leg">
+    <h2 id="auv-leg" class="text-xl font-semibold">{T.legendsH}</h2>
+    <ul class="mt-4 grid gap-4 md:grid-cols-3">
+      {T.legends.map((l) => <li class="rounded-xl border border-line p-4">{l}</li>)}
+    </ul>
+  </section>
 
-  <h3 class="mt-4 font-semibold">{T.legendsH}</h3>
-  <ul class="mt-2 max-w-[70ch] list-disc space-y-1 pl-5">
-    {T.legends.map((l) => <li>{l}</li>)}
-  </ul>
-  <p class="mt-4 max-w-[70ch]">{T.rugby}</p>
-  <div class="clear-both"></div>
-</section>
+  <div class="grid items-center gap-5 md:grid-cols-2">
+    {hasPanneau && (
+      <figure class="card-box overflow-hidden p-0">
+        <img src={asset('auvergne/panneau.jpg')} alt={T.sign} class="h-auto w-full" width="1200" height="896" loading="lazy" />
+        <figcaption class="px-4 py-2 text-xs text-muted">{T.sign}{!PANNEAU_IS_PHOTO && ' ' + T.illus}</figcaption>
+      </figure>
+    )}
+    <section class="card-box p-6">
+      <p><span aria-hidden="true">🏉 </span>{T.rugby}</p>
+    </section>
+  </div>
+</div>
