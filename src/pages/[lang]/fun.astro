@@ -46,6 +46,20 @@ const dive = {
     { src: 'fun/plongee-alger/plongee-5.jpg', alt: { fr: 'Tombant rocheux orné d’éponges orange, en eau bleue', en: 'Rocky drop-off with orange sponges in blue water' } },
   ].map((p) => ({ src: p.src, alt: p.alt[lang] })),
 };
+
+// Parapente : photos et vidéo dans public/fun/parapente/.
+const para = {
+  title: { fr: 'Parapente au Mont Bouquet', en: 'Paragliding at Mont Bouquet' }[lang],
+  sub: { fr: 'Gard, août 2024', en: 'Gard, August 2024' }[lang],
+  video: { fr: 'Un vol en vidéo (11 s)', en: 'A flight on video (11 s)' }[lang],
+  photos: [
+    { src: 'fun/parapente/parapente-1.jpg', alt: { fr: 'Selfie en vol sous une voile jaune et rose', en: 'In-flight selfie under a yellow and pink wing' } },
+    { src: 'fun/parapente/parapente-2.jpg', alt: { fr: 'Parapente à contre-jour au-dessus de la crête, soleil bas', en: 'Paraglider against the light above the ridge, low sun' } },
+    { src: 'fun/parapente/parapente-3.jpg', alt: { fr: 'Voile rouge en vol au-dessus de la vallée et d’un village', en: 'Red wing in flight above the valley and a village' } },
+    { src: 'fun/parapente/parapente-4.jpg', alt: { fr: 'Vue aérienne sur les collines boisées et une route', en: 'Aerial view of wooded hills and a road' } },
+    { src: 'fun/parapente/parapente-5.jpg', alt: { fr: 'Vue vers le bas sur l’aire d’atterrissage, champs et vignes', en: 'Downward view of the landing field, fields and vineyards' } },
+  ].map((p) => ({ src: p.src, alt: p.alt[lang] })),
+};
 ---
 
 <Base lang={lang} path="fun/" title={t(lang, 'fun.title')}>
@@ -69,6 +83,26 @@ const dive = {
       <p class="mt-1 text-sm text-muted">{dive.sub}</p>
       <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {dive.photos.map((p) => (
+          <li>
+            <a href={asset(p.src)} class="block overflow-hidden rounded-xl border border-line">
+              <img src={asset(p.src)} alt={p.alt} class="aspect-[4/3] w-full object-cover" loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="card-box p-6" aria-labelledby="para">
+      <h2 id="para" class="text-xl font-semibold">🪂 {para.title}</h2>
+      <p class="mt-1 text-sm text-muted">{para.sub}</p>
+      <figure class="mt-4">
+        <video class="w-full max-w-3xl rounded-xl border border-line" controls preload="metadata" playsinline poster={asset('fun/parapente/vol-poster.jpg')}>
+          <source src={asset('fun/parapente/vol.mp4')} type="video/mp4" />
+        </video>
+        <figcaption class="mt-2 text-sm text-muted">{para.video}</figcaption>
+      </figure>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {para.photos.map((p) => (
           <li>
             <a href={asset(p.src)} class="block overflow-hidden rounded-xl border border-line">
               <img src={asset(p.src)} alt={p.alt} class="aspect-[4/3] w-full object-cover" loading="lazy" />
