@@ -1,0 +1,74 @@
+---
+// Texte d'introduction de la page Auvergne.
+// Photo du panneau : dépose ton fichier dans public/auvergne/panneau.jpg, elle s'affiche toute seule.
+import fs from 'node:fs';
+import path from 'node:path';
+import { asset } from '../i18n/ui';
+import type { Lang } from '../config';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+// Passe à true quand panneau.jpg est une vraie photo (sinon la légende signale une illustration).
+const PANNEAU_IS_PHOTO = false;
+const hasPanneau = fs.existsSync(path.join(process.cwd(), 'public', 'auvergne', 'panneau.jpg'));
+
+const T = {
+  fr: {
+    h: 'D’où je viens',
+    p1: 'Je suis auvergnat, du Puy-de-Dôme et de la Haute-Loire, et je m’y sens chez moi où que j’habite. C’est une région où l’on peut faire beaucoup de choses : marcher et skier en montagne, se baigner en rivière ou dans un lac de cratère, grimper vers des châteaux perchés, ou simplement regarder les volcans éteints depuis un sommet.',
+    p2: 'L’Auvergne est aussi pleine d’histoire. C’est à Gergovie que Vercingétorix a tenu tête à César en 52 avant notre ère. Les châteaux forts y sont partout. La région a vu naître le marquis de La Fayette, au château de Chavaniac, en Haute-Loire, et la famille Michelin a bâti son empire à Clermont-Ferrand.',
+    legendsH: 'Et puis il y a les légendes',
+    legends: [
+      'La Bête du Gévaudan, qui a terrorisé les campagnes entre 1764 et 1767. Son territoire est surtout lozérien, mais les récits débordent largement sur la Haute-Loire et le Cantal.',
+      'Le lac Pavin, dans le Puy-de-Dôme : on raconte qu’il est sans fond et que jeter une pierre dans l’eau déclenche l’orage.',
+      'Le lac du Bouchet, en Haute-Loire, lui aussi réputé sans fond, au creux d’un cratère presque parfaitement rond.',
+    ],
+    rugby: 'C’est aussi une terre de rugby. Si vous passez par Clermont-Ferrand, n’hésitez pas : allez voir un match de l’ASM Clermont Auvergne au stade Marcel-Michelin. L’ambiance vaut le déplacement.',
+    sign: 'Le panneau du col Saint-Thomas : « Ici commence l’Auvergne, ici finit la France ».',
+    illus: '(Illustration générée par IA.)',
+    blasonAlt: 'Blason de l’Auvergne : d’or au gonfanon de gueules frangé de sinople',
+    blasonCap: 'Le blason de l’Auvergne : d’or au gonfanon de gueules, frangé de sinople.',
+  },
+  en: {
+    h: 'Where I come from',
+    p1: 'I am from Auvergne, from the Puy-de-Dôme and Haute-Loire areas, and it still feels like home wherever I live. There is a lot to do there: hiking and skiing in the mountains, swimming in rivers or crater lakes, climbing up to hilltop castles, or just looking at the extinct volcanoes from a summit.',
+    p2: 'Auvergne is also steeped in history. At Gergovia, Vercingetorix stood up to Caesar in 52 BCE. Medieval castles are everywhere. The Marquis de La Fayette was born at the château de Chavaniac, in Haute-Loire, and the Michelin family built its empire in Clermont-Ferrand.',
+    legendsH: 'And then there are the legends',
+    legends: [
+      'The Beast of Gévaudan, which terrorised the countryside between 1764 and 1767. Its territory is mostly in Lozère, but the stories spill well into Haute-Loire and Cantal.',
+      'Lake Pavin, in the Puy-de-Dôme: it is said to be bottomless, and throwing a stone into the water is supposed to bring a storm.',
+      'Lac du Bouchet, in Haute-Loire, also reputed to be bottomless, in an almost perfectly round crater.',
+    ],
+    rugby: 'It is also rugby country. If you pass through Clermont-Ferrand, do not hesitate: go and see an ASM Clermont Auvergne game at the Stade Marcel-Michelin. The atmosphere is worth the trip.',
+    sign: 'The sign at the Col Saint-Thomas: “Here begins Auvergne, here ends France”.',
+    illus: '(AI-generated illustration.)',
+    blasonAlt: 'Coat of arms of Auvergne: gold, a red gonfanon fringed green',
+    blasonCap: 'The arms of Auvergne: Or, a gonfanon gules fringed vert.',
+  },
+}[lang];
+---
+
+<section class="card-box p-6" aria-labelledby="auv-intro">
+  <figure class="float-right mb-3 ml-5 w-28 sm:w-36">
+    <img src={asset('auvergne/blason.png')} alt={T.blasonAlt} class="w-full" />
+    <figcaption class="mt-1 text-xs text-muted">{T.blasonCap}</figcaption>
+  </figure>
+  <h2 id="auv-intro" class="text-xl font-semibold">{T.h}</h2>
+  <p class="mt-3 max-w-[70ch]">{T.p1}</p>
+  <p class="mt-3 max-w-[70ch]">{T.p2}</p>
+
+  {hasPanneau && (
+    <figure class="my-5 clear-both max-w-xl">
+      <img src={asset('auvergne/panneau.jpg')} alt={T.sign} class="w-full rounded-xl border border-line" loading="lazy" />
+      <figcaption class="mt-2 text-sm text-muted">{T.sign}{!PANNEAU_IS_PHOTO && ' ' + T.illus}</figcaption>
+    </figure>
+  )}
+
+  <h3 class="mt-4 font-semibold">{T.legendsH}</h3>
+  <ul class="mt-2 max-w-[70ch] list-disc space-y-1 pl-5">
+    {T.legends.map((l) => <li>{l}</li>)}
+  </ul>
+  <p class="mt-4 max-w-[70ch]">{T.rugby}</p>
+  <div class="clear-both"></div>
+</section>
