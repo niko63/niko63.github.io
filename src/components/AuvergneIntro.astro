@@ -24,6 +24,8 @@ const T = {
       'Le lac Pavin, dans le Puy-de-Dôme : on raconte qu’il est sans fond et que jeter une pierre dans l’eau déclenche l’orage.',
       'Le lac du Bouchet, en Haute-Loire, lui aussi réputé sans fond, au creux d’un cratère presque parfaitement rond.',
     ],
+    tableH: 'Et on y mange bien',
+    table: 'L’Auvergne est une terre de bonne table. Côté fromages, il y a le saint-nectaire, le cantal, le salers, le bleu d’Auvergne et la fourme d’Ambert. Côté plats, la truffade, la potée et la lentille verte du Puy. Il y a aussi la charcuterie, le jambon sec et le saucisson, et pour finir un verre de vin des Côtes d’Auvergne ou de verveine du Velay.',
     rugby: 'C’est aussi une terre de rugby. Si vous passez par Clermont-Ferrand, n’hésitez pas : allez voir un match de l’ASM Clermont Auvergne au stade Marcel-Michelin. L’ambiance vaut le déplacement.',
     sign: 'Le panneau du col Saint-Thomas : « Ici commence l’Auvergne, ici finit la France ».',
     illus: '(Illustration générée par IA.)',
@@ -40,6 +42,8 @@ const T = {
       'Lake Pavin, in the Puy-de-Dôme: it is said to be bottomless, and throwing a stone into the water is supposed to bring a storm.',
       'Lac du Bouchet, in Haute-Loire, also reputed to be bottomless, in an almost perfectly round crater.',
     ],
+    tableH: 'And the food is good',
+    table: 'Auvergne is a land of good food. For cheese there are Saint-Nectaire, Cantal, Salers, Bleu d’Auvergne and Fourme d’Ambert. For dishes, truffade, potée and the green lentils of Le Puy. There are also cured meats, dry-cured ham and sausage, and to finish a glass of Côtes d’Auvergne wine or Velay verbena liqueur.',
     rugby: 'It is also rugby country. If you pass through Clermont-Ferrand, do not hesitate: go and see an ASM Clermont Auvergne game at the Stade Marcel-Michelin. The atmosphere is worth the trip.',
     sign: 'The sign at the Col Saint-Thomas: “Here begins Auvergne, here ends France”.',
     illus: '(AI-generated illustration.)',
@@ -69,6 +73,11 @@ const T = {
     <ul class="mt-4 grid gap-4 md:grid-cols-3">
       {T.legends.map((l) => <li class="rounded-xl border border-line p-4">{l}</li>)}
     </ul>
+  </section>
+
+  <section class="card-box p-6" aria-labelledby="auv-table">
+    <h2 id="auv-table" class="text-xl font-semibold"><span aria-hidden="true">🧀 </span>{T.tableH}</h2>
+    <p class="mt-3 max-w-[70ch]">{T.table}</p>
   </section>
 
   <div class="grid items-center gap-5 md:grid-cols-2">
