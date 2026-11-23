@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageTitle from '../../components/PageTitle.astro';
 import { LANGS, type Lang } from '../../config';
 import { asset, t } from '../../i18n/ui';
 
@@ -8,70 +9,9 @@ export function getStaticPaths() {
 }
 const lang = Astro.params.lang as Lang;
 
-// Ajoute tes propres phrases dans ces listes !
-const excuses = {
-  fr: [
-    "Le compilateur est de mauvaise humeur aujourd'hui.",
-    "Ça marchait hier. Je n'ai rien touché. Enfin, presque rien.",
-    'Mercure est rétrograde, et mon environnement virtuel aussi.',
-    "Mon chat a marché sur le clavier juste avant le rendu.",
-    "C'est un comportement non documenté, donc une fonctionnalité.",
-    "Le serveur est parti en week-end sans prévenir.",
-    "J'ai bien codé la solution, mais dans un univers parallèle.",
-    "Le café n'avait pas encore fini son déploiement.",
-    "Un rayon cosmique a retourné un bit. C'est documenté.",
-    "Mon fichier s'appelle final_v2_VRAIMENT_final.zip, c'est dire.",
-  ],
-  en: [
-    "The compiler is in a bad mood today.",
-    "It worked yesterday. I didn't touch anything. Well, almost nothing.",
-    'Mercury is in retrograde, and so is my virtual environment.',
-    'My cat walked on the keyboard right before the deadline.',
-    "It's undocumented behaviour, so technically a feature.",
-    "The server went away for the weekend without telling anyone.",
-    'I did write the solution, but in a parallel universe.',
-    "The coffee hadn't finished deploying yet.",
-    'A cosmic ray flipped a bit. It is well documented.',
-    "My file is called final_v2_REALLY_final.zip, which says a lot.",
-  ],
-}[lang];
-
-const dice = {
-  fr: ['Tu gagnes un café imaginaire ☕', 'Rejoue, le dé a hésité 🎲', 'Tu dois dire « synergie » trois fois 🗣️', "Pause biscuit obligatoire 🍪", 'Critique ! Ton code compile du premier coup ✨', 'Échec critique : tu as oublié le point-virgule 😱', "Tu peux désormais parler aux plantes 🌱", "Bonus : un jour de plus pour le rendu 📅"],
-  en: ['You win an imaginary coffee ☕', 'Roll again, the die hesitated 🎲', 'You must say "synergy" three times 🗣️', 'Mandatory cookie break 🍪', 'Critical hit! Your code compiles first try ✨', 'Critical fail: you forgot the semicolon 😱', 'You can now talk to plants 🌱', 'Bonus: one more day before the deadline 📅'],
-}[lang];
-
-const L = {
-  fr: {
-    intro: "Ici, pas de règles. Un terrain de jeu pour tout ce qui ne rentre dans aucune autre page.",
-    btn: 'Ne clique surtout pas',
-    btnDone: 'Je t\'avais prévenu·e 🎉',
-    excuse: "Générateur d'excuses de TP",
-    excuseBtn: 'Nouvelle excuse',
-    dice: 'Dé du destin (d8)',
-    diceBtn: 'Lancer le dé',
-    chaos: 'Mode chaos',
-    chaosOn: 'Activer le chaos',
-    chaosOff: 'Calmer le jeu',
-    secret: 'Il existe un code secret… (indice : il vient des consoles des années 80)',
-    konami: 'Code secret trouvé ! Disco activé 🪩',
-    reduced: "Animations réduites sur ton appareil : j'ai juste mis une petite surprise à la place 🎈",
-  },
-  en: {
-    intro: "No rules here. A playground for everything that fits nowhere else.",
-    btn: "Absolutely don't click",
-    btnDone: 'I warned you 🎉',
-    excuse: 'Lab excuse generator',
-    excuseBtn: 'New excuse',
-    dice: 'Dice of destiny (d8)',
-    diceBtn: 'Roll the die',
-    chaos: 'Chaos mode',
-    chaosOn: 'Enable chaos',
-    chaosOff: 'Calm down',
-    secret: 'There is a secret code… (hint: it comes from 80s game consoles)',
-    konami: 'Secret code found! Disco on 🪩',
-    reduced: 'Reduced motion is on for your device: here is a quiet little surprise instead 🎈',
-  },
+const intro = {
+  fr: 'Ce qui ne va nulle part ailleurs.',
+  en: 'What fits nowhere else.',
 }[lang];
 
 // Article : le rubber-banding dans Mario Kart (PDF dans public/files/fun/).
@@ -95,215 +35,20 @@ const P = {
 }[lang];
 ---
 
-<Base lang={lang} path="fun/" title={t(lang, 'fun.title')} indexed={false}>
-  <div id="fun-root" class="fun relative overflow-hidden">
-    <section class="wrap pt-16 pb-10 text-center">
-      <h1 class="text-5xl font-extrabold tracking-tight sm:text-7xl">
-        <span aria-hidden="true">🎲</span> <span class="fun-title">{t(lang, 'fun.title')}</span> <span aria-hidden="true">🎪</span>
-      </h1>
-      <p class="mx-auto mt-4 max-w-xl text-lg text-muted">{L.intro}</p>
-      <div class="mt-8">
-        <button type="button" id="dont-click" class="fun-btn">{L.btn}</button>
-        <p id="dont-click-msg" class="mt-3 min-h-6 font-semibold text-accent" role="status"></p>
-      </div>
+<Base lang={lang} path="fun/" title={t(lang, 'fun.title')}>
+  <PageTitle title={t(lang, 'fun.title')} intro={intro} emoji="🎲" />
+
+  <div class="wrap grid gap-5 py-8">
+    <!-- Pour ajouter un élément : copie le bloc <section> ci-dessous et change son contenu. -->
+    <section class="card-box p-6" aria-labelledby="rubber">
+      <h2 id="rubber" class="text-xl font-semibold">🏎️ {P.title}</h2>
+      <p class="mt-1 text-sm italic text-muted">{P.sub}</p>
+      <p class="mt-3 max-w-[70ch]">{P.text}</p>
+      <p class="mt-1 text-sm text-muted">{P.meta}</p>
+      <p class="mt-4 flex flex-wrap gap-2">
+        <a class="btn btn-primary" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-fr.pdf') : asset('files/fun/rubber-banding-mariokart-en.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart" download>{lang === 'fr' ? P.pdfFr : P.pdfEn}</a>
+        <a class="btn" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-en.pdf') : asset('files/fun/rubber-banding-mariokart-fr.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart-other" download>{lang === 'fr' ? P.pdfEn : P.pdfFr}</a>
+      </p>
     </section>
-
-    <section class="wrap grid gap-5 pb-10 md:grid-cols-3">
-      <div class="card-box p-6">
-        <h2 class="text-lg font-semibold">🧑‍💻 {L.excuse}</h2>
-        <p id="excuse" class="mt-3 min-h-24 text-lg" role="status" aria-live="polite">{excuses[0]}</p>
-        <button type="button" id="excuse-btn" class="btn mt-2">{L.excuseBtn}</button>
-      </div>
-
-      <div class="card-box p-6">
-        <h2 class="text-lg font-semibold">🎲 {L.dice}</h2>
-        <p id="die" class="fun-die mt-3 text-center text-6xl" aria-hidden="true">🎲</p>
-        <p id="die-text" class="mt-2 min-h-12 text-center" role="status" aria-live="polite"></p>
-        <button type="button" id="die-btn" class="btn mt-2">{L.diceBtn}</button>
-      </div>
-
-      <div class="card-box p-6">
-        <h2 class="text-lg font-semibold">🌀 {L.chaos}</h2>
-        <p class="mt-3 text-muted">{lang === 'fr' ? 'Les couleurs et les emojis perdent la tête.' : 'Colours and emojis lose their minds.'}</p>
-        <button type="button" id="chaos-btn" class="btn mt-4" aria-pressed="false">{L.chaosOn}</button>
-      </div>
-    </section>
-
-    <section class="wrap pb-10" aria-labelledby="rubber">
-      <div class="card-box p-6">
-        <h2 id="rubber" class="text-xl font-semibold">🏎️ {P.title}</h2>
-        <p class="mt-1 text-sm italic text-muted">{P.sub}</p>
-        <p class="mt-3 max-w-[70ch]">{P.text}</p>
-        <p class="mt-1 text-sm text-muted">{P.meta}</p>
-        <p class="mt-4 flex flex-wrap gap-2">
-          <a class="btn btn-primary" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-fr.pdf') : asset('files/fun/rubber-banding-mariokart-en.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart" download>{lang === 'fr' ? P.pdfFr : P.pdfEn}</a>
-          <a class="btn" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-en.pdf') : asset('files/fun/rubber-banding-mariokart-fr.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart-other" download>{lang === 'fr' ? P.pdfEn : P.pdfFr}</a>
-        </p>
-      </div>
-    </section>
-
-    <p class="pb-6 text-center text-sm text-muted">{L.secret}</p>
-    <div id="rain" aria-hidden="true" class="pointer-events-none fixed inset-0 z-30 overflow-hidden"></div>
-    <canvas id="confetti" aria-hidden="true" class="pointer-events-none fixed inset-0 z-50"></canvas>
   </div>
 </Base>
-
-<style is:global>
-  .fun {
-    background:
-      radial-gradient(circle at 15% 10%, color-mix(in srgb, #f472b6 22%, transparent), transparent 40%),
-      radial-gradient(circle at 85% 20%, color-mix(in srgb, #38bdf8 22%, transparent), transparent 40%),
-      radial-gradient(circle at 50% 90%, color-mix(in srgb, #facc15 18%, transparent), transparent 45%);
-  }
-  .fun-title {
-    background: linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #34d399, #facc15, #f472b6);
-    background-size: 300% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: slide 8s linear infinite;
-  }
-  .fun-btn {
-    padding: 0.9rem 1.6rem;
-    border-radius: 999px;
-    font-weight: 800;
-    font-size: 1.05rem;
-    color: #fff;
-    background: linear-gradient(135deg, #ec4899, #8b5cf6);
-    box-shadow: 0 10px 30px -10px #ec4899;
-    transition: transform 0.15s;
-  }
-  .fun-btn:hover {
-    transform: scale(1.06) rotate(-2deg);
-  }
-  .fun-die.rolling {
-    animation: spin 0.6s ease-in-out;
-  }
-  .fun.chaos {
-    animation: hue 4s linear infinite;
-  }
-  .fun.chaos .card {
-    animation: wobble 1.2s ease-in-out infinite alternate;
-  }
-  .fun.disco {
-    animation: hue 1.2s linear infinite;
-  }
-  .rain-emoji {
-    position: absolute;
-    top: -2rem;
-    animation: fall linear forwards;
-  }
-  @keyframes slide { to { background-position: 300% 0; } }
-  @keyframes spin { to { transform: rotate(720deg) scale(1.2); } }
-  @keyframes hue { to { filter: hue-rotate(360deg); } }
-  @keyframes wobble { from { transform: rotate(-1.5deg); } to { transform: rotate(1.5deg) translateY(-4px); } }
-  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-  /* Respect des préférences d'accessibilité : pas d'animation si l'utilisateur les a réduites */
-  @media (prefers-reduced-motion: reduce) {
-    .fun-title, .fun.chaos, .fun.disco, .fun.chaos .card, .fun-die.rolling { animation: none !important; }
-    .fun-btn:hover { transform: none; }
-  }
-</style>
-
-<script is:inline define:vars={{ excuses, dice, L }}>
-  (function () {
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var root = document.getElementById('fun-root');
-    var pick = function (arr, not) {
-      var v;
-      do { v = arr[Math.floor(Math.random() * arr.length)]; } while (arr.length > 1 && v === not);
-      return v;
-    };
-
-    // --- Confettis (canvas, sans bibliothèque) ---
-    var canvas = document.getElementById('confetti');
-    var ctx = canvas.getContext('2d');
-    var parts = [], raf = null;
-    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-    addEventListener('resize', resize); resize();
-    function step() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      parts.forEach(function (p) {
-        p.vy += 0.15; p.x += p.vx; p.y += p.vy; p.r += p.vr;
-        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c;
-        ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6); ctx.restore();
-      });
-      parts = parts.filter(function (p) { return p.y < canvas.height + 20; });
-      if (parts.length) raf = requestAnimationFrame(step);
-      else { ctx.clearRect(0, 0, canvas.width, canvas.height); raf = null; }
-    }
-    function confetti(x, y) {
-      if (reduced) return;
-      var colors = ['#f472b6', '#a78bfa', '#38bdf8', '#34d399', '#facc15', '#fb923c'];
-      for (var i = 0; i < 140; i++) {
-        var a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 8;
-        parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 5, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.4, s: 6 + Math.random() * 8, c: colors[i % colors.length] });
-      }
-      if (!raf) raf = requestAnimationFrame(step);
-    }
-
-    // --- Pluie d'emojis ---
-    var rain = document.getElementById('rain');
-    function emojiRain(list, n) {
-      if (reduced) return;
-      for (var i = 0; i < n; i++) {
-        var e = document.createElement('span');
-        e.className = 'rain-emoji';
-        e.textContent = list[i % list.length];
-        e.style.left = Math.random() * 100 + 'vw';
-        e.style.fontSize = 1 + Math.random() * 1.8 + 'rem';
-        e.style.animationDuration = 3 + Math.random() * 3 + 's';
-        e.style.animationDelay = Math.random() * 1.5 + 's';
-        rain.appendChild(e);
-        setTimeout(function (el) { el.remove(); }, 7000, e);
-      }
-    }
-
-    // --- Bouton interdit ---
-    var msg = document.getElementById('dont-click-msg');
-    document.getElementById('dont-click').addEventListener('click', function (ev) {
-      msg.textContent = reduced ? L.reduced : L.btnDone;
-      confetti(ev.clientX, ev.clientY);
-    });
-
-    // --- Excuses ---
-    var ex = document.getElementById('excuse');
-    document.getElementById('excuse-btn').addEventListener('click', function () {
-      ex.textContent = pick(excuses, ex.textContent);
-    });
-
-    // --- Dé ---
-    var die = document.getElementById('die'), dt = document.getElementById('die-text');
-    document.getElementById('die-btn').addEventListener('click', function () {
-      var n = Math.floor(Math.random() * dice.length);
-      die.classList.remove('rolling'); void die.offsetWidth; die.classList.add('rolling');
-      dt.textContent = (n + 1) + ' : ' + dice[n];
-    });
-
-    // --- Chaos ---
-    var chaosBtn = document.getElementById('chaos-btn'), chaos = false, timer = null;
-    chaosBtn.addEventListener('click', function () {
-      chaos = !chaos;
-      root.classList.toggle('chaos', chaos);
-      chaosBtn.setAttribute('aria-pressed', String(chaos));
-      chaosBtn.textContent = chaos ? L.chaosOff : L.chaosOn;
-      clearInterval(timer);
-      if (chaos) timer = setInterval(function () { emojiRain(['🦄', '🍕', '🚀', '🧪', '🐙', '🪩'], 6); }, 2500);
-    });
-
-    // --- Konami code ---
-    var seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'], pos = 0;
-    addEventListener('keydown', function (e) {
-      var k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-      pos = k === seq[pos] ? pos + 1 : (k === seq[0] ? 1 : 0);
-      if (pos === seq.length) {
-        pos = 0;
-        root.classList.toggle('disco');
-        msg.textContent = L.konami;
-        confetti(innerWidth / 2, innerHeight / 3);
-        emojiRain(['🪩', '🎶', '✨', '🕺'], 24);
-      }
-    });
-  })();
-</script>
