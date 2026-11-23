@@ -34,6 +34,26 @@ const P = {
   },
 }[lang];
 
+// Article : le seuil de reprise dans les jeux vidéo (PDF dans public/files/fun/).
+const R = {
+  fr: {
+    title: 'Le seuil de reprise : reprendre, recommencer ou abandonner un jeu',
+    sub: 'Le seuil de reprise dans les jeux vidéo : typologie des conduites face aux jeux inachevés et enjeux de conception',
+    text: 'Un même jeu peut être commencé, laissé de côté, repris, recommencé de zéro ou jamais conclu, mais le vocabulaire courant ne nomme que le backlog et le 100 %. L’article recense les termes existants, propose une typologie de cinq conduites (reprise, relance, complétion différée, jeu en pointillé, pile) et un modèle du choix entre reprise et relance fondé sur un seuil de reprise, puis en tire des principes de conception pour faciliter le retour du joueur sans le lui imposer.',
+    pdfFr: 'Lire l’article (PDF, français)',
+    pdfEn: 'English version (PDF)',
+    meta: 'Nicolas Daclin · 11 pages (FR), 10 pages (EN)',
+  },
+  en: {
+    title: 'The resumption threshold: resuming, restarting or giving up on a game',
+    sub: 'The Resumption Threshold in Video Games: A Typology of Player Behaviours Toward Unfinished Games and Design Implications',
+    text: 'The same game can be started, set aside, resumed, restarted from scratch or never concluded, yet everyday vocabulary only names the backlog and the 100 %. The article surveys existing terms, proposes a typology of five behaviours (resumption, restart, deferred completion, intermittent play, backlog pile) and a model of the choice between resuming and restarting based on a resumption threshold, then draws design principles to ease a player’s return without forcing it.',
+    pdfFr: 'French version (PDF)',
+    pdfEn: 'Read the article (PDF, English)',
+    meta: 'Nicolas Daclin · 10 pages (EN), 11 pages (FR)',
+  },
+}[lang];
+
 // Plongée : photos dans public/fun/plongee-alger/. Pour en ajouter, copie une ligne de la liste.
 const dive = {
   title: { fr: 'Plongée en Algérie', en: 'Diving in Algeria' }[lang],
@@ -75,6 +95,17 @@ const para = {
       <p class="mt-4 flex flex-wrap gap-2">
         <a class="btn btn-primary" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-fr.pdf') : asset('files/fun/rubber-banding-mariokart-en.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart" download>{lang === 'fr' ? P.pdfFr : P.pdfEn}</a>
         <a class="btn" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-en.pdf') : asset('files/fun/rubber-banding-mariokart-fr.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart-other" download>{lang === 'fr' ? P.pdfEn : P.pdfFr}</a>
+      </p>
+    </section>
+
+    <section class="card-box p-6" aria-labelledby="seuil">
+      <h2 id="seuil" class="text-xl font-semibold">🎮 {R.title}</h2>
+      <p class="mt-1 text-sm italic text-muted">{R.sub}</p>
+      <p class="mt-3 max-w-[70ch]">{R.text}</p>
+      <p class="mt-1 text-sm text-muted">{R.meta}</p>
+      <p class="mt-4 flex flex-wrap gap-2">
+        <a class="btn btn-primary" href={lang === 'fr' ? asset('files/fun/seuil-de-reprise-fr.pdf') : asset('files/fun/seuil-de-reprise-en.pdf')} data-goatcounter-click="download:/files/fun/seuil-de-reprise" download>{lang === 'fr' ? R.pdfFr : R.pdfEn}</a>
+        <a class="btn" href={lang === 'fr' ? asset('files/fun/seuil-de-reprise-en.pdf') : asset('files/fun/seuil-de-reprise-fr.pdf')} data-goatcounter-click="download:/files/fun/seuil-de-reprise-other" download>{lang === 'fr' ? R.pdfEn : R.pdfFr}</a>
       </p>
     </section>
 
