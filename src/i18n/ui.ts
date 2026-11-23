@@ -80,7 +80,7 @@ export const ui = {
     'continent.europe': 'Europe',
     'continent.asie': 'Asie',
     'continent.oceanie': 'Océanie',
-    'fun.title': 'Folie',
+    'fun.title': 'Fun',
     'search.title': 'Recherche',
     'search.hint': 'La recherche fonctionne sur le site publié (après « npm run build »).',
     'footer.rights': 'Site personnel',
