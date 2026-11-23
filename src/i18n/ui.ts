@@ -8,7 +8,7 @@ export const ui = {
     'nav.work': 'Travail',
     'nav.travel': 'Voyages',
     'nav.auvergne': 'Auvergne',
-    'nav.fun': 'Folie',
+    'nav.fun': 'Fun',
     'nav.search': 'Rechercher',
     'nav.menu': 'Menu',
     'skip': 'Aller au contenu',
