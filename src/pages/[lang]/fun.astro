@@ -33,6 +33,19 @@ const P = {
     meta: 'Nicolas Daclin · 15 pages',
   },
 }[lang];
+
+// Plongée : photos dans public/fun/plongee-alger/. Pour en ajouter, copie une ligne de la liste.
+const dive = {
+  title: { fr: 'Plongée en Algérie', en: 'Diving in Algeria' }[lang],
+  sub: { fr: 'Baie d’Alger, été 2024', en: 'Bay of Algiers, summer 2024' }[lang],
+  photos: [
+    { src: 'fun/plongee-alger/plongee-1.jpg', alt: { fr: 'Plongeur en palmes vertes le long de la paroi rocheuse', en: 'Diver with green fins along the rock wall' } },
+    { src: 'fun/plongee-alger/plongee-2.jpg', alt: { fr: 'Plongeur en pleine eau au-dessus des rochers couverts d’algues', en: 'Diver in open water above algae-covered rocks' } },
+    { src: 'fun/plongee-alger/plongee-3.jpg', alt: { fr: 'Plongeur qui s’éloigne le long d’une falaise sous-marine', en: 'Diver swimming away along an underwater cliff' } },
+    { src: 'fun/plongee-alger/plongee-4.jpg', alt: { fr: 'Selfie sous l’eau, bulles et fond rocheux', en: 'Underwater selfie, bubbles and rocky seabed' } },
+    { src: 'fun/plongee-alger/plongee-5.jpg', alt: { fr: 'Tombant rocheux orné d’éponges orange, en eau bleue', en: 'Rocky drop-off with orange sponges in blue water' } },
+  ].map((p) => ({ src: p.src, alt: p.alt[lang] })),
+};
 ---
 
 <Base lang={lang} path="fun/" title={t(lang, 'fun.title')}>
@@ -49,6 +62,20 @@ const P = {
         <a class="btn btn-primary" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-fr.pdf') : asset('files/fun/rubber-banding-mariokart-en.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart" download>{lang === 'fr' ? P.pdfFr : P.pdfEn}</a>
         <a class="btn" href={lang === 'fr' ? asset('files/fun/rubber-banding-mariokart-en.pdf') : asset('files/fun/rubber-banding-mariokart-fr.pdf')} data-goatcounter-click="download:/files/fun/rubber-banding-mariokart-other" download>{lang === 'fr' ? P.pdfEn : P.pdfFr}</a>
       </p>
+    </section>
+
+    <section class="card-box p-6" aria-labelledby="dive">
+      <h2 id="dive" class="text-xl font-semibold">🤿 {dive.title}</h2>
+      <p class="mt-1 text-sm text-muted">{dive.sub}</p>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {dive.photos.map((p) => (
+          <li>
+            <a href={asset(p.src)} class="block overflow-hidden rounded-xl border border-line">
+              <img src={asset(p.src)} alt={p.alt} class="aspect-[4/3] w-full object-cover" loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   </div>
 </Base>
