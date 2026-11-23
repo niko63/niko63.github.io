@@ -177,6 +177,12 @@ export const auvergne = {
     { src: '/auvergne/chateau-2.jpg', alt: 'Le château fort et ses remparts sous un ciel bleu', alt_en: 'The castle and its ramparts under a blue sky' },
     { src: '/auvergne/chateau-3.jpg', alt: 'Cour intérieure du château, arcades et façades en pierre', alt_en: 'Castle courtyard with arcades and stone façades' },
     { src: '/auvergne/chateau-4.jpg', alt: 'Porte sculptée à l’entrée du château', alt_en: 'Carved doorway at the castle entrance' },
+    { src: '/auvergne/riviere-plage.jpg', alt: 'Rivière à l’eau claire bordée d’une plage de sable et de rochers', alt_en: 'Clear river lined with a sandy beach and rocks' },
+    { src: '/auvergne/vallee-pont.jpg', alt: 'Vallée boisée avec un pont et une tour au-dessus de la rivière', alt_en: 'Wooded valley with a bridge and a tower above the river' },
+    { src: '/auvergne/prairie-chemin.jpg', alt: 'Chemin de terre dans une prairie fleurie, en été', alt_en: 'Dirt path through a flowering meadow in summer' },
+    { src: '/auvergne/lac-1.jpg', alt: 'Lac de cratère entouré de forêt de sapins', alt_en: 'Crater lake surrounded by fir forest' },
+    { src: '/auvergne/lac-2.jpg', alt: 'Rive du lac, roseaux au premier plan', alt_en: 'Lakeshore with reeds in the foreground' },
+    { src: '/auvergne/lac-3.jpg', alt: 'Pédalos amarrés au bord du lac', alt_en: 'Pedal boats moored at the lake shore' },
   ] as { src: string; alt: string; alt_en?: string }[],
   // Exemple :
   // gallery: [
