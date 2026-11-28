@@ -16,6 +16,26 @@ const items: { key: UiKey; to: string }[] = [
   { key: 'nav.auvergne', to: 'auvergne' },
   { key: 'nav.fun', to: 'fun' },
 ];
+const egg =
+  lang === 'fr'
+    ? {
+        title: 'Nicolas, d’où ça vient ?',
+        text: [
+          'Nicolas vient du grec Nikólaos, de nikê (la victoire) et laos (le peuple). Autrement dit, la victoire du peuple.',
+          'Le prénom doit son succès en Occident à saint Nicolas de Myre, évêque du IVe siècle en Asie Mineure, patron des enfants, des marins et de la Lorraine. C’est lui qui, par le néerlandais Sinterklaas, a fini par devenir le Père Noël.',
+          'Oui, je porte le prénom du Père Noël.',
+        ],
+        close: 'Fermer',
+      }
+    : {
+        title: 'Nicolas, where does it come from?',
+        text: [
+          'Nicolas comes from the Greek Nikólaos, from nikê (victory) and laos (people). In other words, victory of the people.',
+          'The name owes its success in the West to Saint Nicholas of Myra, a 4th-century bishop in Asia Minor, patron saint of children, sailors and Lorraine. Through the Dutch Sinterklaas, he ended up becoming Santa Claus.',
+          'Yes, I share my first name with Santa Claus.',
+        ],
+        close: 'Close',
+      };
 const current = path.replace(/\/$/, '').split('/')[0];
 ---
 
@@ -23,6 +43,7 @@ const current = path.replace(/\/$/, '').split('/')[0];
   <div class="wrap flex items-center justify-between gap-4 py-3.5">
     <a href={href(lang)} class="flex items-center gap-2 text-lg font-bold tracking-tight">
       <span
+        data-badge
         class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-base text-accent-fg"
         aria-hidden="true">{SITE.name.charAt(0)}</span
       >
@@ -148,4 +169,40 @@ const current = path.replace(/\/$/, '').split('/')[0];
     const order: Mode[] = ['auto', 'light', 'dark'];
     apply(order[(order.indexOf(current()) + 1) % order.length]);
   });
+</script>
+
+<dialog id="egg" class="egg" aria-labelledby="egg-title">
+  <h2 id="egg-title" class="text-xl font-semibold">{egg.title}</h2>
+  {egg.text.map((p) => <p class="mt-3 text-muted">{p}</p>)}
+  <form method="dialog" class="mt-5 text-right"><button class="btn btn-primary">{egg.close}</button></form>
+</dialog>
+
+<script>
+  // Cinq clics rapides sur le badge ouvrent l'étymologie du prénom. Un clic isolé garde son rôle (retour à l'accueil).
+  const badge = document.querySelector<HTMLElement>('[data-badge]');
+  const dlg = document.getElementById('egg') as HTMLDialogElement | null;
+  if (badge && dlg) {
+    let n = 0;
+    let timer: number | undefined;
+    const link = badge.closest('a') as HTMLAnchorElement;
+    link.addEventListener('click', (e) => {
+      if (!(e.target as HTMLElement).closest('[data-badge]')) return;
+      e.preventDefault();
+      n++;
+      clearTimeout(timer);
+      if (n >= 5) {
+        n = 0;
+        dlg.showModal();
+        return;
+      }
+      timer = window.setTimeout(() => {
+        const wasSingle = n === 1;
+        n = 0;
+        if (wasSingle) location.href = link.href;
+      }, 600);
+    });
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+  }
 </script>

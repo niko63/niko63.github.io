@@ -220,3 +220,16 @@ a.card:hover {
   --pagefind-ui-tag: var(--accent-soft);
   --pagefind-ui-font: var(--font-sans);
 }
+
+.egg {
+  max-width: min(32rem, calc(100vw - 2rem));
+  margin: auto;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  color: inherit;
+}
+.egg::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
