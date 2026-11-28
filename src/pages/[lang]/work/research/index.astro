@@ -14,9 +14,9 @@ const tx = (x: string | { fr: string; en: string }) => (typeof x === 'string' ? 
 const maxDomain = Math.max(...r.domains.map((d) => d.n));
 const maxKw = Math.max(...r.keywords.map((k) => k.n));
 const title = t(lang, 'work.research');
-const stats: { n: number; label: string; note?: string }[] = [
+const stats: { n: number; label: string; note?: string; url?: string }[] = [
   ...r.stats.map((s) => ({ n: s.n, label: s.label[lang] })),
-  ...(r.hIndex.value !== null ? [{ n: r.hIndex.value, label: r.hIndex.label[lang], note: r.hIndex.source }] : []),
+  ...(r.hIndex.value !== null ? [{ n: r.hIndex.value, label: r.hIndex.label[lang], note: r.hIndex.source, url: r.hIndex.url }] : []),
 ];
 ---
 
@@ -33,7 +33,9 @@ const stats: { n: number; label: string; note?: string }[] = [
           <li class="card-box p-5">
             <p class="text-4xl font-bold text-accent">{s.n}</p>
             <p class="text-sm text-muted">{s.label}</p>
-            {s.note && <p class="mt-0.5 text-xs text-muted">{s.note}</p>}
+            {s.note && (s.url
+              ? <a href={s.url} target="_blank" rel="noopener" class="mt-0.5 block text-xs text-muted underline decoration-dotted hover:text-accent">{s.note}</a>
+              : <p class="mt-0.5 text-xs text-muted">{s.note}</p>)}
           </li>
         ))
       }

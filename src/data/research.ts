@@ -14,6 +14,7 @@ export const research = {
     value: 19 as number | null,
     label: { fr: 'h-index', en: 'h-index' } as Txt,
     source: 'Google Scholar, nov. 2026',
+    url: 'https://scholar.google.com/citations?user=Tfx289EAAAAJ&hl=fr',
   },
 
   // Chiffres du profil HAL.
