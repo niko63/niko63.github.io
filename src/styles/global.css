@@ -179,6 +179,13 @@ a.card:hover {
 .icon-btn {
   padding: 0.5rem 0.65rem;
 }
+/* Bouton du menu mobile : masqué dès la largeur « md » (768 px). La classe utilitaire md:hidden
+   perdait face à .icon-btn (display: inline-flex), d'où un bouton visible mais inutile sur ordinateur. */
+@media (min-width: 48rem) {
+  .menu-btn {
+    display: none;
+  }
+}
 .btn:hover,
 .icon-btn:hover {
   border-color: var(--accent);
