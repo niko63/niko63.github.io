@@ -33,20 +33,22 @@ const lang = Astro.params.lang as Lang;
           </p>
           <p>
             Auvergnat d’origine, expatrié depuis un bon moment, je vis aujourd’hui du côté de Nîmes.
-            L’<a href={href(lang, 'auvergne')}>Auvergne</a> reste ma région, et je ne rate jamais une occasion de le rappeler.
+            L’<a href={href(lang, 'auvergne')}>Auvergne</a> reste ma région, et ça se voit : elle a sa page.
           </p>
 
           <h2>Ce que je fais</h2>
           <p>
-            Je suis enseignant-chercheur. Mes travaux portent sur les processus, de leur modélisation à leur simulation en passant
-            par leur pilotage, leur automatisation et leur orchestration, ainsi que sur l’interopérabilité des organisations.
-            Ils s’appliquent à l’industrie, l’apiculture, la santé, l’agriculture, les transports…
-            Tout a commencé par l’interopérabilité, qui a donné naissance à un cadre d’interopérabilité des entreprises.
+            Je suis enseignant-chercheur. Tout a commencé par l’interopérabilité, c’est-à-dire faire travailler ensemble des
+            organisations qui ne parlent pas la même langue, et ce travail a donné naissance à un cadre d’interopérabilité des
+            entreprises. Aujourd’hui, mes travaux portent sur les processus, de leur modélisation à leur simulation en passant par
+            leur pilotage, leur automatisation et leur orchestration, sans jamais lâcher l’interopérabilité. Ils s’appliquent à
+            l’industrie, l’apiculture, la santé, l’agriculture, les transports…
           </p>
           <p>
             Thèse à Bordeaux, HDR à Montpellier, et aujourd’hui je dirige le département d’enseignement PRISM (performance industrielle
-            et systèmes mécatroniques) de l’IMT Mines Alès. Si mes cours (modélisation des processus, pilotage, automatisation et orchestration, ingénierie des exigences)
-            ou mes <a href={href(lang, 'work') + '#research'}>recherches</a> t’intéressent, tu trouveras tout sur la <a href={href(lang, 'work') + '#teaching'}>page Travail</a>.
+            et systèmes mécatroniques) de l’IMT Mines Alès. Mes cours vont de la modélisation des processus à l’ingénierie des exigences.
+            Pour les <a href={href(lang, 'work') + '#teaching'}>cours</a> comme pour la <a href={href(lang, 'work') + '#research'}>recherche</a>,
+            direction la page Travail.
           </p>
 
           <h2>Ce qui n’est pas dans mon CV</h2>
@@ -55,8 +57,7 @@ const lang = Astro.params.lang as Lang;
             Une idée à la con ? Tu es au bon endroit, et tu peux compter sur moi !
           </p>
           <p>
-            Les <a href={href(lang, 'travel')}>voyages</a> et l’<a href={href(lang, 'auvergne')}>Auvergne</a> ont leur page,
-            et tout le reste a atterri dans <a href={href(lang, 'fun')}>Fun</a>.
+            Les <a href={href(lang, 'travel')}>voyages</a> ont leur page, et tout le reste a atterri dans <a href={href(lang, 'fun')}>Fun</a>.
           </p>
         </article>
       ) : (
@@ -66,20 +67,21 @@ const lang = Astro.params.lang as Lang;
           </p>
           <p>
             I am from Auvergne, a long-time expat, and I now live near Nîmes.
-            <a href={href(lang, 'auvergne')}>Auvergne</a> is still my region, and I never miss a chance to say so.
+            <a href={href(lang, 'auvergne')}>Auvergne</a> is still my region, and it shows: it has its own page.
           </p>
 
           <h2>What I do</h2>
           <p>
-            I am a lecturer and researcher. My work deals with processes, from modelling to simulation by way of steering,
-            automation and orchestration, as well as with the interoperability of organisations.
-            It applies to industry, beekeeping, healthcare, agriculture, transport…
-            It all started with interoperability, which gave rise to an enterprise interoperability framework.
+            I am a lecturer and researcher. It all started with interoperability, getting organisations that do not speak the
+            same language to work together, and that work gave birth to an enterprise interoperability framework. Today my work
+            deals with processes, from modelling to simulation by way of steering, automation and orchestration, without ever
+            letting go of interoperability. It applies to industry, beekeeping, healthcare, agriculture, transport…
           </p>
           <p>
             PhD in Bordeaux, habilitation in Montpellier, and today I head the PRISM teaching department (industrial performance
-            and mechatronic systems) at IMT Mines Alès. If my courses (process modelling, steering, automation and orchestration, requirements engineering)
-            or my <a href={href(lang, 'work') + '#research'}>research</a> interest you, you will find everything on the <a href={href(lang, 'work') + '#teaching'}>Work page</a>.
+            and mechatronic systems) at IMT Mines Alès. My courses range from process modelling to requirements engineering.
+            For the <a href={href(lang, 'work') + '#teaching'}>courses</a> as for the <a href={href(lang, 'work') + '#research'}>research</a>,
+            head to the Work page.
           </p>
 
           <h2>What is not on my CV</h2>
@@ -88,8 +90,7 @@ const lang = Astro.params.lang as Lang;
             A silly idea? You are in the right place, and you can count on me!
           </p>
           <p>
-            The <a href={href(lang, 'travel')}>trips</a> and <a href={href(lang, 'auvergne')}>Auvergne</a> have their own pages,
-            and everything else ended up in <a href={href(lang, 'fun')}>Fun</a>.
+            The <a href={href(lang, 'travel')}>trips</a> have their own page, and everything else ended up in <a href={href(lang, 'fun')}>Fun</a>.
           </p>
         </article>
       )
