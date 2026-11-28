@@ -169,6 +169,7 @@ export const auvergne = {
     { src: '/auvergne/stade-1.jpg', alt: 'Échauffement des joueurs de l’ASM au stade Marcel-Michelin, avant le match', alt_en: 'ASM players warming up at the Stade Marcel-Michelin before the match' },
     { src: '/auvergne/stade-2.jpg', alt: 'Les tribunes du stade Marcel-Michelin, pleines un soir de match', alt_en: 'The stands of the Stade Marcel-Michelin, packed on a match night' },
     { src: '/auvergne/stade-3.jpg', alt: 'Le stade Marcel-Michelin de nuit, vu des tribunes, pendant le match', alt_en: 'The Stade Marcel-Michelin at night, seen from the stands, during the match' },
+    { src: '/auvergne/stade-4.jpg', alt: 'Tifo « Ici on est à Montferrand, une terre de rugby » déployé dans les tribunes du stade Marcel-Michelin (photo retouchée par IA)', alt_en: 'Banner reading “Ici on est à Montferrand, une terre de rugby” unfurled in the stands of the Stade Marcel-Michelin (AI-retouched photo)' },
     { src: '/auvergne/puy-ruelle-cathedrale.jpg', alt: 'Ruelle pavoisée du Puy-en-Velay menant à la cathédrale', alt_en: 'A street hung with bunting in Le Puy-en-Velay, leading to the cathedral' },
     { src: '/auvergne/puy-cathedrale.jpg', alt: 'Façade de la cathédrale du Puy-en-Velay', alt_en: 'Façade of Le Puy-en-Velay cathedral' },
     { src: '/auvergne/puy-rue-pavee.jpg', alt: 'Rue pavée du Puy-en-Velay décorée de fanions', alt_en: 'Cobbled street in Le Puy-en-Velay decorated with pennants' },
