@@ -11,9 +11,9 @@ export const research = {
 
   // Indicateur d'impact, affiché seulement quand value est renseigné. Une seule source, avec sa date.
   hIndex: {
-    value: null as number | null,
+    value: 19 as number | null,
     label: { fr: 'h-index', en: 'h-index' } as Txt,
-    source: '', // ex. 'Google Scholar, nov. 2026'
+    source: 'Google Scholar, nov. 2026',
   },
 
   // Chiffres du profil HAL.
@@ -26,7 +26,6 @@ export const research = {
   // Le fil conducteur et les axes de recherche ne forment plus qu'une structure : quatre étapes, puis l'horizon.
   path: {
     title: { fr: 'Le fil conducteur', en: 'The common thread' } as Txt,
-    loop: { fr: 'Chaque résultat corrige le modèle, et on recommence.', en: 'Each result corrects the model, and we start again.' } as Txt,
     steps: [
       {
         icon: 'model',
