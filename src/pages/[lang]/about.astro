@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import { LANGS, SITE, type Lang } from '../../config';
-import { href, t } from '../../i18n/ui';
+import { asset, href, t } from '../../i18n/ui';
 
 export function getStaticPaths() {
   return LANGS.map((lang) => ({ params: { lang } }));
@@ -13,18 +13,20 @@ const lang = Astro.params.lang as Lang;
 <Base lang={lang} path="about/" title={t(lang, 'about.title')}>
   <PageTitle title={t(lang, 'about.title')} color="c1" />
   <div class="wrap grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-20">
-    <!-- Emplacement de ta photo : remplace ce bloc par <img src="/portrait.jpg" alt="…"> -->
-    <div class="lg:sticky lg:top-28 lg:self-start" aria-hidden="true">
-      <div class="card grid aspect-[4/5] place-items-center bg-accent-soft">
-        <span class="display text-[9rem] leading-none text-accent">{SITE.name.charAt(0)}</span>
-      </div>
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <img
+        src={asset('portrait.jpg')}
+        alt={lang === 'fr' ? 'Nicolas, son fils sur les épaules, sur la crête d’une dune du Sahara' : 'Nicolas with his son on his shoulders, on the crest of a Sahara dune'}
+        class="card aspect-[4/5] w-full object-cover"
+        width="922"
+        height="1152"
+      />
     </div>
     {
       lang === 'fr' ? (
         <article class="prose prose-lg max-w-[68ch]">
           <p class="lead">
-            Je m’appelle {SITE.name}. Si tu me connais bien, c’est Nico. Si tu me connais encore mieux, tu as un autre surnom,
-            et je préfère ne pas savoir lequel.
+            Je m’appelle {SITE.name}. Si tu me connais bien, c’est Nico. Et si tu me connais encore mieux, tu sais déjà comment m’appeler.
           </p>
           <p>
             Auvergnat d’origine, expatrié depuis un bon moment, je vis aujourd’hui du côté de Nîmes.
@@ -33,37 +35,35 @@ const lang = Astro.params.lang as Lang;
 
           <h2>Ce que je fais</h2>
           <p>
-            Je suis enseignant-chercheur. Je travaille sur les <strong>processus</strong> : les modéliser, les piloter,
-            les automatiser et les orchestrer, les simuler, et faire dialoguer les organisations entre elles
-            (c’est ce qu’on appelle l’interopérabilité). Mes terrains d’application sont variés : industrie,
-            apiculture, santé, agriculture, transport…
+            Je suis enseignant-chercheur. Mes travaux portent sur les processus, de leur modélisation à leur simulation en passant
+            par leur pilotage, leur automatisation et leur orchestration, ainsi que sur l’interopérabilité des organisations.
+            Ils s’appliquent à l’industrie, l’apiculture, la santé, l’agriculture, les transports…
           </p>
           <p>
-            Je dirige aussi un département d’enseignement à l’IMT Mines Alès : PRISM, performance industrielle et systèmes mécatroniques.
-            Si tu veux le détail, direction la <a href={href(lang, 'work')}>page Travail</a>.
+            Je dirige aussi un département d’enseignement à l’IMT Mines Alès, PRISM (performance industrielle et systèmes mécatroniques).
+            Pour en savoir plus, direction la <a href={href(lang, 'work')}>page Travail</a>.
           </p>
 
           <h2>En dehors du labo</h2>
           <p>
-            Voyages, plongée, triathlon, cigares, jeux vidéo, tatouages… La liste n’est pas fermée.
-            Une idée à la con ? Envoie-la, tu peux compter sur moi.
+            Voyages, plongée, triathlon, ski, cigares, jeux vidéo, tatouages, et la liste n’est pas fermée.
+            Une idée à la con ? Tu es au bon endroit, et tu peux compter sur moi !
           </p>
           <p>
-            Les <a href={href(lang, 'travel')}>voyages</a> et les photos d’<a href={href(lang, 'auvergne')}>Auvergne</a> ont leur page,
-            et le reste a atterri dans <a href={href(lang, 'fun')}>Fun</a>.
+            Les <a href={href(lang, 'travel')}>voyages</a> et l’<a href={href(lang, 'auvergne')}>Auvergne</a> ont leur page,
+            et tout le reste a atterri dans <a href={href(lang, 'fun')}>Fun</a>.
           </p>
 
           <h2>Sur ce site</h2>
           <p>
-            Tu y trouveras ce que tu es venu chercher, ou pas : mes travaux de recherche, quelques cours et exercices
-            sur ce que je fais, mes voyages, d’où je viens, et d’autres trucs.
+            Tu y trouveras ce que tu es venu chercher, ou pas. Il y a mes travaux de recherche, quelques cours et exercices
+            sur ce que je fais, mes voyages, d’où je viens et d’autres trucs.
           </p>
         </article>
       ) : (
         <article class="prose prose-lg max-w-[68ch]">
           <p class="lead">
-            My name is {SITE.name}. If you know me well, it’s Nico. If you know me even better, you have another nickname for me,
-            and I would rather not know which one.
+            My name is {SITE.name}. If you know me well, it’s Nico. And if you know me even better, you already know what to call me.
           </p>
           <p>
             I am from Auvergne, a long-time expat, and I now live near Nîmes.
@@ -72,30 +72,29 @@ const lang = Astro.params.lang as Lang;
 
           <h2>What I do</h2>
           <p>
-            I am a lecturer and researcher. I work on <strong>processes</strong>: modelling them, steering them,
-            automating and orchestrating them, simulating them, and getting organisations to talk to each other
-            (what is called interoperability). I apply this in many fields: industry, beekeeping, healthcare,
-            agriculture, transport…
+            I am a lecturer and researcher. My work deals with processes, from modelling to simulation by way of steering,
+            automation and orchestration, as well as with the interoperability of organisations.
+            It applies to industry, beekeeping, healthcare, agriculture, transport…
           </p>
           <p>
-            I also head a teaching department at IMT Mines Alès: PRISM, industrial performance and mechatronic systems.
-            For the details, head to the <a href={href(lang, 'work')}>Work page</a>.
+            I also head a teaching department at IMT Mines Alès, PRISM (industrial performance and mechatronic systems).
+            To know more, head to the <a href={href(lang, 'work')}>Work page</a>.
           </p>
 
           <h2>Outside the lab</h2>
           <p>
-            Travel, scuba diving, triathlon, cigars, video games, tattoos… The list is open.
-            Got a silly idea? Send it over, you can count on me.
+            Travel, scuba diving, triathlon, skiing, cigars, video games, tattoos, and the list is open.
+            A silly idea? You are in the right place, and you can count on me!
           </p>
           <p>
-            The <a href={href(lang, 'travel')}>trips</a> and the photos of <a href={href(lang, 'auvergne')}>Auvergne</a> have their own pages,
-            and the rest ended up in <a href={href(lang, 'fun')}>Fun</a>.
+            The <a href={href(lang, 'travel')}>trips</a> and <a href={href(lang, 'auvergne')}>Auvergne</a> have their own pages,
+            and everything else ended up in <a href={href(lang, 'fun')}>Fun</a>.
           </p>
 
           <h2>On this site</h2>
           <p>
-            You will find what you came for, or not: my research, a few courses and exercises on what I do,
-            my travels, where I come from, and other things.
+            You will find what you came for, or not. There is my research, a few courses and exercises on what I do,
+            my travels, where I come from and other things.
           </p>
         </article>
       )
