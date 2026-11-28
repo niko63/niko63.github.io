@@ -3,8 +3,8 @@ export const SITE = {
   name: 'Nicolas',
   // Petite phrase affichée sur l'accueil (une version par langue).
   tagline: {
-    fr: 'Enseignant-chercheur. Modèles, simulation, voyages et bêtises.',
-    en: 'Lecturer & researcher. Models, simulation, travel and mischief.',
+    fr: 'Enseignant-chercheur. Modèles, simulation, voyages et n’importe quoi.',
+    en: 'Lecturer & researcher. Models, simulation, travel and random nonsense.',
   },
   // Mesure d'audience (GoatCounter, sans cookie). Colle ici le « code » choisi à l'inscription sur goatcounter.com
   // (ex. 'niko63' pour https://niko63.goatcounter.com). Laisse vide pour désactiver tout suivi.
