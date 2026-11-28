@@ -166,6 +166,9 @@ export const auvergne = {
   gallery: [
     { src: '/auvergne/clermont-place-de-jaude.jpg', alt: 'Place de Jaude à Clermont-Ferrand, de nuit à Noël, avec la grande roue et la statue de Vercingétorix', alt_en: 'Place de Jaude in Clermont-Ferrand at night at Christmas, with the Ferris wheel and the statue of Vercingetorix' },
     { src: '/auvergne/clermont-cathedrale.jpg', alt: 'La cathédrale de Clermont-Ferrand vue de côté', alt_en: 'Clermont-Ferrand cathedral seen from the side' },
+    { src: '/auvergne/stade-1.jpg', alt: 'Échauffement des joueurs de l’ASM au stade Marcel-Michelin, avant le match', alt_en: 'ASM players warming up at the Stade Marcel-Michelin before the match' },
+    { src: '/auvergne/stade-2.jpg', alt: 'Les tribunes du stade Marcel-Michelin, pleines un soir de match', alt_en: 'The stands of the Stade Marcel-Michelin, packed on a match night' },
+    { src: '/auvergne/stade-3.jpg', alt: 'Le stade Marcel-Michelin de nuit, vu des tribunes, pendant le match', alt_en: 'The Stade Marcel-Michelin at night, seen from the stands, during the match' },
     { src: '/auvergne/puy-ruelle-cathedrale.jpg', alt: 'Ruelle pavoisée du Puy-en-Velay menant à la cathédrale', alt_en: 'A street hung with bunting in Le Puy-en-Velay, leading to the cathedral' },
     { src: '/auvergne/puy-cathedrale.jpg', alt: 'Façade de la cathédrale du Puy-en-Velay', alt_en: 'Façade of Le Puy-en-Velay cathedral' },
     { src: '/auvergne/puy-rue-pavee.jpg', alt: 'Rue pavée du Puy-en-Velay décorée de fanions', alt_en: 'Cobbled street in Le Puy-en-Velay decorated with pennants' },
