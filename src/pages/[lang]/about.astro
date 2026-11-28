@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import { LANGS, SITE, type Lang } from '../../config';
-import { t } from '../../i18n/ui';
+import { href, t } from '../../i18n/ui';
 
 export function getStaticPaths() {
   return LANGS.map((lang) => ({ params: { lang } }));
@@ -13,7 +13,7 @@ const lang = Astro.params.lang as Lang;
 <Base lang={lang} path="about/" title={t(lang, 'about.title')}>
   <PageTitle title={t(lang, 'about.title')} color="c1" />
   <div class="wrap grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-20">
-    <!-- Emplacement de ta photo ou de ton illustration : remplace ce bloc par <img src="/portrait.jpg" alt="…"> -->
+    <!-- Emplacement de ta photo : remplace ce bloc par <img src="/portrait.jpg" alt="…"> -->
     <div class="lg:sticky lg:top-28 lg:self-start" aria-hidden="true">
       <div class="card grid aspect-[4/5] place-items-center bg-accent-soft">
         <span class="display text-[9rem] leading-none text-accent">{SITE.name.charAt(0)}</span>
@@ -23,20 +23,80 @@ const lang = Astro.params.lang as Lang;
       lang === 'fr' ? (
         <article class="prose prose-lg max-w-[68ch]">
           <p class="lead">
-            Je m'appelle {SITE.name}. Voici ma page de présentation : remplace ce texte par le tien.
+            Je m’appelle {SITE.name}. Si tu me connais bien, c’est Nico. Si tu me connais encore mieux, tu as un autre surnom,
+            et je préfère ne pas savoir lequel.
           </p>
+          <p>
+            Auvergnat d’origine, expatrié depuis un bon moment, je vis aujourd’hui du côté de Nîmes.
+            L’<a href={href(lang, 'auvergne')}>Auvergne</a> reste ma région, et je ne rate jamais une occasion de le rappeler.
+          </p>
+
           <h2>Ce que je fais</h2>
-          <p>Quelques lignes sur ton métier, tes thèmes de travail, ce qui te passionne.</p>
-          <h2>Ce qui m'anime</h2>
-          <p>Tes centres d'intérêt, ta façon de travailler, ce que tu aimerais que les visiteurs retiennent.</p>
+          <p>
+            Je suis enseignant-chercheur. Je travaille sur les <strong>processus</strong> : les modéliser, les piloter,
+            les automatiser et les orchestrer, les simuler, et faire dialoguer les organisations entre elles
+            (c’est ce qu’on appelle l’interopérabilité). Mes terrains d’application sont variés : industrie,
+            apiculture, santé, agriculture, transport…
+          </p>
+          <p>
+            Je dirige aussi un département d’enseignement à l’IMT Mines Alès : PRISM, performance industrielle et systèmes mécatroniques.
+            Si tu veux le détail, direction la <a href={href(lang, 'work')}>page Travail</a>.
+          </p>
+
+          <h2>En dehors du labo</h2>
+          <p>
+            Voyages, plongée, triathlon, cigares, jeux vidéo, tatouages… La liste n’est pas fermée.
+            Une idée à la con ? Envoie-la, tu peux compter sur moi.
+          </p>
+          <p>
+            Les <a href={href(lang, 'travel')}>voyages</a> et les photos d’<a href={href(lang, 'auvergne')}>Auvergne</a> ont leur page,
+            et le reste a atterri dans <a href={href(lang, 'fun')}>Fun</a>.
+          </p>
+
+          <h2>Sur ce site</h2>
+          <p>
+            Tu y trouveras ce que tu es venu chercher, ou pas : mes travaux de recherche, quelques cours et exercices
+            sur ce que je fais, mes voyages, d’où je viens, et d’autres trucs.
+          </p>
         </article>
       ) : (
         <article class="prose prose-lg max-w-[68ch]">
-          <p class="lead">My name is {SITE.name}. This is my about page: replace this text with your own.</p>
+          <p class="lead">
+            My name is {SITE.name}. If you know me well, it’s Nico. If you know me even better, you have another nickname for me,
+            and I would rather not know which one.
+          </p>
+          <p>
+            I am from Auvergne, a long-time expat, and I now live near Nîmes.
+            <a href={href(lang, 'auvergne')}>Auvergne</a> is still my region, and I never miss a chance to say so.
+          </p>
+
           <h2>What I do</h2>
-          <p>A few lines about your job, your topics, what you are passionate about.</p>
-          <h2>What drives me</h2>
-          <p>Your interests, how you work, what you would like visitors to remember.</p>
+          <p>
+            I am a lecturer and researcher. I work on <strong>processes</strong>: modelling them, steering them,
+            automating and orchestrating them, simulating them, and getting organisations to talk to each other
+            (what is called interoperability). I apply this in many fields: industry, beekeeping, healthcare,
+            agriculture, transport…
+          </p>
+          <p>
+            I also head a teaching department at IMT Mines Alès: PRISM, industrial performance and mechatronic systems.
+            For the details, head to the <a href={href(lang, 'work')}>Work page</a>.
+          </p>
+
+          <h2>Outside the lab</h2>
+          <p>
+            Travel, scuba diving, triathlon, cigars, video games, tattoos… The list is open.
+            Got a silly idea? Send it over, you can count on me.
+          </p>
+          <p>
+            The <a href={href(lang, 'travel')}>trips</a> and the photos of <a href={href(lang, 'auvergne')}>Auvergne</a> have their own pages,
+            and the rest ended up in <a href={href(lang, 'fun')}>Fun</a>.
+          </p>
+
+          <h2>On this site</h2>
+          <p>
+            You will find what you came for, or not: my research, a few courses and exercises on what I do,
+            my travels, where I come from, and other things.
+          </p>
         </article>
       )
     }
