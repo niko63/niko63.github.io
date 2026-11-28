@@ -15,6 +15,7 @@ const year = new Date().getFullYear();
     <ul class="flex flex-wrap items-center gap-4">
       {SITE.links.github && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={SITE.links.github} rel="noopener">GitHub</a></li>}
       {SITE.links.hal && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={SITE.links.hal} rel="noopener">HAL</a></li>}
+      {SITE.links.orcid && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={SITE.links.orcid} rel="noopener">ORCID</a></li>}
       {SITE.links.email && <li><a class="hover:text-accent underline-offset-4 hover:underline" href={`mailto:${SITE.links.email}`}>{SITE.links.email}</a></li>}
       <li><a class="hover:text-accent underline-offset-4 hover:underline" href={href(lang, 'privacy')}>{t(lang, 'footer.privacy')}</a></li>
       <li>{t(lang, 'footer.built')}</li>

@@ -13,6 +13,7 @@ export const SITE = {
   links: {
     github: 'https://github.com/niko63',
     hal: 'https://cv.hal.science/nicolas-daclin',
+    orcid: 'https://orcid.org/0000-0002-8610-1886',
     email: '', // ex. 'prenom@exemple.fr' ; laisse vide pour ne rien afficher
   },
 } as const;

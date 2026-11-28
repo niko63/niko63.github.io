@@ -13,15 +13,18 @@ const lang = Astro.params.lang as Lang;
 <Base lang={lang} path="about/" title={t(lang, 'about.title')}>
   <PageTitle title={t(lang, 'about.title')} color="c1" />
   <div class="wrap grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-20">
-    <div class="lg:sticky lg:top-28 lg:self-start">
+    <figure class="lg:sticky lg:top-28 lg:self-start">
       <img
         src={asset('portrait.jpg')}
-        alt={lang === 'fr' ? 'Nicolas, son fils sur les épaules, sur la crête d’une dune du Sahara' : 'Nicolas with his son on his shoulders, on the crest of a Sahara dune'}
+        alt={lang === 'fr' ? 'Nicolas, son fils sur les épaules, sur la crête d’une dune du désert algérien' : 'Nicolas with his son on his shoulders, on the crest of a dune in the Algerian desert'}
         class="card aspect-[4/5] w-full object-cover"
-        width="922"
-        height="1152"
+        width="960"
+        height="1200"
       />
-    </div>
+      <figcaption class="mt-2 text-sm text-muted">
+        {lang === 'fr' ? 'Désert algérien, près de Timimoun.' : 'Algerian desert, near Timimoun.'}
+      </figcaption>
+    </figure>
     {
       lang === 'fr' ? (
         <article class="prose prose-lg max-w-[68ch]">
@@ -35,13 +38,16 @@ const lang = Astro.params.lang as Lang;
 
           <h2>Ce que je fais</h2>
           <p>
-            Je suis enseignant-chercheur. Mes travaux portent sur les processus, de leur modélisation à leur simulation en passant
+            Je suis professeur et chercheur. Mes travaux portent sur les processus, de leur modélisation à leur simulation en passant
             par leur pilotage, leur automatisation et leur orchestration, ainsi que sur l’interopérabilité des organisations.
             Ils s’appliquent à l’industrie, l’apiculture, la santé, l’agriculture, les transports…
+            Tout a commencé par l’interopérabilité, dans des projets européens qui ont donné naissance à un cadre d’interopérabilité des entreprises.
           </p>
           <p>
-            Je dirige aussi un département d’enseignement à l’IMT Mines Alès, PRISM (performance industrielle et systèmes mécatroniques).
-            Pour en savoir plus, direction la <a href={href(lang, 'work')}>page Travail</a>.
+            Thèse à Bordeaux, HDR à Montpellier, et aujourd’hui je dirige le département d’enseignement PRISM (performance industrielle
+            et systèmes mécatroniques) de l’IMT Mines Alès. Si mes cours t’intéressent (modélisation des processus, pilotage,
+            automatisation et orchestration, ingénierie des exigences), ils t’attendent sur la <a href={href(lang, 'work') + '#teaching'}>page Travail</a>.
+            La <a href={href(lang, 'work') + '#research'}>recherche</a> aussi.
           </p>
 
           <h2>Ce qui n’est pas dans mon CV</h2>
@@ -52,12 +58,6 @@ const lang = Astro.params.lang as Lang;
           <p>
             Les <a href={href(lang, 'travel')}>voyages</a> et l’<a href={href(lang, 'auvergne')}>Auvergne</a> ont leur page,
             et tout le reste a atterri dans <a href={href(lang, 'fun')}>Fun</a>.
-          </p>
-
-          <h2>Sur ce site</h2>
-          <p>
-            Tu y trouveras ce que tu es venu chercher, ou pas. Il y a mes travaux de recherche, quelques cours et exercices
-            sur ce que je fais, mes voyages, d’où je viens et d’autres trucs.
           </p>
         </article>
       ) : (
@@ -72,13 +72,16 @@ const lang = Astro.params.lang as Lang;
 
           <h2>What I do</h2>
           <p>
-            I am a lecturer and researcher. My work deals with processes, from modelling to simulation by way of steering,
+            I am a professor and researcher. My work deals with processes, from modelling to simulation by way of steering,
             automation and orchestration, as well as with the interoperability of organisations.
             It applies to industry, beekeeping, healthcare, agriculture, transport…
+            It all started with interoperability, in European projects that gave rise to an enterprise interoperability framework.
           </p>
           <p>
-            I also head a teaching department at IMT Mines Alès, PRISM (industrial performance and mechatronic systems).
-            To know more, head to the <a href={href(lang, 'work')}>Work page</a>.
+            PhD in Bordeaux, habilitation in Montpellier, and today I head the PRISM teaching department (industrial performance
+            and mechatronic systems) at IMT Mines Alès. If my courses interest you (process modelling, steering,
+            automation and orchestration, requirements engineering), they are waiting on the <a href={href(lang, 'work') + '#teaching'}>Work page</a>.
+            So is the <a href={href(lang, 'work') + '#research'}>research</a>.
           </p>
 
           <h2>What is not on my CV</h2>
@@ -89,12 +92,6 @@ const lang = Astro.params.lang as Lang;
           <p>
             The <a href={href(lang, 'travel')}>trips</a> and <a href={href(lang, 'auvergne')}>Auvergne</a> have their own pages,
             and everything else ended up in <a href={href(lang, 'fun')}>Fun</a>.
-          </p>
-
-          <h2>On this site</h2>
-          <p>
-            You will find what you came for, or not. There is my research, a few courses and exercises on what I do,
-            my travels, where I come from and other things.
           </p>
         </article>
       )
