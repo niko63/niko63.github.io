@@ -5,9 +5,16 @@ type Txt = { fr: string; en: string };
 
 export const research = {
   intro: {
-    fr: 'Autour des processus : les modéliser, les simuler, les faire dialoguer entre organisations et les rendre résilients.',
-    en: 'Around processes: modelling them, simulating them, making them interoperate across organisations and making them resilient.',
+    fr: 'Autour des processus, pour les modéliser, les simuler, les faire dialoguer entre organisations et les rendre résilients.',
+    en: 'Around processes, to model them, simulate them, make them interoperate across organisations and make them resilient.',
   } as Txt,
+
+  // Indicateur d'impact, affiché seulement quand value est renseigné. Une seule source, avec sa date.
+  hIndex: {
+    value: null as number | null,
+    label: { fr: 'h-index', en: 'h-index' } as Txt,
+    source: '', // ex. 'Google Scholar, nov. 2026'
+  },
 
   // Chiffres du profil HAL.
   stats: [
@@ -16,77 +23,64 @@ export const research = {
     { n: 81, label: { fr: 'communications en congrès', en: 'conference papers' } as Txt },
   ],
 
-  // Le fil conducteur : quatre étapes qui s'enchaînent.
-  thread: {
+  // Le fil conducteur et les axes de recherche ne forment plus qu'une structure : quatre étapes, puis l'horizon.
+  path: {
     title: { fr: 'Le fil conducteur', en: 'The common thread' } as Txt,
+    loop: { fr: 'Chaque résultat corrige le modèle, et on recommence.', en: 'Each result corrects the model, and we start again.' } as Txt,
     steps: [
       {
+        icon: 'model',
         name: { fr: 'Modéliser', en: 'Model' } as Txt,
-        text: { fr: 'Décrire un processus et ses décisions avec des notations partagées.', en: 'Describe a process and its decisions with shared notations.' } as Txt,
+        text: {
+          fr: 'Décrire un processus et ses décisions avec des notations partagées.',
+          en: 'Describe a process and its decisions with shared notations.',
+        } as Txt,
         tags: ['BPMN', 'GRAI', 'IDEF0'],
       },
       {
+        icon: 'simulate',
         name: { fr: 'Simuler', en: 'Simulate' } as Txt,
-        text: { fr: 'Exécuter le modèle pour mesurer, comparer, anticiper.', en: 'Run the model to measure, compare and anticipate.' } as Txt,
-        tags: ['DEVS', 'BPSim', 'KPI'],
+        text: {
+          fr: 'Transformer un modèle de processus en simulation pour mesurer, comparer et anticiper.',
+          en: 'Turn a process model into a simulation to measure, compare and anticipate.',
+        } as Txt,
+        tags: ['DEVS', 'BPSim', { fr: 'indicateurs', en: 'KPIs' }],
       },
       {
+        icon: 'interop',
         name: { fr: 'Faire interopérer', en: 'Interoperate' } as Txt,
-        text: { fr: 'Faire dialoguer des processus et des simulateurs issus d’organisations différentes.', en: 'Make processes and simulators from different organisations work together.' } as Txt,
-        tags: ['HLA', { fr: 'exigences', en: 'requirements' }],
+        text: {
+          fr: 'Faire dialoguer des processus et des simulateurs issus d’organisations différentes, et vérifier qu’ils s’entendent.',
+          en: 'Make processes and simulators from different organisations work together, and check that they understand each other.',
+        } as Txt,
+        tags: ['HLA', { fr: 'exigences', en: 'requirements' }, { fr: 'vérification', en: 'verification' }],
       },
       {
+        icon: 'resilient',
         name: { fr: 'Rendre résilient', en: 'Make resilient' } as Txt,
-        text: { fr: 'Évaluer comment un système interconnecté encaisse une perturbation.', en: 'Assess how an interconnected system absorbs a disruption.' } as Txt,
-        tags: [{ fr: 'infrastructures critiques', en: 'critical infrastructures' }],
-      },
-    ] as { name: Txt; text: Txt; tags: (string | Txt)[] }[],
-  },
-
-  // Axes détaillés (d'après les thèmes du profil HAL).
-  axes: {
-    title: { fr: 'Quatre axes', en: 'Four research axes' } as Txt,
-    items: [
-      {
-        emoji: '🤝',
-        name: { fr: 'Interopérabilité des processus collaboratifs', en: 'Interoperability of collaborative processes' } as Txt,
         text: {
-          fr: 'Exigences d’interopérabilité, vérification, et interopérabilité fédérée assistée par l’IA, par exemple pour le Physical Internet.',
-          en: 'Interoperability requirements, verification, and AI-assisted federated interoperability, for example for the Physical Internet.',
+          fr: 'Évaluer comment un système interconnecté encaisse une perturbation, des infrastructures critiques aux hôpitaux de campagne.',
+          en: 'Assess how an interconnected system absorbs a disruption, from critical infrastructures to field hospitals.',
         } as Txt,
+        tags: [{ fr: 'infrastructures critiques', en: 'critical infrastructures' }, { fr: 'cybersécurité', en: 'cybersecurity' }],
       },
-      {
-        emoji: '🛡️',
-        name: { fr: 'Résilience des infrastructures et systèmes interconnectés', en: 'Resilience of infrastructures and interconnected systems' } as Txt,
-        text: {
-          fr: 'Évaluation de la résilience, infrastructures critiques, cybersécurité (notamment des hôpitaux de campagne). Participation à un projet ANR sur le sujet.',
-          en: 'Resilience assessment, critical infrastructures, cybersecurity (notably for field hospitals). Participation in an ANR project on the topic.',
-        } as Txt,
-      },
-      {
-        emoji: '🧪',
-        name: { fr: 'Simulation de processus métiers', en: 'Business process simulation' } as Txt,
-        text: {
-          fr: 'BPMN, BPSim, DEVS, HLA et ingénierie dirigée par les modèles : transformer un modèle de processus en simulation et calculer des indicateurs de performance.',
-          en: 'BPMN, BPSim, DEVS, HLA and model-driven engineering: turning a process model into a simulation and computing performance indicators.',
-        } as Txt,
-      },
-      {
-        emoji: '🪞',
-        name: { fr: 'Jumeaux numériques, holons et IA', en: 'Digital twins, holons and AI' } as Txt,
-        text: {
-          fr: 'Systèmes holoniques à l’heure de l’intelligence artificielle et des jumeaux numériques.',
-          en: 'Holonic systems in the era of artificial intelligence and digital twins.',
-        } as Txt,
-      },
-    ],
+    ] as { icon: 'model' | 'simulate' | 'interop' | 'resilient'; name: Txt; text: Txt; tags: (string | Txt)[] }[],
+    horizon: {
+      icon: 'horizon' as const,
+      name: { fr: 'Et après', en: 'What comes next' } as Txt,
+      text: {
+        fr: 'Des systèmes holoniques à l’heure de l’intelligence artificielle et des jumeaux numériques.',
+        en: 'Holonic systems in the era of artificial intelligence and digital twins.',
+      } as Txt,
+      tags: [{ fr: 'jumeaux numériques', en: 'digital twins' }, { fr: 'holons', en: 'holons' }, { fr: 'IA', en: 'AI' }],
+    },
   },
 
   tool: {
-    title: { fr: 'L’outil : MSStudio', en: 'The tool: MSStudio' } as Txt,
+    title: { fr: 'MSStudio, mon outil', en: 'MSStudio, my tool' } as Txt,
     text: {
-      fr: 'Une application web que je développe : elle réunit des notations de modélisation d’entreprise et la simulation à événements discrets. Elle sert la recherche, et aussi l’enseignement de ces matières.',
-      en: 'A web application I am developing: it brings together enterprise modelling notations and discrete-event simulation. It serves research, and also the teaching of these subjects.',
+      fr: 'Une application web que je développe, qui réunit des notations de modélisation d’entreprise et la simulation à événements discrets. Elle sert la recherche, et aussi l’enseignement de ces matières.',
+      en: 'A web application I am developing, which brings together enterprise modelling notations and discrete-event simulation. It serves research, and also the teaching of these subjects.',
     } as Txt,
     slug: 'msstudio',
   },
